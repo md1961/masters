@@ -11,6 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20150412224006) do
+
+  create_table "holes", force: true do |t|
+    t.integer "number"
+    t.integer "par"
+    t.integer "distance"
+  end
 
 end
