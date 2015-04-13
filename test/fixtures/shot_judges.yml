@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  prev_result: MyString
+  lands: MyString
+  next_use: MyString
+  next_adjust: 1
+
+two:
+  prev_result: MyString
+  lands: MyString
+  next_use: MyString
+  next_adjust: 1

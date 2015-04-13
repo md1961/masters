@@ -1,3 +1,3 @@
 class Hole < ActiveRecord::Base
-  belongs_to :shot
+  has_many :shots
 end

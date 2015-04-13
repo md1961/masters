@@ -11,12 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412224006) do
+ActiveRecord::Schema.define(version: 20150412232028) do
 
   create_table "holes", force: true do |t|
     t.integer "number"
     t.integer "par"
     t.integer "distance"
   end
+
+  create_table "shot_judges", force: true do |t|
+    t.string  "prev_result"
+    t.string  "lands"
+    t.string  "next_use"
+    t.integer "next_adjust", default: 0
+    t.integer "shot_id"
+  end
+
+  add_index "shot_judges", ["shot_id"], name: "index_shot_judges_on_shot_id"
+
+  create_table "shots", force: true do |t|
+    t.integer  "number"
+    t.boolean  "layup",      default: false
+    t.integer  "hole_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shots", ["hole_id"], name: "index_shots_on_hole_id"
 
 end
