@@ -517,3 +517,17 @@ t_watson = Player.create!(last_name: 'Watson', first_name: 'Tom', overall: 22)
   %w(drive fw li mi si p ch sd putt).each do |club_name|
     t_watson.clubs.create!(club_attrs(club_name, eval(club_name)))
   end
+
+floyd = Player.create!(last_name: 'Floyd', first_name: 'Ray', overall: 23)
+  drive = %w(SL SR SC ML MR ML MC* MR MC MC MC MC* MC MC LR LL LR LC LC* LC LC*)
+  fw    = %w(SL-P SC-P SR-P LC-Ch ML-Ch SR-Ch SC-Ch LR-Ch MR-Ch 54 42 37 30 27 25 21 18 14 11 7 4)
+  li    = %w(SC-P SR-P LC-Ch SR-Ch ML-Ch SC-Ch LR-Ch MR-Ch 50 41 37 34 31 25 21 18 16 13 10 5 4)
+  mi    = %w(SC-Ch MR-Ch LC-Ch SR-Ch LL-Ch ML-Ch LR-Ch 54 43 38 34 30 25 23 19 17 15 12 9 5 3)
+  si    = %w(SC-Ch LR-Ch MR-Ch LC-Ch ML-Ch SR-Ch 48 37 32 29 25 22 20 18 15 13 10 8 5 3 1)
+  p     = %w(MR-Ch LL-Ch 45 29 21 19 18 17 15 13 12 11 10 8 7 6 5 4 2 1 (1))
+  ch    = %w(45 30 20 14 11 10 9 8 7 6 6 5 4 4 3 3 2 2 1 1 IN)
+  sd    = %w(Sd 38 27 23 19 16 13 11 10 9 8 7 7 6 5 5 4 3 2 1 IN)
+  putt  = %w(Miss-A 1-B 2-C 3-D 3 4 5 5 6 7 8 9 10 11 13 16 19 25 41 IN IN)
+  %w(drive fw li mi si p ch sd putt).each do |club_name|
+    floyd.clubs.create!(club_attrs(club_name, eval(club_name)))
+  end
