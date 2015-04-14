@@ -466,3 +466,27 @@ hole18 = Hole.create!(number:18, par: 4, distance: 405)
     shot18_4.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
+
+Player.destroy_all
+
+def club_attrs(name, values)
+  keys = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66)
+  attrs = Hash[keys.zip(values)]
+  attrs['name'] = name
+  attrs
+end
+
+aoki = Player.create!(last_name: 'Aoki', first_name: 'Isao', overall: 25)
+  drive = %w(SL SR SL SC SC SC* SC MR MC MC ML MC MC MC MC* MC MC MC* LC LC*)
+  fw    = %w(SC-P SR-P SL-P SC-P SR-Ch LC-Ch MR-Ch SL-Ch ML-Ch LL-Ch 50 41 34 30 28 25 20 16 12 8 6)
+  li    = %w(SR-P SL-P SC-P SL-Ch MR-Ch LC-Ch LR-Ch SC-Ch ML-Ch 48 41 37 33 29 25 20 17 14 11 7 5)
+  mi    = %w(SC-P MR-Ch LC-Ch SR-Ch LL-Ch ML-Ch LR-Ch 57 45 40 36 33 28 24 20 18 16 13 9 6 3)
+  si    = %w(SR-Ch ML-Ch LR-Ch SC-Ch MR-Ch SL-Ch 50 39 35 32 27 24 22 19 16 13 11 8 6 4 2)
+  p     = %w(SC-Ch MR-Ch SR-Ch 44 30 25 22 20 18 16 14 13 11 10 9 7 6 5 3 2 (1))
+  ch    = %w(52 36 26 18 14 12 11 10 9 8 7 6 5 5 4 4 3 2 2 1 IN)
+  sd    = %w(Sd 36 24 20 17 14 12 10 9 8 7 7 6 6 5 4 4 3 2 1 IN)
+  putt  = %w(Miss-A 1-B 2-C 3-D 3 4 4 5 6 7 8 9 10 12 13 16 20 26 42 IN IN)
+  %w(drive fw li mi si p ch sd putt).each do |club_name|
+    aoki.clubs.create!(club_attrs(club_name, eval(club_name)))
+  end
+

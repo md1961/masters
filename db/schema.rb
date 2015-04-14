@@ -11,12 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412232028) do
+ActiveRecord::Schema.define(version: 20150414060702) do
+
+  create_table "clubs", force: true do |t|
+    t.string  "name"
+    t.integer "player_id"
+    t.string  "11"
+    t.string  "12"
+    t.string  "13"
+    t.string  "14"
+    t.string  "15"
+    t.string  "16"
+    t.string  "22"
+    t.string  "23"
+    t.string  "24"
+    t.string  "25"
+    t.string  "26"
+    t.string  "33"
+    t.string  "34"
+    t.string  "35"
+    t.string  "36"
+    t.string  "44"
+    t.string  "45"
+    t.string  "46"
+    t.string  "55"
+    t.string  "56"
+    t.string  "66"
+  end
 
   create_table "holes", force: true do |t|
     t.integer "number"
     t.integer "par"
     t.integer "distance"
+  end
+
+  create_table "players", force: true do |t|
+    t.string  "last_name"
+    t.string  "first_name"
+    t.integer "overall"
   end
 
   create_table "shot_judges", force: true do |t|
