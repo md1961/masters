@@ -529,5 +529,23 @@ floyd = Player.create!(last_name: 'Floyd', first_name: 'Ray', overall: 23)
   sd    = %w(Sd 38 27 23 19 16 13 11 10 9 8 7 7 6 5 5 4 3 2 1 IN)
   putt  = %w(Miss-A 1-B 2-C 3-D 3 4 5 5 6 7 8 9 10 11 13 16 19 25 41 IN IN)
   %w(drive fw li mi si p ch sd putt).each do |club_name|
-    floyd.clubs.create!(club_attrs(club_name, eval(club_name)))
+    values = eval(club_name)
+    raise RuntimeError, "illeagl size #{values.size} for #{club_name}" unless values.size == 21
+    floyd.clubs.create!(club_attrs(club_name, values))
+  end
+
+strange = Player.create!(last_name: 'Strange', first_name: 'Curtis', overall: 24)
+  drive = %w(SR SL SC SC SC SC SC* SC MR ML MC MR MC MC MC MC* MC MC MC* LC LC*)
+  fw    = %w(SL-P SC-P SR-P LC-Ch ML-Ch SR-Ch SC-Ch LR-Ch MR-Ch 53 41 37 30 27 25 21 18 14 11 7 4)
+  li    = %w(SC-P SR-P LC-Ch SR-Ch ML-Ch SC-Ch LR-Ch MR-Ch 49 40 37 34 31 25 21 18 16 13 10 5 4)
+  mi    = %w(SC-Ch MR-Ch LC-Ch SR-Ch LL-Ch ML-Ch LR-Ch 53 42 38 34 30 25 23 19 17 15 12 9 5 3)
+  si    = %w(SC-Ch LR-Ch MR-Ch LC-Ch ML-Ch SR-Ch 47 37 31 29 25 22 20 18 15 13 10 8 5 3 1)
+  p     = %w(SC-Ch MR-Ch 47 31 22 20 19 18 16 14 13 12 11 9 8 6 5 4 3 1 (1))
+  ch    = %w(47 33 23 16 13 11 10 9 8 7 6 6 5 4 4 3 2 2 1 1 IN)
+  sd    = %w(Sd 38 27 23 19 16 13 12 10 9 8 7 7 6 5 5 4 3 2 1 IN)
+  putt  = %w(Miss-A 1-B 2-C 3-D 3 4 4 5 6 7 8 9 10 11 12 15 18 24 40 IN IN)
+  %w(drive fw li mi si p ch sd putt).each do |club_name|
+    values = eval(club_name)
+    raise RuntimeError, "illeagl size #{values.size} for #{club_name}" unless values.size == 21
+    strange.clubs.create!(club_attrs(club_name, values))
   end
