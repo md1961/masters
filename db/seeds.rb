@@ -501,5 +501,19 @@ nicklaus = Player.create!(last_name: 'Nicklaus', first_name: 'Jack', overall: 22
   sd    = %w(Sd 50 35 32 28 22 19 15 13 12 11 10 9 8 7 6 5 4 3 2 (1))
   putt  = %W(Miss-A 1-B 2-C 2-D 3 3 4 4 5 6 7 8 9 10 12 13 16 21 34 50 IN)
   %w(drive fw li mi si p ch sd putt).each do |club_name|
-    aoki.clubs.create!(club_attrs(club_name, eval(club_name)))
+    nicklaus.clubs.create!(club_attrs(club_name, eval(club_name)))
+  end
+
+t_watson = Player.create!(last_name: 'Watson', first_name: 'Tom', overall: 22)
+  drive = %w(SL SR SC ML MR ML MR ML MC MC MC MC* MC LL LR LC* LL LC LC* LC LC*)
+  fw    = %w(SC-P SR-P SR-P SR-Ch LC-Ch MR-Ch SL-Ch ML-Ch LL-Ch 53 41 36 30 27 25 21 18 14 11 7 4)
+  li    = %w(SL-P SC-P SL-Ch MR-Ch LC-Ch LR-Ch SC-Ch ML-Ch 49 40 37 34 31 25 21 18 16 13 10 5 4)
+  mi    = %w(MR-Ch LL-Ch ML-Ch SR-Ch SL-Ch LC-Ch SC-Ch 53 42 38 34 30 26 22 19 17 15 12 9 5 3)
+  si    = %w(SR-Ch SC-Ch MR-Ch LR-Ch ML-Ch SL-Ch 47 37 31 29 25 22 20 18 15 13 10 7 5 3 2)
+  p     = %w(MR-Ch LL-Ch 44 28 20 18 17 16 14 13 12 11 10 8 7 6 5 3 2 1 (1))
+  ch    = %w(44 29 18 13 11 10 9 8 7 6 5 5 4 4 3 3 2 2 1 1 IN)
+  sd    = %w(Sd 36 24 20 17 14 12 10 9 8 8 7 6 6 5 4 4 3 2 1 IN)
+  putt  = %w(Miss-A 1-B 2-C 3-D 3 4 5 5 6 7 8 9 10 12 13 16 20 25 42 IN IN)
+  %w(drive fw li mi si p ch sd putt).each do |club_name|
+    t_watson.clubs.create!(club_attrs(club_name, eval(club_name)))
   end
