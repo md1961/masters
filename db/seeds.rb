@@ -490,3 +490,16 @@ aoki = Player.create!(last_name: 'Aoki', first_name: 'Isao', overall: 25)
     aoki.clubs.create!(club_attrs(club_name, eval(club_name)))
   end
 
+nicklaus = Player.create!(last_name: 'Nicklaus', first_name: 'Jack', overall: 22)
+  drive = %w(SL SR SC ML MR MC* MC MC MC MC MC MC* MC MC LR LL LC LC LC* LC LC*)
+  fw    = %w(SL-P SR-P SC-Ch MR-Ch LL-Ch LC-Ch SR-Ch ML-Ch 54 45 38 35 28 25 22 19 16 12 9 5 3)
+  li    = %w(SC-P MR-Ch ML-Ch SR-Ch LL-Ch SC-Ch LR-Ch 45 42 37 35 31 28 22 19 16 14 11 8 4 2)
+  mi    = %w(SL-Ch SR-Ch ML-Ch LR-Ch LC-Ch MR-Ch 56 46 41 37 32 28 24 21 18 16 14 11 8 5 2)
+  si    = %w(SL-Ch MR-Ch LC-Ch ML-Ch LL-Ch 51 37 32 29 27 23 21 19 17 14 12 10 7 5 3 1)
+  p     = %w(SR-Ch SL-Ch LL-Ch 47 33 28 24 21 19 18 16 14 12 11 10 8 7 6 4 2 (1))
+  ch    = %w(54 39 30 20 16 13 12 11 10 9 8 7 6 6 5 4 4 3 2 1 IN)
+  sd    = %w(Sd 50 35 32 28 22 19 15 13 12 11 10 9 8 7 6 5 4 3 2 (1))
+  putt  = %W(Miss-A 1-B 2-C 2-D 3 3 4 4 5 6 7 8 9 10 12 13 16 21 34 50 IN)
+  %w(drive fw li mi si p ch sd putt).each do |club_name|
+    aoki.clubs.create!(club_attrs(club_name, eval(club_name)))
+  end
