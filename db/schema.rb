@@ -62,11 +62,9 @@ ActiveRecord::Schema.define(version: 20150414060702) do
   add_index "shot_judges", ["shot_id"], name: "index_shot_judges_on_shot_id"
 
   create_table "shots", force: true do |t|
-    t.integer  "number"
-    t.boolean  "layup",      default: false
-    t.integer  "hole_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "number"
+    t.boolean "layup",   default: false
+    t.integer "hole_id"
   end
 
   add_index "shots", ["hole_id"], name: "index_shots_on_hole_id"
