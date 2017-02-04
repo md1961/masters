@@ -4,10 +4,10 @@ class CreateClubs < ActiveRecord::Migration
 
   def change
     create_table :clubs do |t|
-      t.string     :name
+      t.string     :name, null: false
       t.references :player
       KEYS.each do |key|
-        t.string :"#{key}"
+        t.string :"d#{key}", null: false
       end
     end
   end

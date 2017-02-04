@@ -470,7 +470,7 @@ hole18 = Hole.create!(number:18, par: 4, distance: 405)
 Player.destroy_all
 
 def club_attrs(name, values)
-  keys = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66)
+  keys = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map { |key| "d#{key}" }
   attrs = Hash[keys.zip(values)]
   attrs['name'] = name
   attrs
@@ -478,7 +478,8 @@ end
 
 def add_clubs(player, h_clubs)
   h_clubs.each do |name, values|
-    raise StandardError, "illeagl size #{values.size} for #{name} of #{player.last_name}, #{player.first_name}" unless values.size == 21
+    raise StandardError, "illeagl size #{values.size} for #{name} of #{player.last_name}, #{player.first_name}" \
+      unless values.size == 21
     player.clubs.create!(club_attrs(name, values))
   end
 end

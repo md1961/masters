@@ -14,41 +14,41 @@
 ActiveRecord::Schema.define(version: 20150414060702) do
 
   create_table "clubs", force: true do |t|
-    t.string  "name"
+    t.string  "name",      null: false
     t.integer "player_id"
-    t.string  "11"
-    t.string  "12"
-    t.string  "13"
-    t.string  "14"
-    t.string  "15"
-    t.string  "16"
-    t.string  "22"
-    t.string  "23"
-    t.string  "24"
-    t.string  "25"
-    t.string  "26"
-    t.string  "33"
-    t.string  "34"
-    t.string  "35"
-    t.string  "36"
-    t.string  "44"
-    t.string  "45"
-    t.string  "46"
-    t.string  "55"
-    t.string  "56"
-    t.string  "66"
+    t.string  "d11",       null: false
+    t.string  "d12",       null: false
+    t.string  "d13",       null: false
+    t.string  "d14",       null: false
+    t.string  "d15",       null: false
+    t.string  "d16",       null: false
+    t.string  "d22",       null: false
+    t.string  "d23",       null: false
+    t.string  "d24",       null: false
+    t.string  "d25",       null: false
+    t.string  "d26",       null: false
+    t.string  "d33",       null: false
+    t.string  "d34",       null: false
+    t.string  "d35",       null: false
+    t.string  "d36",       null: false
+    t.string  "d44",       null: false
+    t.string  "d45",       null: false
+    t.string  "d46",       null: false
+    t.string  "d55",       null: false
+    t.string  "d56",       null: false
+    t.string  "d66",       null: false
   end
 
   create_table "holes", force: true do |t|
-    t.integer "number"
-    t.integer "par"
-    t.integer "distance"
+    t.integer "number",   null: false
+    t.integer "par",      null: false
+    t.integer "distance", null: false
   end
 
   create_table "players", force: true do |t|
-    t.string  "last_name"
-    t.string  "first_name"
-    t.integer "overall"
+    t.string  "last_name",  null: false
+    t.string  "first_name", null: false
+    t.integer "overall",    null: false
   end
 
   create_table "shot_judges", force: true do |t|
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 20150414060702) do
   add_index "shot_judges", ["shot_id"], name: "index_shot_judges_on_shot_id"
 
   create_table "shots", force: true do |t|
-    t.integer "number"
-    t.boolean "layup",   default: false
+    t.integer "number",                  null: false
+    t.boolean "layup",   default: false, null: false
     t.integer "hole_id"
   end
 
