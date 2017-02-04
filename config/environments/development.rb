@@ -26,4 +26,9 @@ Masters::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  if ENV['TRUSTED_IP']
+    config.web_console.whitelisted_ips << ENV['TRUSTED_IP']
+    BetterErrors::Middleware.allow_ip!    ENV['TRUSTED_IP']
+  end
 end
