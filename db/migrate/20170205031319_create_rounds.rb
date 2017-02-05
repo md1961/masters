@@ -2,7 +2,7 @@ class CreateRounds < ActiveRecord::Migration
 
   def change
     create_table :rounds do |t|
-      t.references :tournament, index: true
+      t.references :tournament, index: true, foreign_key: true
       t.integer :number, null: false
     end
 

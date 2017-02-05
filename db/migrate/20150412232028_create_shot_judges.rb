@@ -6,7 +6,7 @@ class CreateShotJudges < ActiveRecord::Migration
       t.string     :lands      , default: nil
       t.string     :next_use
       t.integer    :next_adjust, default: 0
-      t.references :shot       , index: true
+      t.references :shot       , index: true, foreign_key: true
     end
   end
 end

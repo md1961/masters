@@ -11,33 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205072953) do
+ActiveRecord::Schema.define(version: 20170205100539) do
 
   create_table "clubs", force: :cascade do |t|
-    t.string  "name",      limit: 255, null: false
+    t.string  "name",      null: false
     t.integer "player_id"
-    t.string  "d11",       limit: 255, null: false
-    t.string  "d12",       limit: 255, null: false
-    t.string  "d13",       limit: 255, null: false
-    t.string  "d14",       limit: 255, null: false
-    t.string  "d15",       limit: 255, null: false
-    t.string  "d16",       limit: 255, null: false
-    t.string  "d22",       limit: 255, null: false
-    t.string  "d23",       limit: 255, null: false
-    t.string  "d24",       limit: 255, null: false
-    t.string  "d25",       limit: 255, null: false
-    t.string  "d26",       limit: 255, null: false
-    t.string  "d33",       limit: 255, null: false
-    t.string  "d34",       limit: 255, null: false
-    t.string  "d35",       limit: 255, null: false
-    t.string  "d36",       limit: 255, null: false
-    t.string  "d44",       limit: 255, null: false
-    t.string  "d45",       limit: 255, null: false
-    t.string  "d46",       limit: 255, null: false
-    t.string  "d55",       limit: 255, null: false
-    t.string  "d56",       limit: 255, null: false
-    t.string  "d66",       limit: 255, null: false
+    t.string  "d11",       null: false
+    t.string  "d12",       null: false
+    t.string  "d13",       null: false
+    t.string  "d14",       null: false
+    t.string  "d15",       null: false
+    t.string  "d16",       null: false
+    t.string  "d22",       null: false
+    t.string  "d23",       null: false
+    t.string  "d24",       null: false
+    t.string  "d25",       null: false
+    t.string  "d26",       null: false
+    t.string  "d33",       null: false
+    t.string  "d34",       null: false
+    t.string  "d35",       null: false
+    t.string  "d36",       null: false
+    t.string  "d44",       null: false
+    t.string  "d45",       null: false
+    t.string  "d46",       null: false
+    t.string  "d55",       null: false
+    t.string  "d56",       null: false
+    t.string  "d66",       null: false
   end
+
+  add_index "clubs", ["player_id"], name: "index_clubs_on_player_id"
+
+  create_table "groups", force: :cascade do |t|
+    t.integer "round_id"
+    t.integer "number",        null: false
+    t.integer "playing_at_id"
+  end
+
+  add_index "groups", ["playing_at_id"], name: "index_groups_on_playing_at_id"
+  add_index "groups", ["round_id"], name: "index_groups_on_round_id"
 
   create_table "holes", force: :cascade do |t|
     t.integer "number",   null: false
@@ -46,9 +57,9 @@ ActiveRecord::Schema.define(version: 20170205072953) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.string  "last_name",  limit: 255, null: false
-    t.string  "first_name", limit: 255, null: false
-    t.integer "overall",                null: false
+    t.string  "last_name",  null: false
+    t.string  "first_name", null: false
+    t.integer "overall",    null: false
   end
 
   create_table "playing_ats", force: :cascade do |t|
@@ -68,10 +79,10 @@ ActiveRecord::Schema.define(version: 20170205072953) do
   add_index "rounds", ["tournament_id"], name: "index_rounds_on_tournament_id"
 
   create_table "shot_judges", force: :cascade do |t|
-    t.string  "prev_result", limit: 255
-    t.string  "lands",       limit: 255
-    t.string  "next_use",    limit: 255
-    t.integer "next_adjust",             default: 0
+    t.string  "prev_result"
+    t.string  "lands"
+    t.string  "next_use"
+    t.integer "next_adjust", default: 0
     t.integer "shot_id"
   end
 

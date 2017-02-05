@@ -5,7 +5,7 @@ class CreateClubs < ActiveRecord::Migration
   def change
     create_table :clubs do |t|
       t.string     :name, null: false
-      t.references :player
+      t.references :player, index: true, foreign_key: true
       KEYS.each do |key|
         t.string :"d#{key}", null: false
       end
