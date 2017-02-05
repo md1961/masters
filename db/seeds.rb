@@ -467,6 +467,27 @@ hole18 = Hole.create!(number:18, par: 4, distance: 405)
     shot18_4.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+
+SECOND_PUTT_RESULTS = [
+  #  Lenght of
+  #  First Putt   A    B    C    D
+  %w( 1-3       GOOD GOOD GOOD GOOD),
+  %w( 4-6         1  GOOD GOOD GOOD),
+  %w( 7-9         2    1  GOOD GOOD),
+  %w(10-13        3    2    1  GOOD),
+  %w(14-17        4    3    2    1 ),
+  %w(18-21        5    4    2    1 ),
+  %w(22-25        6    4    3    2 ),
+  %w(26-30        7    5    3    2 ),
+  %w(31-35        9    6    4    2 ),
+  %w(36-40       11    8    5    3 ),
+  %w(41-45       13    9    5    3 ),
+  %w(46-50       14   10    6    3 ),
+  %w(51-55       16   12    8    5 ),
+  %w( 56+        18   14   10    5 ),
+]
+
+
 Player.destroy_all
 
 def club_attrs(name, values)
