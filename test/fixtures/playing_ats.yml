@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hole_id: 
+  seq_num: 1
+  location: 1
+
+two:
+  hole_id: 
+  seq_num: 1
+  location: 1

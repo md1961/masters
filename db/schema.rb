@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205031319) do
+ActiveRecord::Schema.define(version: 20170205072953) do
 
   create_table "clubs", force: true do |t|
     t.string  "name",      null: false
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20170205031319) do
     t.string  "first_name", null: false
     t.integer "overall",    null: false
   end
+
+  create_table "playing_ats", force: true do |t|
+    t.integer "hole_id"
+    t.integer "seq_num",              null: false
+    t.integer "location", default: 0, null: false
+  end
+
+  add_index "playing_ats", ["hole_id"], name: "index_playing_ats_on_hole_id"
 
   create_table "rounds", force: true do |t|
     t.integer  "tournament_id"
