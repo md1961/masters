@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205100539) do
+ActiveRecord::Schema.define(version: 20170205105034) do
 
   create_table "clubs", force: :cascade do |t|
     t.string  "name",      null: false
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 20170205100539) do
   end
 
   add_index "clubs", ["player_id"], name: "index_clubs_on_player_id"
+
+  create_table "groupings", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "player_id"
+    t.integer "teeing_order"
+  end
+
+  add_index "groupings", ["group_id"], name: "index_groupings_on_group_id"
+  add_index "groupings", ["player_id"], name: "index_groupings_on_player_id"
 
   create_table "groups", force: :cascade do |t|
     t.integer "round_id"

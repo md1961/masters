@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group: 
+  player_id: 
+  teeing_order: 1
+
+two:
+  group: 
+  player_id: 
+  teeing_order: 1
