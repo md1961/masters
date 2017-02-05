@@ -606,7 +606,7 @@ add_clubs(player, h_clubs)
 
 # Tournament    : year name
 # Round         : number tournament_id
+# PlayingAt     : seq_num hole_id name
 # Group         : number round_id playing_at_id
 # Grouping      : group_id player_id play_order
-# PlayingAt     : seq_num hole_id name
 # Ball          : player_id status
