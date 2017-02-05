@@ -2,8 +2,9 @@ class CreateTournaments < ActiveRecord::Migration
 
   def change
     create_table :tournaments do |t|
-      t.integer :year, null: false
-      t.string  :name, null: false, default: 'Masters'
+      t.integer :year      , null: false
+      t.string  :name      , null: false, default: 'Masters'
+      t.integer :num_rounds, null: false, default: 4
 
       t.timestamps
     end
