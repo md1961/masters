@@ -602,3 +602,11 @@ h_clubs = {
   putt:  %w(Miss-A 1-B 2-C 3-D 3 4 4 5 6 7 8 9 10 11 12 15 18 24 40 IN IN),
 }
 add_clubs(player, h_clubs)
+
+
+# Tournament    : year name
+# Round         : number tournament_id
+# Group         : number round_id playing_at_id
+# Grouping      : group_id player_id play_order
+# PlayingAt     : seq_num hole_id name
+# Ball          : player_id status
