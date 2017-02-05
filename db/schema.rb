@@ -13,30 +13,17 @@
 
 ActiveRecord::Schema.define(version: 20170205105034) do
 
+  create_table "club_results", force: :cascade do |t|
+    t.integer "club_id"
+    t.integer "dice",    null: false
+    t.string  "result",  null: false
+  end
+
+  add_index "club_results", ["club_id"], name: "index_club_results_on_club_id"
+
   create_table "clubs", force: :cascade do |t|
     t.string  "name",      null: false
     t.integer "player_id"
-    t.string  "d11",       null: false
-    t.string  "d12",       null: false
-    t.string  "d13",       null: false
-    t.string  "d14",       null: false
-    t.string  "d15",       null: false
-    t.string  "d16",       null: false
-    t.string  "d22",       null: false
-    t.string  "d23",       null: false
-    t.string  "d24",       null: false
-    t.string  "d25",       null: false
-    t.string  "d26",       null: false
-    t.string  "d33",       null: false
-    t.string  "d34",       null: false
-    t.string  "d35",       null: false
-    t.string  "d36",       null: false
-    t.string  "d44",       null: false
-    t.string  "d45",       null: false
-    t.string  "d46",       null: false
-    t.string  "d55",       null: false
-    t.string  "d56",       null: false
-    t.string  "d66",       null: false
   end
 
   add_index "clubs", ["player_id"], name: "index_clubs_on_player_id"

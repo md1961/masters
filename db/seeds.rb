@@ -503,19 +503,19 @@ SECOND_PUTT_RESULTS = [
 
 
 Player.destroy_all
+Club.destroy_all
+ClubResult.destroy_all
 
-def club_attrs(name, values)
-  keys = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map { |key| "d#{key}" }
-  attrs = Hash[keys.zip(values)]
-  attrs['name'] = name
-  attrs
-end
+DICES = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map(&:to_i)
 
 def add_clubs(player, h_clubs)
-  h_clubs.each do |name, values|
-    raise StandardError, "illeagl size #{values.size} for #{name} of #{player.last_name}, #{player.first_name}" \
-      unless values.size == 21
-    player.clubs.create!(club_attrs(name, values))
+  h_clubs.each do |name, results|
+    raise StandardError, "illeagl size #{results.size} for #{name} of #{player.last_name}, #{player.first_name}" \
+      unless results.size == 21
+    club = player.clubs.create!(name: name)
+    DICES.zip(results) do |dice, result|
+      club.club_results.create!(dice: dice, result: result)
+    end
   end
 end
 
