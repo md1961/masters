@@ -67,6 +67,7 @@ hole02 = Hole.create!(number: 2, par: 5, distance: 555)
   shot02_4 = hole02.shots.create!(number: 4, is_layup: false)
     shot02_4.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
     shot02_4.shot_judges.create!(prev_result: 'SR-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot02_4.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
     shot02_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot02_4.shot_judges.create!(prev_result: 'TROUBLE'     , lands: 'Trees'     , next_use: 'P', next_adjust: -6)
 
@@ -84,6 +85,15 @@ hole03 = Hole.create!(number: 3, par: 4, distance: 360)
     shot03_2.shot_judges.create!(prev_result: 'LC', lands: 'Near Green'  , next_use: 'P')
     shot03_2.shot_judges.create!(prev_result: 'LR', lands: 'Trees'       , next_use: 'P', next_adjust: -2)
     shot03_2.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees'  , next_use: 'P', next_adjust: -4)
+  shot03_3 = hole03.shots.create!(number: 3, is_layup: false)
+    shot03_3.shot_judges.create!(prev_result: 'ML-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot03_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
+    shot03_3.shot_judges.create!(prev_result: 'All P'       , lands: 'Near Green', next_use: 'P')
+    shot03_3.shot_judges.create!(prev_result: 'TROUBLE'     , lands: 'Trees'     , next_use: 'P', next_adjust: -6)
+  shot03_4 = hole03.shots.create!(number: 4, is_layup: false)
+    shot03_4.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
+    shot03_4.shot_judges.create!(prev_result: 'ML-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot03_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 hole04 = Hole.create!(number: 4, par: 3, distance: 205)
   shot04_1 = hole04.shots.create!(number: 1, is_layup: false)
@@ -96,6 +106,7 @@ hole04 = Hole.create!(number: 4, par: 3, distance: 205)
   shot04_3 = hole04.shots.create!(number: 3, is_layup: false)
     shot04_3.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
     shot04_3.shot_judges.create!(prev_result: 'SR-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot04_3.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
     shot04_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 hole05 = Hole.create!(number: 5, par: 4, distance: 435)
@@ -130,6 +141,11 @@ hole06 = Hole.create!(number: 6, par: 3, distance: 180)
     shot06_2.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
     shot06_2.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot06_2.shot_judges.create!(prev_result: 'All P'       , lands: 'Sand'      , next_use: 'Sd')
+  shot06_3 = hole06.shots.create!(number: 3, is_layup: false)
+    shot06_3.shot_judges.create!(prev_result: 'SC-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot06_3.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot06_3.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
+    shot06_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 hole07 = Hole.create!(number: 7, par: 4, distance: 365)
   shot07_1 = hole07.shots.create!(number: 1, is_layup: false)
@@ -145,6 +161,23 @@ hole07 = Hole.create!(number: 7, par: 4, distance: 365)
     shot07_2.shot_judges.create!(prev_result: 'LC', lands: 'Fairway', next_use: 'P')
     shot07_2.shot_judges.create!(prev_result: 'LR', lands: 'Trees'  , next_use: 'P', next_adjust: -3)
     shot07_2.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'P', next_adjust: -8)
+  shot07_3 = hole07.shots.create!(number: 3, is_layup: false)
+    shot07_3.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_3.shot_judges.create!(prev_result: 'SC-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_3.shot_judges.create!(prev_result: 'SR-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_3.shot_judges.create!(prev_result: 'LL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_3.shot_judges.create!(prev_result: 'LR-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
+    shot07_3.shot_judges.create!(prev_result: 'All P'       , lands: 'Near Green', next_use: 'P')
+    shot07_3.shot_judges.create!(prev_result: 'TROUBLE'     , lands: 'Trees'     , next_use: 'CH', next_adjust: -10)
+  shot07_4 = hole07.shots.create!(number: 4, is_layup: false)
+    shot07_4.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_4.shot_judges.create!(prev_result: 'SC-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_4.shot_judges.create!(prev_result: 'SR-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_4.shot_judges.create!(prev_result: 'LL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_4.shot_judges.create!(prev_result: 'LR-Ch'       , lands: 'Sand'      , next_use: 'Sd')
+    shot07_4.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
+    shot07_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 hole08 = Hole.create!(number: 8, par: 5, distance: 535)
   shot08_1 = hole08.shots.create!(number: 1, is_layup: false)
@@ -175,8 +208,8 @@ hole08 = Hole.create!(number: 8, par: 5, distance: 535)
     shot08_3.shot_judges.create!(prev_result: 'All P' , lands: 'Near Green', next_use: 'P')
     shot08_3.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'P', next_adjust: -6)
   shot08_4 = hole08.shots.create!(number: 4, is_layup: false)
-    shot08_4.shot_judges.create!(prev_result: 'All Ch', lands: 'Near Green', next_use: 'Ch')
-    shot08_4.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'P', next_adjust: -6)
+    shot08_4.shot_judges.create!(prev_result: 'All Ch' , lands: 'Near Green', next_use: 'Ch')
+    shot08_4.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees'     , next_use: 'P', next_adjust: -6)
 
 hole09 = Hole.create!(number: 9, par: 4, distance: 435)
   shot09_1 = hole09.shots.create!(number: 1, is_layup: false)
@@ -199,9 +232,9 @@ hole09 = Hole.create!(number: 9, par: 4, distance: 435)
     shot09_3.shot_judges.create!(prev_result: 'All P', lands: 'Near Green', next_use: 'P')
     shot09_3.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Sand', next_use: 'Sd')
   shot09_4 = hole09.shots.create!(number: 4, is_layup: false)
-    shot09_4.shot_judges.create!(prev_result: 'Sd', lands: 'Sand', next_use: 'Sd')
     shot09_4.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Sand', next_use: 'Sd')
     shot09_4.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Sand', next_use: 'Sd')
+    shot09_4.shot_judges.create!(prev_result: 'Sd'   , lands: 'Sand', next_use: 'Sd')
     shot09_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 hole10 = Hole.create!(number:10, par: 4, distance: 485)
@@ -252,6 +285,13 @@ hole11 = Hole.create!(number:11, par: 4, distance: 455)
     shot11_3.shot_judges.create!(prev_result: 'All other P', lands: 'Near Green', next_use: 'P')
     shot11_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot11_3.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Water', next_use: 'P')
+  shot11_4 = hole11.shots.create!(number: 4, is_layup: false)
+    shot11_4.shot_judges.create!(prev_result: 'Sd',    lands: 'Sand', next_use: 'Sd')
+    shot11_4.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Water', next_use: 'P')
+    shot11_4.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Water', next_use: 'P')
+    shot11_4.shot_judges.create!(prev_result: 'LC-Ch', lands: 'Sand', next_use: 'Sd')
+    shot11_4.shot_judges.create!(prev_result: 'LR-Ch', lands: 'Sand', next_use: 'Sd')
+    shot11_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 hole12 = Hole.create!(number:12, par: 3, distance: 155)
   shot12_1 = hole12.shots.create!(number: 1, is_layup: false)
@@ -433,6 +473,19 @@ hole17 = Hole.create!(number:17, par: 4, distance: 400)
     shot17_2.shot_judges.create!(prev_result: 'LC', lands: 'Fairway', next_use: 'SI')
     shot17_2.shot_judges.create!(prev_result: 'LR', lands: 'Fairway', next_use: 'SI')
     shot17_2.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Mounds', next_use: 'SI', next_adjust: -3)
+  shot17_3 = hole17.shots.create!(number: 3, is_layup: false)
+    shot17_3.shot_judges.create!(prev_result: 'SR-Ch', lands: 'Sand' , next_use: 'Sd')
+    shot17_3.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Sand' , next_use: 'Sd')
+    shot17_3.shot_judges.create!(prev_result: 'LR-Ch', lands: 'Rocks', next_use: 'Ch', next_adjust: -1)
+    shot17_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
+    shot17_3.shot_judges.create!(prev_result: 'All other P' , lands: 'Near Green', next_use: 'P')
+    shot17_3.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Sand', next_use: 'Sd')
+  shot17_4 = hole17.shots.create!(number: 4, is_layup: false)
+    shot17_4.shot_judges.create!(prev_result: 'SR-Ch', lands: 'Sand' , next_use: 'Sd')
+    shot17_4.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Sand' , next_use: 'Sd')
+    shot17_4.shot_judges.create!(prev_result: 'LR-Ch', lands: 'Rocks', next_use: 'Ch', next_adjust: -1)
+    shot17_4.shot_judges.create!(prev_result: 'Sd'   , lands: 'Sand' , next_use: 'Sd')
+    shot17_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 hole18 = Hole.create!(number:18, par: 4, distance: 405)
   shot18_1 = hole18.shots.create!(number: 1, is_layup: false)
@@ -450,27 +503,26 @@ hole18 = Hole.create!(number:18, par: 4, distance: 405)
     shot18_2.shot_judges.create!(prev_result: 'LC', lands: 'Fairway', next_use: 'SI')
     shot18_2.shot_judges.create!(prev_result: 'LR', lands: 'Trees', next_use: 'SI', next_adjust: -3)
     shot18_2.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'SI', next_adjust: -6)
-  shot18_4 = hole18.shots.create!(number: 3, is_layup: false)
-    shot18_4.shot_judges.create!(prev_result: 'SL-P', lands: 'Rough', next_use: 'P', next_adjust: -1)
-    shot18_4.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Sand', next_use: 'Sd')
-    shot18_4.shot_judges.create!(prev_result: 'MR-Ch', lands: 'Sand', next_use: 'Sd')
-    shot18_4.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
-    shot18_4.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
-    shot18_4.shot_judges.create!(prev_result: 'All other P', lands: 'Near Green', next_use: 'P')
-    shot18_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
-    shot18_4.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Sand', next_use: 'Sd')
-    shot18_4.shot_judges.create!(prev_result: 'SC', lands: 'Fairway', next_use: 'LI')
+  shot18_3 = hole18.shots.create!(number: 3, is_layup: false)
+    shot18_3.shot_judges.create!(prev_result: 'SL-P' , lands: 'Rough', next_use: 'P', next_adjust: -1)
+    shot18_3.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Sand' , next_use: 'Sd')
+    shot18_3.shot_judges.create!(prev_result: 'MR-Ch', lands: 'Sand' , next_use: 'Sd')
+    shot18_3.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
+    shot18_3.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
+    shot18_3.shot_judges.create!(prev_result: 'All other P' , lands: 'Near Green', next_use: 'P')
+    shot18_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
+    shot18_3.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Sand', next_use: 'Sd')
   shot18_4 = hole18.shots.create!(number: 4, is_layup: false)
-    shot18_4.shot_judges.create!(prev_result: 'Sd', lands: 'Sand', next_use: 'Sd')
-    shot18_4.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Sand', next_use: 'Sd')
-    shot18_4.shot_judges.create!(prev_result: 'MR-Ch', lands: 'Sand', next_use: 'Sd')
+    shot18_4.shot_judges.create!(prev_result: 'Sd'   , lands: 'Sand' , next_use: 'Sd')
+    shot18_4.shot_judges.create!(prev_result: 'SL-Ch', lands: 'Sand' , next_use: 'Sd')
+    shot18_4.shot_judges.create!(prev_result: 'MR-Ch', lands: 'Sand' , next_use: 'Sd')
     shot18_4.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
 
 SECOND_PUTT_RESULTS = [
-  #  Lenght of
+  #  Length of
   #  First Putt   A    B    C    D
   %w( 1-3       GOOD GOOD GOOD GOOD),
   %w( 4-6         1  GOOD GOOD GOOD),
@@ -487,6 +539,8 @@ SECOND_PUTT_RESULTS = [
   %w(51-55       16   12    8    5 ),
   %w( 56+        18   14   10    5 ),
 ]
+# Third putt is missed only if rolls 11.
+# Fourth putt is automatically sunk.
 
 
 Player.destroy_all
@@ -505,6 +559,11 @@ def add_clubs(player, h_clubs)
     end
   end
 end
+
+# If shot just after superlative drive land on green, rolls one dice and subtract it from distance.
+# If it becomes exactly zero, the ball goes into the cup.
+# (1) in 66 obtained unmodified: 1, 2 or 3 into the cup; 4, 5 or 6 lands 1 foot from the pin.
+#   After superlative drive: 1, 2, 3 or 4 into the cup; 5 or 6 lands 1 foot from the pin.
 
 player = Player.create!(last_name: 'Aoki', first_name: 'Isao', overall: 25)
 h_clubs = {
@@ -611,6 +670,6 @@ add_clubs(player, h_clubs)
 # Group         : number round_id playing_at_id
 # Grouping      : group_id player_id play_order
 #
-# Ball          : player_id status shot_count
+# Ball          : player_id lands next_use next_adjust shot_count
 # ScoreCard     : player_id round_id
 # Score         : score_card_id hole_id value
