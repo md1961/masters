@@ -59,12 +59,14 @@ ActiveRecord::Schema.define(version: 20170205105034) do
   end
 
   create_table "playing_ats", force: :cascade do |t|
+    t.integer "tournament_id"
     t.integer "hole_id"
-    t.integer "seq_num",              null: false
-    t.integer "location", default: 0, null: false
+    t.integer "seq_num",                   null: false
+    t.integer "location",      default: 0, null: false
   end
 
   add_index "playing_ats", ["hole_id"], name: "index_playing_ats_on_hole_id"
+  add_index "playing_ats", ["tournament_id"], name: "index_playing_ats_on_tournament_id"
 
   create_table "rounds", force: :cascade do |t|
     t.integer "tournament_id"

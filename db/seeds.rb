@@ -468,19 +468,6 @@ hole18 = Hole.create!(number:18, par: 4, distance: 405)
     shot18_4.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
-h_locations = {
-  '3' => %w(tee green),
-  '4' => %w(tee fairway green),
-  '5' => %w(tee fairway layup green),
-}
-seq_num = 1
-Hole.order(:number).each do |hole|
-  h_locations[hole.par.to_s].each do |location|
-    playing_at = PlayingAt.create!(hole: hole, seq_num: seq_num, location: location.to_sym)
-    seq_num += 1
-  end
-end
-
 
 SECOND_PUTT_RESULTS = [
   #  Lenght of
@@ -623,4 +610,7 @@ add_clubs(player, h_clubs)
 # PlayingAt     : seq_num hole_id name
 # Group         : number round_id playing_at_id
 # Grouping      : group_id player_id play_order
-# Ball          : player_id status
+#
+# Ball          : player_id status shot_count
+# ScoreCard     : player_id round_id
+# Score         : score_card_id hole_id value
