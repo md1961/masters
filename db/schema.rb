@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170205105034) do
+ActiveRecord::Schema.define(version: 20170206104605) do
+
+  create_table "balls", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "shot_id"
+    t.integer "shot_count", default: 0, null: false
+    t.string  "result"
+  end
+
+  add_index "balls", ["player_id"], name: "index_balls_on_player_id"
+  add_index "balls", ["shot_id"], name: "index_balls_on_shot_id"
 
   create_table "club_results", force: :cascade do |t|
     t.integer "club_id"

@@ -1,3 +1,4 @@
+# TODO: Maybe unnecessary.
 class PlayingAt < ActiveRecord::Base
   belongs_to :tournament
   belongs_to :hole

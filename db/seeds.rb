@@ -670,6 +670,6 @@ add_clubs(player, h_clubs)
 # Group         : number round_id playing_at_id
 # Grouping      : group_id player_id play_order
 #
-# Ball          : player_id lands next_use next_adjust shot_count
+# Ball          : player_id shod_id shot_count result
 # ScoreCard     : player_id round_id
 # Score         : score_card_id hole_id value

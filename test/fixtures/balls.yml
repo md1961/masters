@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player_id: 
+  shot_id: 
+  shot_count: 1
+  result: MyString
+
+two:
+  player_id: 
+  shot_id: 
+  shot_count: 1
+  result: MyString
