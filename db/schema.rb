@@ -70,7 +70,8 @@ ActiveRecord::Schema.define(version: 20170205105034) do
 
   create_table "rounds", force: :cascade do |t|
     t.integer "tournament_id"
-    t.integer "number",        null: false
+    t.integer "number",                        null: false
+    t.boolean "is_current",    default: false, null: false
   end
 
   add_index "rounds", ["tournament_id", "number"], name: "index_rounds_on_tournament_id_and_number", unique: true
