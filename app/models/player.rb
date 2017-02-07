@@ -4,4 +4,8 @@ class Player < ActiveRecord::Base
   has_many :groups, through: :groupings
   has_one :ball
   has_one :shot, through: :ball
+
+  def to_s
+    "#{last_name}, #{first_name}"
+  end
 end
