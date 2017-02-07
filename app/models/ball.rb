@@ -5,4 +5,8 @@ class Ball < ActiveRecord::Base
   def holed_out?
     result == 'IN'
   end
+
+  def ok?
+    result == 'OK'
+  end
 end

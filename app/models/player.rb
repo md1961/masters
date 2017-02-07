@@ -19,7 +19,7 @@ class Player < ActiveRecord::Base
 
   def swing_club
     club = \
-      if ball.result.to_i > 0
+      if ball.ok? || ball.result.to_i > 0
         clubs.find_by(name: 'putt')
       else
         shot_judge = shot.judge(ball.result)

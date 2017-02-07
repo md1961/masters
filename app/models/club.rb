@@ -20,10 +20,12 @@ class Club < ActiveRecord::Base
     result = club_results.find_by(dice: Club.two_dices).result
     if putt?
       ball_on = player.ball.result.to_i
-      if result.to_i >= ball_on
+      if player.ball.ok? || result.to_i >= ball_on
         result = 'IN'
+      elsif result =~ /[A-D]\z/
+        raise StandardError, "Second putt resolve not implemented yet."
       else
-        result = (ball_on - result.to_i).to_s
+        result = 'OK'
       end
     end
     result
