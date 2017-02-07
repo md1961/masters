@@ -8,6 +8,16 @@ class Player < ActiveRecord::Base
   def play
     return if ball.try(:holed_out?)
     create_ball!(shot: Shot.first_tee) unless ball
+    result = swing_club
+    self.shot = shot.next
+    shot_judge = shot.judge(result)
+    ball.result = result
+    ball.shot_count += 1
+    save!
+    shot_judge
+  end
+
+  def swing_club
     club = \
       if ball.result.to_i > 0
         clubs.find_by(name: 'putt')
@@ -17,12 +27,7 @@ class Player < ActiveRecord::Base
       end
     result = club.swing
     result = 'IN' if club.putt? && result.to_i >= ball.result.to_i
-    ball.result = result
-    self.shot = shot.next
-    shot_judge = shot.judge(result)
-    ball.shot_count += 1
-    save!
-    shot_judge
+    result
   end
 
   def to_s

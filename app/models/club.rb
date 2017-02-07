@@ -17,7 +17,16 @@ class Club < ActiveRecord::Base
   end
 
   def swing
-    club_results.find_by(dice: Club.two_dices).result
+    result = club_results.find_by(dice: Club.two_dices).result
+    if putt?
+      ball_on = player.ball.result.to_i
+      if result.to_i >= ball_on
+        result = 'IN'
+      else
+        result = (ball_on - result.to_i).to_s
+      end
+    end
+    result
   end
 
   def to_s
