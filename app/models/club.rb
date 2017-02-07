@@ -12,6 +12,10 @@ class Club < ActiveRecord::Base
   end
 
 
+  def putt?
+    name == 'putt'
+  end
+
   def swing
     club_results.find_by(dice: Club.two_dices).result
   end

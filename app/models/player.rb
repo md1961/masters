@@ -6,10 +6,17 @@ class Player < ActiveRecord::Base
   has_one :shot, through: :ball
 
   def play
+    return if ball.try(:holed_out?)
     create_ball!(shot: Shot.first_tee) unless ball
-    shot_judge = shot.judge(ball.result)
-    club = clubs.find_by(name: shot_judge.next_club.downcase)
+    club = \
+      if ball.result.to_i > 0
+        clubs.find_by(name: 'putt')
+      else
+        shot_judge = shot.judge(ball.result)
+        clubs.find_by(name: shot_judge.next_club.downcase)
+      end
     result = club.swing
+    result = 'IN' if club.putt? && result.to_i >= ball.result.to_i
     ball.result = result
     self.shot = shot.next
     shot_judge = shot.judge(result)

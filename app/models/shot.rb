@@ -18,6 +18,6 @@ class Shot < ActiveRecord::Base
   end
 
   def next
-    Shot.find_by(hole: hole, number: number + 1, is_layup: false)
+    Shot.find_by(hole: hole, number: number + 1, is_layup: false) || self
   end
 end
