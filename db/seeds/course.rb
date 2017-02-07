@@ -331,6 +331,7 @@ hole13 = Hole.create!(number:13, par: 5, distance: 465)
     shot13_3l.shot_judges.create!(prev_result: 'All other P', lands: 'Fairway', next_use: 'SI')
     shot13_3l.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'Save', next_adjust: -6)
   shot13_3 = hole13.shots.create!(number: 3, is_layup: false)
+    # TODO: First one with '1-30' may be wrong.
     shot13_3.shot_judges.create!(prev_result: '1-30', lands: 'Near Green', next_use: 'P', next_adjust: +1)
     shot13_3.shot_judges.create!(prev_result: 'SC-P', lands: 'Water', next_use: 'P')
     shot13_3.shot_judges.create!(prev_result: 'SL-P', lands: 'Water', next_use: 'P')
