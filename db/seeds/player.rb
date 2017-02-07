@@ -28,8 +28,7 @@ DICES = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map(&
 
 def add_clubs(player, h_clubs)
   h_clubs.each do |name, results|
-    raise StandardError, "illeagl size #{results.size} for #{name} of #{player.last_name}, #{player.first_name}" \
-      unless results.size == 21
+    raise StandardError, "illeagl size #{results.size} for #{name} of #{player}" unless results.size == DICES.size
     club = player.clubs.create!(name: name)
     DICES.zip(results) do |dice, result|
       club.club_results.create!(dice: dice, result: result)
