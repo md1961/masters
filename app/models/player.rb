@@ -18,14 +18,16 @@ class Player < ActiveRecord::Base
   end
 
   def swing_club
+    result_adjust = 0
     club = \
       if ball.ok? || ball.result.to_i > 0
         clubs.find_by(name: 'putt')
       else
         shot_judge = shot.judge(ball.result)
+        result_adjust = shot_judge.next_adjust
         clubs.find_by(name: shot_judge.next_club.downcase)
       end
-    result = club.swing
+    result = club.swing(result_adjust)
     result = 'IN' if club.putt? && result.to_i >= ball.result.to_i
     result
   end
