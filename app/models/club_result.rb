@@ -15,9 +15,11 @@ class ClubResult < ActiveRecord::Base
     putt:  /\A(:?Miss-A|\d{1,2}(:?-[BCD])?|IN)\z/,
   }.stringify_keys.freeze
 
+  INVALID_RESULTS = %w(MC-Ch)
+
   def result_is_valid
     re_result = H_RE_RESULT[club.name]
-    if re_result && result !~ re_result
+    if re_result && (result !~ re_result || INVALID_RESULTS.include?(result))
       errors.add(:result, "'#{result}' is invalid for #{club} of #{club.player}")
     end
   end
