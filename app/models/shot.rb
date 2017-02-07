@@ -4,8 +4,9 @@ class Shot < ActiveRecord::Base
   has_many :balls
   has_many :players, through: :balls
 
-  def self.first_tee
-    find_by(hole: Hole.find_by(number: 1), number: 1)
+  # TODO: Remove argument hole_number.
+  def self.first_tee(hole_number = 1)
+    find_by(hole: Hole.find_by(number: hole_number), number: 1)
   end
 
   def judge(result)
@@ -25,6 +26,7 @@ class Shot < ActiveRecord::Base
   end
 
   def next
+    # TODO: Choice whether layup or not on par 5's.
     Shot.find_by(hole: hole, number: number + 1, is_layup: false) || self
   end
 end

@@ -5,9 +5,10 @@ class Player < ActiveRecord::Base
   has_one :ball
   has_one :shot, through: :ball
 
-  def play
+  # TODO: Remove argument hole_number.
+  def play(hole_number = 1)
     return if ball.try(:holed_out?)
-    create_ball!(shot: Shot.first_tee) unless ball
+    create_ball!(shot: Shot.first_tee(hole_number)) unless ball
     result = swing_club
     self.shot = shot.next
     shot_judge = shot.judge(result)
