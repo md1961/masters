@@ -9,4 +9,12 @@ class Ball < ActiveRecord::Base
   def ok?
     result == 'OK'
   end
+
+  def second_putt?
+    result =~ /\A\d{1,2}s\z/
+  end
+
+  def third_putt?
+    result =~ /\A1t\z/
+  end
 end
