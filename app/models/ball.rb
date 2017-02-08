@@ -32,6 +32,7 @@ class Ball < ActiveRecord::Base
   # TODO: Handle layup results.
   def accept(result)
     self.next_adjust = 0
+    self.is_layup = false
     if result == 'OK'
       self.result      = 'IN'
       self.lands       = 'Green'
