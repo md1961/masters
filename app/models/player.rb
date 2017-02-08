@@ -9,8 +9,8 @@ class Player < ActiveRecord::Base
   def play(hole_number = 1)
     return if ball.try(:holed_out?)
     create_ball!(shot: Shot.first_tee(hole_number)) unless ball
-    result = swing_club
-    self.shot = shot.next
+    result, is_layup = swing_club
+    self.shot = shot.next(is_layup)
     shot_judge = shot.judge(result)
     ball.result = result
     ball.shot_count += 1
@@ -19,18 +19,18 @@ class Player < ActiveRecord::Base
   end
 
   def swing_club
-    result_adjust = 0
+    shot_judgement = ShotJudgement.new
     club = \
       if ball.ok? || ball.result.to_i > 0
         clubs.find_by(name: 'putt')
       else
         shot_judge = shot.judge(ball.result)
-        result_adjust = shot_judge.next_adjust
-        clubs.find_by(name: shot_judge.next_club.downcase)
+        shot_judgement = shot_judge.determine
+        clubs.find_by(name: shot_judgement.club_name.downcase)
       end
-    result = club.swing(result_adjust)
+    result = club.swing(shot_judgement.dice_adjust)
     result = 'IN' if club.putt? && result.to_i >= ball.result.to_i
-    result
+    [result, shot_judgement.is_layup]
   end
 
   def to_s
