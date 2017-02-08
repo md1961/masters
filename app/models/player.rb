@@ -26,6 +26,7 @@ class Player < ActiveRecord::Base
       else
         shot_judge = shot.judge(ball.result)
         shot_judgement = shot_judge.determine
+        ball.shot_count += shot_judgement.shot_count_addend
         clubs.find_by(name: shot_judgement.club_name.downcase)
       end
     result = club.swing(shot_judgement.dice_adjust)

@@ -29,6 +29,9 @@ class ShotJudge < ActiveRecord::Base
     if next_use =~ /\A([A-Z]{2}) Layup\z/
       judgement.club_name = Regexp.last_match(1)
       judgement.is_layup = true
+    elsif next_use =~ /\ASave, ([A-Z]{2})\z/
+      judgement.club_name = Regexp.last_match(1)
+      judgement.shot_count_addend = 1
     else
       judgement.club_name = next_use
     end
