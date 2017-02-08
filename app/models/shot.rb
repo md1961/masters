@@ -10,8 +10,19 @@ class Shot < ActiveRecord::Base
   end
 
   def judge(result)
+    shot_judges.find_by(prev_result: look_up_in_prev_result(result))
+  end
+
+  def next(is_layup)
+    # TODO: Choice whether layup or not on par 5's.
+    Shot.find_by(hole: hole, number: number + 1, is_layup: is_layup) || self
+  end
+
+  private
+
     # TODO: Tons of more to do.
-    if result
+    def look_up_in_prev_result(result)
+      return result unless result
       result = result.sub(/\*\z/, '')
       prev_results = shot_judges.pluck(:prev_result)
       if !prev_results.include?(result) && result =~ /\A[SML][LRC]-(Ch|P)\z/
@@ -20,13 +31,6 @@ class Shot < ActiveRecord::Base
         result = prev_results.find { |r| r =~ re_result }
         raise StandardError, "Cannot find result matching #{re_result} in #{prev_results.inspect}" unless result
       end
+      result
     end
-
-    shot_judges.find_by(prev_result: result)
-  end
-
-  def next(is_layup)
-    # TODO: Choice whether layup or not on par 5's.
-    Shot.find_by(hole: hole, number: number + 1, is_layup: is_layup) || self
-  end
 end

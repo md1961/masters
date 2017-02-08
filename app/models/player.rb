@@ -7,39 +7,36 @@ class Player < ActiveRecord::Base
 
   # TODO: Remove argument hole_number.
   def play(hole_number = 1)
-    return if ball.try(:holed_out?)
-    create_ball!(shot: Shot.first_tee(hole_number)) unless ball
-    result, is_layup = swing_club
-    self.shot = shot.next(is_layup)
-    shot_judge = shot.judge(result)
-    ball.result = result
+    if ball.try(:holed_out?)
+      hole_number = shot.hole.number + 1
+      ball.destroy
+      reload
+    end
+    unless ball
+      _shot = Shot.first_tee(hole_number)
+      create_ball!(shot: _shot)
+    end
+    result = swing_club
+    self.shot = shot.next(ball.is_layup)
+    ball.accept(result)
     ball.shot_count += 1
     save!
-    shot_judge
+    ball
   end
 
   def swing_club
-    shot_judgement = ShotJudgement.new
-    club = \
-      if ball.ok? || ball.result.to_i > 0
-        clubs.find_by(name: 'putt')
-      else
-        shot_judge = shot.judge(ball.result)
-        shot_judgement = shot_judge.determine
-        ball.shot_count += shot_judgement.shot_count_addend
-        clubs.find_by(name: shot_judgement.club_name.downcase)
-      end
-    result = club.swing(shot_judgement.dice_adjust)
+    club = clubs.find_by(name: ball.next_use.downcase)
+    result = club.swing(ball.next_adjust)
     if club.putt? && result.to_i >= ball.result.to_i
       result = 'IN'
-    elsif result == '(1)' && shot_judgement.dice_adjust == 0
+    elsif result == '(1)' && ball.next_adjust == 0
       max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
       result = Dice.roll <= max_roll_for_in ? 'IN' : '1'
     elsif ball.superlative? && result.to_i > 0
       result = (result.to_i - Dice.roll).abs
       result = 'IN' if result.zero?
     end
-    [result, shot_judgement.is_layup]
+    result
   end
 
   def to_s
