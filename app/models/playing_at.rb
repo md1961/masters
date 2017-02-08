@@ -1,4 +1,4 @@
-# TODO: Maybe unnecessary.
+# TODO: The class is probably unnecessary.
 class PlayingAt < ActiveRecord::Base
   belongs_to :tournament
   belongs_to :hole
