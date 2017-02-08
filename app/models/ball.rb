@@ -29,20 +29,15 @@ class Ball < ActiveRecord::Base
     result =~ /\*\z/
   end
 
-  # TODO: Handle layup results.
-  def accept(result)
+  def accept(club_result)
     self.next_adjust = 0
     self.is_layup = false
-    if result == 'OK'
-      self.result      = 'IN'
-      self.lands       = 'Green'
-      self.next_use    = 'Putt'
-    elsif !shot.is_layup && (result == 'IN' || result.to_i > 0)
-      self.result      = result
+    if !shot.is_layup && (%w(IN OK).include?(club_result) || club_result.to_i > 0)
+      self.result      = club_result
       self.lands       = 'Green'
       self.next_use    = 'Putt'
     else
-      shot_judge = shot.judge(result)
+      shot_judge = shot.judge(club_result)
       self.result      = shot_judge.prev_result
       self.lands       = shot_judge.lands
       self.next_use    = shot_judge.next_use
