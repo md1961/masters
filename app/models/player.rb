@@ -6,7 +6,7 @@ class Player < ActiveRecord::Base
   has_one :shot, through: :ball
 
   # TODO: Remove argument hole_number.
-  def play(hole_number = 1)
+  def play(hole_number: 1)
     if ball.try(:holed_out?)
       hole_number = shot.hole.number + 1
       ball.destroy
