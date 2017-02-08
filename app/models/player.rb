@@ -29,7 +29,15 @@ class Player < ActiveRecord::Base
         clubs.find_by(name: shot_judgement.club_name.downcase)
       end
     result = club.swing(shot_judgement.dice_adjust)
-    result = 'IN' if club.putt? && result.to_i >= ball.result.to_i
+    if club.putt? && result.to_i >= ball.result.to_i
+      result = 'IN'
+    elsif result == '(1)' && shot_judgement.dice_adjust == 0
+      max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
+      result = Dice.roll <= max_roll_for_in ? 'IN' : '1'
+    elsif ball.superlative? && result.to_i > 0
+      result = (result.to_i - Dice.roll).abs
+      result = 'IN' if result.zero?
+    end
     [result, shot_judgement.is_layup]
   end
 

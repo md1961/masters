@@ -17,4 +17,8 @@ class Ball < ActiveRecord::Base
   def third_putt?
     result =~ /\A1t\z/
   end
+
+  def superlative?
+    result =~ /\*\z/
+  end
 end
