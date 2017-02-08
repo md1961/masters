@@ -6,6 +6,10 @@ class CreateBalls < ActiveRecord::Migration
       t.references :shot  , index: true, foreign_key: true
       t.integer :shot_count, null: false, default: 0
       t.string  :result
+      t.string  :lands
+      t.string  :next_use
+      t.boolean :is_layup   , default: false
+      t.integer :next_adjust, default: 0
     end
   end
 end

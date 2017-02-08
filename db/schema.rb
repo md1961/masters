@@ -16,8 +16,12 @@ ActiveRecord::Schema.define(version: 20170206104605) do
   create_table "balls", force: :cascade do |t|
     t.integer "player_id"
     t.integer "shot_id"
-    t.integer "shot_count", default: 0, null: false
+    t.integer "shot_count",  default: 0,     null: false
     t.string  "result"
+    t.string  "lands"
+    t.string  "next_use"
+    t.boolean "is_layup",    default: false
+    t.integer "next_adjust", default: 0
   end
 
   add_index "balls", ["player_id"], name: "index_balls_on_player_id"
