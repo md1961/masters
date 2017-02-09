@@ -7,7 +7,9 @@ class Club < ActiveRecord::Base
   end
 
   def swing(dice_adjust = 0)
-    result = club_results.find_by(dice: dice_adjusted(dice_adjust)).result
+    dice = Dice.two_rolls
+    dice = dice_adjusted(dice, dice_adjust) unless dice_adjust.zero?
+    result = club_results.find_by(dice: dice).result
     if putt?
       ball_on = player.ball.result.to_i
       if player.ball.ok? || player.ball.third_putt? || result.to_i >= ball_on
@@ -30,9 +32,9 @@ class Club < ActiveRecord::Base
 
   private
 
-    def dice_adjusted(adjust)
+    def dice_adjusted(dice, adjust)
+      binding.pry
       @@dices ||= club_results.pluck(:dice).sort
-      dice = Dice.two_rolls
       index = @@dices.index(dice)
       raise StandardError, "No dice '#{dice}' in ClubResult of #{club} of #{player}" unless index
       index += adjust
