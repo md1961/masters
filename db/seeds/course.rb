@@ -293,8 +293,8 @@ hole12 = Hole.create!(number:12, par: 3, distance: 155)
     shot12_2.shot_judges.create!(prev_result: 'SR-P', lands: 'Water', next_use: 'P')
     shot12_2.shot_judges.create!(prev_result: 'SL-Ch', lands: "{'1-3' => 'Water', '4-6' => 'Near Green'}", next_use: 'Ch')
     shot12_2.shot_judges.create!(prev_result: 'SC-Ch', lands: 'Sand', next_use: 'Sd')
-    shot12_2.shot_judges.create!(prev_result: 'SR-Ch', lands: "{'1-2' => 'Water', '3-6' => 'Penalty'}",
-                                                       next_use: 'P', next_adjust: "{'1-2' => -5, '3-6' => 0}")
+    shot12_2.shot_judges.create!(prev_result: 'SR-Ch', lands: "{'1-2' => 'Bank', '3-6' => 'Water'}",
+                                                       next_use: "{'1-2' => 'P (-8), '3-6' => 'P'}", next_adjust: 0)
     shot12_2.shot_judges.create!(prev_result: 'All other P', lands: 'Near Green', next_use: 'P')
     shot12_2.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot12_2.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'Ch', next_adjust: -6)
@@ -334,12 +334,12 @@ hole13 = Hole.create!(number:13, par: 5, distance: 465)
     shot13_3.shot_judges.create!(prev_result: 'SC-P', lands: 'Water', next_use: 'P')
     shot13_3.shot_judges.create!(prev_result: 'SL-P', lands: 'Water', next_use: 'P')
     shot13_3.shot_judges.create!(prev_result: 'SR-P', lands: 'Water', next_use: 'P')
-    shot13_3.shot_judges.create!(prev_result: 'SC-Ch', lands: "{'1-2' => 'Water', '3-6' => 'Penalty'}",
-                                                       next_use: 'P', next_adjust: "{'1-2' => -5, '3-6' => 0}")
-    shot13_3.shot_judges.create!(prev_result: 'SR-Ch', lands: "{'1-2' => 'Water', '3-6' => 'Penalty'}",
-                                                       next_use: 'P', next_adjust: "{'1-2' => -5, '3-6' => 0}")
-    shot13_3.shot_judges.create!(prev_result: 'SL-Ch', lands: "{'1-2' => 'Water', '3-6' => 'Penalty'}",
-                                                       next_use: 'P', next_adjust: "{'1-2' => -5, '3-6' => 0}")
+    shot13_3.shot_judges.create!(prev_result: 'SC-Ch', lands: "{'1-2' => 'Bank', '3-6' => 'Water'}",
+                                                       next_use: "{'1-2' => 'P (-8), '3-6' => 'P'}", next_adjust: 0)
+    shot13_3.shot_judges.create!(prev_result: 'SR-Ch', lands: "{'1-2' => 'Bank', '3-6' => 'Water'}",
+                                                       next_use: "{'1-2' => 'P (-8), '3-6' => 'P'}", next_adjust: 0)
+    shot13_3.shot_judges.create!(prev_result: 'SL-Ch', lands: "{'1-2' => 'Bank', '3-6' => 'Water'}",
+                                                       next_use: "{'1-2' => 'P (-8), '3-6' => 'P'}", next_adjust: 0)
     shot13_3.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Sand', next_use: 'Sd')
     shot13_3.shot_judges.create!(prev_result: 'LR-Ch', lands: 'Sand', next_use: 'Sd')
     shot13_3.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Sand', next_use: 'Sd')
