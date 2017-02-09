@@ -4,11 +4,6 @@ class Ball < ActiveRecord::Base
 
   after_create :set_next_use_if_nil
 
-  def set_next_use_if_nil
-    shot_judges = shot.shot_judges
-    self.next_use = shot_judges.first.next_use if next_use.nil? && shot_judges.size == 1
-  end
-
   def holed_out?
     result == 'IN'
   end
@@ -45,6 +40,7 @@ class Ball < ActiveRecord::Base
       self.lands       = shot_judge.lands
       self.next_use    = shot_judge.next_use
       self.next_adjust = shot_judge.next_adjust
+      decide_optional_lands
       parse_next_use
     end
   end
@@ -57,7 +53,20 @@ class Ball < ActiveRecord::Base
 
   private
 
-    # FIXME: Handle optional results
+  # TODO: Find out what 'lands' on 'Penalty' means.
+
+    RE_STRINGIFIED_HASH = /\A{.*}\z/
+
+    def decide_optional_lands
+      return unless lands =~ RE_STRINGIFIED_HASH
+      r = rand(1..6)
+      self.lands    = eval(lands   ).find { |k, _v| r.between?(*(k.split('-').map(&:to_i))) }.last
+      self.shot_count += 1 if %w(Water Penalty).include?(lands)
+      return unless next_use =~ RE_STRINGIFIED_HASH
+      self.next_use = eval(next_use).find { |k, _v| r.between?(*(k.split('-').map(&:to_i))) }.last
+    end
+
+    # FIXME: Handle optional next_use
     # [ 0] "FW Layup",
     # [ 1] "LI Layup",
     # [ 2] "MI Layup",
@@ -90,5 +99,10 @@ class Ball < ActiveRecord::Base
         self.next_use = Regexp.last_match(1)
         self.shot_count += 1
       end
+    end
+
+    def set_next_use_if_nil
+      shot_judges = shot.shot_judges
+      self.next_use = shot_judges.first.next_use if next_use.nil? && shot_judges.size == 1
     end
 end

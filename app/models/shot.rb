@@ -14,13 +14,11 @@ class Shot < ActiveRecord::Base
   end
 
   def next(is_layup)
-    # TODO: Choice whether layup or not on par 5's.
     Shot.find_by(hole: hole, number: number + 1, is_layup: is_layup) || self
   end
 
   private
 
-    # TODO: Tons of more to do.
     def look_up_in_prev_result(result)
       return result unless result
       value = result.sub(/\*\z/, '')
