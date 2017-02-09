@@ -36,9 +36,9 @@ class Player < ActiveRecord::Base
     elsif result == '(1)' && ball.next_adjust == 0
       max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
       result = Dice.roll <= max_roll_for_in ? 'IN' : '1'
-    elsif ball.superlative? && result.to_i > 0
-      result = (result.to_i - Dice.roll).abs
-      result = 'IN' if result.zero?
+    elsif ball.superlative? && result.to_i > 0 && !shot.is_layup
+      result = (result.to_i - Dice.roll).abs.to_s
+      result = 'IN' if result == '0'
     end
     @info = club.info
     result
