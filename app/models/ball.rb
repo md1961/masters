@@ -29,9 +29,12 @@ class Ball < ActiveRecord::Base
     result =~ /\*\z/
   end
 
+  def next_use_optional?
+    next_use =~ / or /
+  end
+
   def accept(club_result)
     self.next_adjust = 0
-    self.is_layup = false
     if !shot.is_layup && (%w(IN OK).include?(club_result) || club_result.to_i > 0)
       self.result      = club_result
       self.lands       = 'Green'
@@ -46,6 +49,12 @@ class Ball < ActiveRecord::Base
     end
   end
 
+  def choose_next_use(index)
+    return unless next_use_optional?
+    self.next_use = next_use.split(' or ')[index]
+    parse_next_use
+  end
+
   private
 
     # FIXME: Handle optional results
@@ -58,19 +67,22 @@ class Ball < ActiveRecord::Base
     # [ 6] "SI Layup or FW",
     # [ 7] "SI Layup or FW (-1)",
     # [ 8] "SI Layup or LI (-2)",
-    # [ 9] "Save",
-    # [10] "Save, FW",
-    # [11] "Save, LI",
-    # [12] "{'1-2' => 'P', '3-6' => 'Ch'}",
-    # [13] "{'1-2' => 'Save, SI', '3-4' => 'Sand, P', '5-6' => 'LI'}",
-    # [14] "{'1-3' => 'MI', '4-6': SI'}",
-    # [15] "{'1-3' => 'P', '4-6' => 'Ch'}",
-    # [16] "{'1-3' => 'SI', '4-6' => 'Ch'}",
-    # [17] "{'1-3' => 'Save, LI Layup', '4-6' => 'Save, FW'}",
-    # [18] "{'1-3' => 'Save, LI', '4-5' => 'Save, MI', '6' -> 'Save, SI'}",
-    # [19] "{'1-3' => 'Save, LI', '4-6' => 'Save, LI Layup'}"
+    # [ 9] "Save, FW",
+    # [10] "Save, LI",
+    # [11] "{'1-2' => 'P', '3-6' => 'Ch'}",
+    # [12] "{'1-2' => 'Save, SI', '3-4' => 'Sand, P', '5-6' => 'LI'}",
+    # [13] "{'1-3' => 'MI', '4-6': SI'}",
+    # [14] "{'1-3' => 'P', '4-6' => 'Ch'}",
+    # [15] "{'1-3' => 'SI', '4-6' => 'Ch'}",
+    # [16] "{'1-3' => 'Save, LI Layup', '4-6' => 'Save, FW'}",
+    # [17] "{'1-3' => 'Save, LI', '4-5' => 'Save, MI', '6' -> 'Save, SI'}",
+    # [18] "{'1-3' => 'Save, LI', '4-6' => 'Save, LI Layup'}"
 
     def parse_next_use
+      self.is_layup = false
+      if next_use.sub!(/ \(([+-]?\d{1,2})\)\z/, '')
+        self.next_adjust += Regexp.last_match(1).to_i
+      end
       if next_use =~ /\A([A-Z]{2}) Layup\z/
         self.next_use = Regexp.last_match(1)
         self.is_layup = true
