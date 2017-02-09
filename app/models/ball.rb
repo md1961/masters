@@ -40,7 +40,7 @@ class Ball < ActiveRecord::Base
       self.next_use    = 'Putt'
     else
       shot_judge = shot.judge(club_result)
-      self.result      = shot_judge.prev_result
+      self.result      = club_result
       self.lands       = shot_judge.lands
       self.next_use    = shot_judge.next_use
       self.next_adjust = shot_judge.next_adjust
