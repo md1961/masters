@@ -5,6 +5,8 @@ class Player < ActiveRecord::Base
   has_one :ball
   has_one :shot, through: :ball
 
+  attr_accessor :info
+
   # TODO: Remove argument hole_number.
   def play(hole_number: 1, index_option: nil)
     if ball.try(:next_use_optional?)

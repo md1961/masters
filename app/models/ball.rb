@@ -2,6 +2,8 @@ class Ball < ActiveRecord::Base
   belongs_to :player
   belongs_to :shot
 
+  attr_reader :info
+
   after_create :set_next_use_if_nil
 
   def hole
@@ -33,6 +35,7 @@ class Ball < ActiveRecord::Base
   end
 
   def accept(club_result)
+    @info = ''
     self.next_adjust = 0
     if !shot.is_layup && (%w(IN OK).include?(club_result) || club_result.to_i > 0)
       self.result      = club_result
@@ -46,7 +49,9 @@ class Ball < ActiveRecord::Base
       self.next_adjust = shot_judge.next_adjust
       decide_optional_lands
       parse_next_use
+      self.shot_count += 1 if lands == 'Water'
     end
+    player.info += (player.info.blank? ? '' : '; ') + @info if @info.present?
   end
 
   def choose_next_use(index)
@@ -63,17 +68,28 @@ class Ball < ActiveRecord::Base
 
   private
 
-  # TODO: Find out what 'lands' on 'Penalty' means.
-
     RE_STRINGIFIED_HASH = /\A{.*}\z/
 
     def decide_optional_lands
       return unless lands =~ RE_STRINGIFIED_HASH
-      r = rand(1..6)
-      self.lands    = eval(lands   ).find { |k, _v| r.between?(*(k.split('-').map(&:to_i))) }.last
-      self.shot_count += 1 if %w(Water Penalty).include?(lands)
+      dice = Dice.roll
+      lands_orig = lands
+      self.lands    = look_up_optional_result(eval(lands   ), dice)
+      @info = "'#{lands}' on dice '#{dice}' from #{lands_orig}"
       return unless next_use =~ RE_STRINGIFIED_HASH
-      self.next_use = eval(next_use).find { |k, _v| r.between?(*(k.split('-').map(&:to_i))) }.last
+      decide_optional_next_use(dice)
+    end
+
+    def decide_optional_next_use(dice = nil)
+      dice = Dice.roll unless dice
+      next_use_orig = next_use
+      self.next_use = look_up_optional_result(eval(next_use), dice)
+      @info = '' unless @info
+      @info += (@info.present? ? ', ' : '') + "'#{next_use}' on dice '#{dice}' from #{next_use_orig}"
+    end
+
+    def look_up_optional_result(hash, num)
+      hash.find { |k, _v| num.between?(*(k.split('-').map(&:to_i))) }[1]
     end
 
     # FIXME: Handle optional next_use
@@ -99,6 +115,9 @@ class Ball < ActiveRecord::Base
 
     def parse_next_use
       self.is_layup = false
+      if next_use =~ RE_STRINGIFIED_HASH
+        decide_optional_next_use
+      end
       if next_use.sub!(/ \(([+-]?\d{1,2})\)\z/, '')
         self.next_adjust += Regexp.last_match(1).to_i
       end
@@ -111,8 +130,12 @@ class Ball < ActiveRecord::Base
       end
     end
 
+    # FIXME: Implement round-wise choice for tee shot on No.12
+
     def set_next_use_if_nil
       shot_judges = shot.shot_judges
       self.next_use = shot_judges.first.next_use if next_use.nil? && shot_judges.size == 1
+
+      decide_optional_next_use if next_use =~ RE_STRINGIFIED_HASH
     end
 end
