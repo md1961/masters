@@ -4,6 +4,10 @@ class Ball < ActiveRecord::Base
 
   after_create :set_next_use_if_nil
 
+  def hole
+    shot.try(:hole)
+  end
+
   def holed_out?
     result == 'IN'
   end
@@ -49,6 +53,12 @@ class Ball < ActiveRecord::Base
     return unless next_use_optional?
     self.next_use = next_use.split(' or ')[index]
     parse_next_use
+  end
+
+  def to_s
+    #"#{player.last_name} on " \
+    "#{hole}: #{shot} : stroke ##{shot_count} : '#{result}' on #{lands} : " \
+      "Next: '#{next_use}', layup=#{is_layup}, (#{next_adjust > 0 ? '+' : ''}#{next_adjust})"
   end
 
   private

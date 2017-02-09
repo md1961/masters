@@ -17,6 +17,10 @@ class Shot < ActiveRecord::Base
     Shot.find_by(hole: hole, number: number + 1, is_layup: is_layup) || self
   end
 
+  def to_s
+    "shot ##{number}(#{is_layup ? 'Layup' : 'No Layup'})"
+  end
+
   private
 
     def look_up_in_prev_result(result)
