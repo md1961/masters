@@ -2,13 +2,19 @@ class Club < ActiveRecord::Base
   has_many :club_results
   belongs_to :player
 
+  attr_reader :info
+
   def putt?
     name == 'putt'
   end
 
   def swing(dice_adjust = 0)
     dice = Dice.two_rolls
-    dice = dice_adjusted(dice, dice_adjust) unless dice_adjust.zero?
+    @info = "'#{dice}'"
+    unless dice_adjust.zero?
+      dice = dice_adjusted(dice, dice_adjust)
+      @info = "'#{dice}'(#{format("%+d", dice_adjust)} of #{@info})"
+    end
     result = club_results.find_by(dice: dice).result
     if putt?
       ball_on = player.ball.result.to_i
@@ -23,11 +29,12 @@ class Club < ActiveRecord::Base
         result = 'OK'
       end
     end
+    @info = "'#{result}' by #{self} on dice #{@info}"
     result
   end
 
   def to_s
-    name
+    name =~ /[wi]\z/ ? name.upcase : name.capitalize
   end
 
   private

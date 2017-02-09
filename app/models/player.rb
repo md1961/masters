@@ -25,7 +25,7 @@ class Player < ActiveRecord::Base
     ball.accept(club_result)
     ball.shot_count += 1
     save!
-    ball.to_s
+    ball.to_s + "\n#{@info}"
   end
 
   def swing_club
@@ -40,6 +40,7 @@ class Player < ActiveRecord::Base
       result = (result.to_i - Dice.roll).abs
       result = 'IN' if result.zero?
     end
+    @info = club.info
     result
   end
 
