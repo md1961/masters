@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20170206104605) do
 
+  create_table "areas", force: :cascade do |t|
+    t.integer "round_id"
+    t.integer "seq_num",              null: false
+    t.integer "name",     default: 0, null: false
+  end
+
+  add_index "areas", ["round_id"], name: "index_areas_on_round_id"
+
   create_table "balls", force: :cascade do |t|
     t.integer "player_id"
     t.integer "shot_id"
@@ -71,16 +79,6 @@ ActiveRecord::Schema.define(version: 20170206104605) do
     t.string  "first_name", null: false
     t.integer "overall",    null: false
   end
-
-  create_table "playing_ats", force: :cascade do |t|
-    t.integer "tournament_id"
-    t.integer "hole_id"
-    t.integer "seq_num",                   null: false
-    t.integer "location",      default: 0, null: false
-  end
-
-  add_index "playing_ats", ["hole_id"], name: "index_playing_ats_on_hole_id"
-  add_index "playing_ats", ["tournament_id"], name: "index_playing_ats_on_tournament_id"
 
   create_table "rounds", force: :cascade do |t|
     t.integer "tournament_id"

@@ -1,5 +1,6 @@
 class Shot < ActiveRecord::Base
   belongs_to :hole
+  belongs_to :area
   has_many :shot_judges
   has_many :balls
   has_many :players, through: :balls
