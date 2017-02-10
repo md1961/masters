@@ -1,5 +1,6 @@
 class Area < ActiveRecord::Base
   belongs_to :round
+  has_one :group
   has_many :shots
 
   enum name: {tee: 0, fairway: 1, layup: 2, green: 3}
