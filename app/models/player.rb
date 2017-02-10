@@ -34,16 +34,20 @@ class Player < ActiveRecord::Base
   def swing_club
     club = clubs.find_by(name: ball.next_use.downcase)
     result = club.swing(ball.next_adjust)
+    @info = club.info
     if club.putt? && result.to_i >= ball.result.to_i
       result = 'IN'
     elsif result == '(1)' && ball.next_adjust == 0
       max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
-      result = Dice.roll <= max_roll_for_in ? 'IN' : '1'
+      dice = Dice.roll
+      result = dice <= max_roll_for_in ? 'IN' : '1'
+      @info += ", '#{result}' from dice '#{dice}'"
     elsif ball.superlative? && result.to_i > 0 && !shot.is_layup
-      result = (result.to_i - Dice.roll).abs.to_s
+      dice = Dice.roll
+      result = (result.to_i - dice).abs.to_s
       result = 'IN' if result == '0'
+      @info += ", '#{result}' from dice '#{dice}' after superlative"
     end
-    @info = club.info
     result
   end
 

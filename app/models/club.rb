@@ -16,7 +16,7 @@ class Club < ActiveRecord::Base
       dice = dice_adjusted(dice, dice_adjust)
       @info = "'#{dice}'(#{format("%+d", dice_adjust)} of #{@info})"
     end
-    raw_result = club_results.find_by(dice: dice).result unless player.ball.second_putt?
+    raw_result = club_results.find_by(dice: dice).result unless player.ball.third_putt?
     result = raw_result
     if putt?
       ball_on = player.ball.result.to_i
