@@ -84,7 +84,6 @@ class Ball < ActiveRecord::Base
       dice = Dice.roll unless dice
       next_use_orig = next_use
       self.next_use = look_up_optional_result(eval(next_use), dice)
-      @info = '' unless @info
       @info += (@info.present? ? ', ' : '') + "'#{next_use}' on dice '#{dice}' from #{next_use_orig}"
     end
 
@@ -136,6 +135,7 @@ class Ball < ActiveRecord::Base
       shot_judges = shot.shot_judges
       self.next_use = shot_judges.first.next_use if next_use.nil? && shot_judges.size == 1
 
+      @info = ''
       decide_optional_next_use if next_use =~ RE_STRINGIFIED_HASH
     end
 end

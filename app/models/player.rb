@@ -15,6 +15,7 @@ class Player < ActiveRecord::Base
       ball.choose_next_use(index_option)
     elsif ball.try(:holed_out?)
       hole_number = shot.hole.number + 1
+      end_of_round if hole_number > 18
       ball.destroy
       reload
     end
