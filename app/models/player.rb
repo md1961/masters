@@ -35,9 +35,7 @@ class Player < ActiveRecord::Base
     club = clubs.find_by(name: ball.next_use.downcase)
     result = club.swing(ball.next_adjust)
     @info = club.info
-    if club.putt? && result.to_i >= ball.result.to_i
-      result = 'IN'
-    elsif result == '(1)' && ball.next_adjust == 0
+    if result == '(1)' && ball.next_adjust == 0
       max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
       dice = Dice.roll
       result = dice <= max_roll_for_in ? 'IN' : '1'
