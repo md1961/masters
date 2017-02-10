@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20170206104605) do
   create_table "groupings", force: :cascade do |t|
     t.integer "group_id"
     t.integer "player_id"
-    t.integer "teeing_order"
+    t.integer "play_order"
   end
 
   add_index "groupings", ["group_id"], name: "index_groupings_on_group_id"
@@ -61,11 +61,11 @@ ActiveRecord::Schema.define(version: 20170206104605) do
 
   create_table "groups", force: :cascade do |t|
     t.integer "round_id"
-    t.integer "number",        null: false
-    t.integer "playing_at_id"
+    t.integer "number",   null: false
+    t.integer "area_id"
   end
 
-  add_index "groups", ["playing_at_id"], name: "index_groups_on_playing_at_id"
+  add_index "groups", ["area_id"], name: "index_groups_on_area_id"
   add_index "groups", ["round_id"], name: "index_groups_on_round_id"
 
   create_table "holes", force: :cascade do |t|
