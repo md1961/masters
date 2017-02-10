@@ -5,3 +5,15 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+filenames = %w(course player)
+paths = filenames.map { |filename| File.join('db', 'seeds', "#{filename}.rb") }
+paths.each do |path|
+  unless File.exist?(Rails.root.join(path))
+    STDERR.puts "Cannot find '#{path}'."
+    exit
+  end
+end
+paths.each do |path|
+  puts "Applying seed '#{path}'..."
+  require(Rails.root.join(path))
+end
