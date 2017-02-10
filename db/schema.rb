@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20170206104605) do
   create_table "shots", force: :cascade do |t|
     t.integer "number",                   null: false
     t.boolean "is_layup", default: false, null: false
+    t.integer "area_id",  default: 0,     null: false
     t.integer "hole_id"
   end
 

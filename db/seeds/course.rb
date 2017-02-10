@@ -509,3 +509,16 @@ hole18 = Hole.create!(number:18, par: 4, distance: 405)
     shot18_4.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
+
+@area_id = 1
+
+def set_area_id_to(shots)
+  shots.each { |shot| shot.update!(area_id: @area_id) }
+  @area_id += 1
+end
+
+Hole.order(:number).each do |hole|
+  set_area_id_to(hole.shots.where(number: 1))
+  set_area_id_to(hole.shots.where(number: hole.par == 3 ? [2, 3] : 2))
+  set_area_id_to(hole.shots.where(number: [3, 4])) if hole.par >= 4
+end

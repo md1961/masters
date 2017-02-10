@@ -62,8 +62,8 @@ class Ball < ActiveRecord::Base
 
   def to_s
     #"#{player.last_name} on " \
-    "#{hole}: #{shot} : stroke ##{shot_count} : '#{result}' on #{lands} : " \
-      "Next: '#{next_use}', layup=#{is_layup}, (#{next_adjust > 0 ? '+' : ''}#{next_adjust})"
+    "#{hole}(Par #{hole.par}): #{shot} : stroke ##{shot_count} : on #{lands} by '#{result}' : " \
+      "Next: '#{next_use}'(#{next_adjust > 0 ? '+' : ''}#{next_adjust}), layup=#{is_layup}"
   end
 
   private
