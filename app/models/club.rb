@@ -22,7 +22,7 @@ class Club < ActiveRecord::Base
       ball_on = player.ball.result.to_i
       if player.ball.third_putt?
         result = dice == 11 ? 'OK' : 'IN'
-      elsif raw_result.to_i >= ball_on
+      elsif raw_result == 'IN' || raw_result.to_i >= ball_on
         result = 'IN'
       elsif player.ball.second_putt?
         result = '1t'
