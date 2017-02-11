@@ -2,8 +2,10 @@ class Player < ActiveRecord::Base
   has_many :clubs
   has_one :grouping
   has_one :group, through: :grouping
+  has_one :round, through: :group
   has_one :ball
   has_one :shot, through: :ball
+  #has_one :area, through: :shot
 
   attr_accessor :info
 

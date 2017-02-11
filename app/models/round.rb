@@ -1,7 +1,7 @@
 class Round < ActiveRecord::Base
   belongs_to :tournament
-  has_many :areas
-  has_many :groups
+  has_many :areas , -> { order(:seq_num) }
+  has_many :groups, -> { order(:number ) }
 
   after_create :setup_group_for_round_one, :create_areas_for_round_one, if: :first_round?
 
@@ -25,28 +25,28 @@ class Round < ActiveRecord::Base
 
   # =====
 
-  def next_group
-    first_empty_area = areas.detect(&:no_group?)
-    first_empty_area.prev.try(:group)
+  def current_group
+    groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
   end
 
   def proceed
     if ready_to_play?
-      @current_player = next_group.next_player
-      @result_display = current_player.play
-    elsif areas.all?(&:no_group?)
+      @current_player = current_group.next_player
+      @result_display = @current_player.play
+    elsif areas.all?(&:open?)
       group1 = groups.find_by(number: 1)
       group1.tee_up_on(1)
     else
-      raise
+      group = current_group
+      # group.set_to_next_area if group.players_gone_to_next_area?
     end
     puts self
   end
 
   def to_s
     if @ready_to_play
-      group = next_group
-      (["#{group} about to stroke on #{group.area}"] \
+      group = current_group
+      (["#{group} about to stroke on #{group.next_player.shot.area}"] \
         + group.players.map(&:ball)).
         join("\n")
     else

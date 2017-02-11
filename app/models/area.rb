@@ -1,7 +1,7 @@
 class Area < ActiveRecord::Base
   belongs_to :round
-  has_one :group
   has_many :shots
+  has_many :players, through: :shots
 
   enum name: {tee: 0, fairway: 1, layup: 2, green: 3}
 
@@ -28,8 +28,8 @@ class Area < ActiveRecord::Base
     end
   end
 
-  def no_group?
-    group.nil?
+  def open?
+    players.none? { |player| player.round == round }
   end
 
   def prev
