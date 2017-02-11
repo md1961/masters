@@ -1,11 +1,15 @@
 class Player < ActiveRecord::Base
   has_many :clubs
-  has_many :groupings
-  has_many :groups, through: :groupings
+  has_one :grouping
+  has_one :group, through: :grouping
   has_one :ball
   has_one :shot, through: :ball
 
   attr_accessor :info
+
+  def play_order
+    grouping.play_order
+  end
 
   # TODO: Remove argument hole_number.
   def play(hole_number: 1, index_option: nil)
@@ -50,6 +54,6 @@ class Player < ActiveRecord::Base
   end
 
   def to_s
-    "#{last_name}, #{first_name}"
+    "#{last_name}" #, #{first_name}"
   end
 end
