@@ -5,12 +5,42 @@ class Round < ActiveRecord::Base
 
   after_create :setup_group_for_round_one, :create_areas_for_round_one, if: :first_round?
 
+  def num_players_per_group
+    2
+  end
+
   def first_round?
     number == 1
   end
 
-  def num_players_per_group
-    2
+  def ready_to_play?
+    value = @ready_to_play
+    @ready_to_play = !@ready_to_play
+    value
+  end
+
+  def next_group
+    first_empty_area = areas.detect(&:no_group?)
+    first_empty_area.prev.try(:group)
+  end
+
+  def proceed
+    if ready_to_play?
+      raise
+    elsif areas.all?(&:no_group?)
+      group1 = groups.find_by(number: 1)
+      group1.tee_up_on(1)
+    else
+      raise
+    end
+  end
+
+  def to_s
+    if @ready_to_play
+      "#{next_group} about to stroke on #{next_group.area}"
+    else
+      raise
+    end
   end
 
   private
