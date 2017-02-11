@@ -13,11 +13,17 @@ class Round < ActiveRecord::Base
     number == 1
   end
 
+  # FIXME: Not work on web.
+
+  attr_reader :current_player, :result_display
+
   def ready_to_play?
     value = @ready_to_play
     @ready_to_play = !@ready_to_play
     value
   end
+
+  # =====
 
   def next_group
     first_empty_area = areas.detect(&:no_group?)
@@ -26,7 +32,8 @@ class Round < ActiveRecord::Base
 
   def proceed
     if ready_to_play?
-      raise
+      @current_player = next_group.next_player
+      @result_display = current_player.play
     elsif areas.all?(&:no_group?)
       group1 = groups.find_by(number: 1)
       group1.tee_up_on(1)
@@ -43,7 +50,7 @@ class Round < ActiveRecord::Base
         + group.players.map(&:ball)).
         join("\n")
     else
-      raise
+      result_display
     end
   end
 

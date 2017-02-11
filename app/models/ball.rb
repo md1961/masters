@@ -134,6 +134,7 @@ class Ball < ActiveRecord::Base
     def set_next_use_if_nil
       shot_judges = shot.shot_judges
       self.next_use = shot_judges.first.next_use if next_use.nil? && shot_judges.size == 1
+      save!
 
       @info = ''
       decide_optional_next_use if next_use =~ RE_STRINGIFIED_HASH
