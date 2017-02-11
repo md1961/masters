@@ -1,4 +1,6 @@
 class Shot < ActiveRecord::Base
+  include Comparable
+
   belongs_to :hole
   belongs_to :area
   has_many :shot_judges
@@ -16,6 +18,16 @@ class Shot < ActiveRecord::Base
 
   def next(is_layup)
     Shot.find_by(hole: hole, number: number + 1, is_layup: is_layup) || self
+  end
+
+  def <=>(other)
+    if self.hole != other.hole
+      self.hole <=> other.hole
+    elsif self.number <=> other.number
+      self.number <=> other.number
+    else
+      other.is_layup.to_s <=> self.is_layup.to_s
+    end
   end
 
   def to_s
