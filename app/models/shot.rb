@@ -31,7 +31,7 @@ class Shot < ActiveRecord::Base
   end
 
   def to_s
-    "shot ##{number}(#{is_layup ? 'Layup' : 'No Layup'})"
+    "shot##{number}(#{is_layup ? 'Layup' : 'No Layup'})"
   end
 
   private
