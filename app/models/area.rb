@@ -28,7 +28,19 @@ class Area < ActiveRecord::Base
     end
   end
 
-  def nobody?
-    shots.all? { |shot| shot.players.empty? }
+  def no_group?
+    group.nil?
+  end
+
+  def prev
+    round.areas.find_by(seq_num: seq_num - 1)
+  end
+
+  def next
+    round.areas.find_by(seq_num: seq_num + 1)
+  end
+
+  def to_s
+    "#{shots.first.hole} #{name.capitalize}"
   end
 end
