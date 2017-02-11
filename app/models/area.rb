@@ -27,4 +27,8 @@ class Area < ActiveRecord::Base
       @seq_num += 1
     end
   end
+
+  def nobody?
+    shots.all? { |shot| shot.players.empty? }
+  end
 end
