@@ -1,7 +1,7 @@
 class Group < ActiveRecord::Base
   belongs_to :round
   belongs_to :area
-  has_many :groupings
+  has_many :groupings, -> { order(:play_order) }
   has_many :players, through: :groupings
 
   def tee_up_on(hole_number)

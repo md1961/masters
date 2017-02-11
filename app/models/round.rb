@@ -33,11 +33,15 @@ class Round < ActiveRecord::Base
     else
       raise
     end
+    puts self
   end
 
   def to_s
     if @ready_to_play
-      "#{next_group} about to stroke on #{next_group.area}"
+      group = next_group
+      (["#{group} about to stroke on #{group.area}"] \
+        + group.players.map(&:ball)).
+        join("\n")
     else
       raise
     end
