@@ -11,6 +11,10 @@ class Group < ActiveRecord::Base
     players.map(&:shot).compact.map(&:area).compact.uniq
   end
 
+  def not_started_yet?
+    players.first.ball.nil?
+  end
+
   def players_split?
     players_area_uniq.size > 1
   end
