@@ -33,7 +33,7 @@ class Player < ActiveRecord::Base
     self.shot = shot.next(ball.is_layup)
     ball.accept(club_result)
     ball.shot_count += 1
-    save!
+    ball.save!
     "#{ball}\n(#{@info})"
   end
 
