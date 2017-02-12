@@ -4,14 +4,6 @@
     <tr>
       <td><%= "#{group} about to stroke from #{group.next_player.shot.area}" %></td>
     </tr>
-    <% group.players.each do |player| -%>
-      <tr>
-        <td><%= player.ball.result_display %></td>
-      </tr>
-      <tr>
-        <td><%= player.ball.next_shot_display %></td>
-      </tr>
-    <% end -%>
   <% elsif @round.play_result -%>
     <% eval(@round.play_result).each do |line| -%>
       <tr>
@@ -20,6 +12,27 @@
     <% end -%>
   <% else -%>
     <%= "Ready to play #{@round}" %>
+  <% end -%>
+</table>
+
+<table id="players_info">
+  <% @round.groups.each do |group| -%>
+    <% group.players.each_with_index do |player, index| -%>
+      <tr>
+        <% if index.zero? -%>
+          <td rowspan="<%= group.players.size %>">
+            <%= group.number %>
+          </td>
+        <% end -%>
+        <% ball = player.ball %>
+        <% if ball.nil? -%>
+          <td><%= player %></td>
+        <% else -%>
+          <td><%= ball.result_display %></td>
+          <td><%= ball.next_shot_display %></td>
+        <% end -%>
+      </tr>
+    <% end -%>
   <% end -%>
 </table>
 
