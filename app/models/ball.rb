@@ -1,6 +1,16 @@
 class Ball < ActiveRecord::Base
+  include Comparable
+
   belongs_to :player
   belongs_to :shot
+
+  def <=>(other)
+    if self.shot != other.shot
+      self.shot <=> other.shot
+    else
+      other.result.to_i <=> self.result.to_i
+    end
+  end
 
   attr_reader :info
 
