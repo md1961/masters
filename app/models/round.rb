@@ -31,8 +31,20 @@ class Round < ActiveRecord::Base
 
   def proceed
     if ready_to_play?
+
+      # TODO: Alternative way?
+      groups.flat_map(&:players).map(&:reload)
+
       @current_player = current_group.next_player
       @result_display = @current_player.play
+
+      # TODO: Alternative way?
+      areas.flat_map(&:shots).map(&:reload)
+
+      if areas.first.open? && groups.any?(&:not_started_yet?)
+        group = groups.detect(&:not_started_yet?)
+        group.tee_up_on(1)
+      end
     elsif areas.all?(&:open?)
       group1 = groups.find_by(number: 1)
       group1.tee_up_on(1)
