@@ -43,10 +43,14 @@ class Round < ActiveRecord::Base
     puts self
   end
 
+  def ==(other)
+    self.tournament == other.tournament && self.number == other.number
+  end
+
   def to_s
     if @ready_to_play
       group = current_group
-      (["#{group} about to stroke on #{group.next_player.shot.area}"] \
+      (["#{group} about to stroke from #{group.next_player.shot.area}"] \
         + group.players.map(&:ball)).
         join("\n")
     else
