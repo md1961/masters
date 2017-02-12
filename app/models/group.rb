@@ -26,7 +26,7 @@ class Group < ActiveRecord::Base
   end
 
   def next_player
-    players.sort_by { |p| [p.shot, p.play_order] }.first
+    players.sort_by { |p| [p.ball, p.play_order] }.first
   end
 
   def to_s
