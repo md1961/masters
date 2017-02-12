@@ -1,7 +1,6 @@
 class Area < ActiveRecord::Base
   belongs_to :round
   has_many :shots
-  has_many :players, through: :shots
 
   enum name: {tee: 0, fairway: 1, layup: 2, green: 3}
 
@@ -29,7 +28,7 @@ class Area < ActiveRecord::Base
   end
 
   def open?
-    players.none? { |player| player.round == round }
+    shots.flat_map(&:players).none? { |player| player.round == round }
   end
 
   def prev
