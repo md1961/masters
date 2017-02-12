@@ -13,15 +13,13 @@ class Round < ActiveRecord::Base
     number == 1
   end
 
+  def ready_to_play?
+    ready_to_play
+  end
+
   # FIXME: Not work on web.
 
-  attr_reader :current_player, :result_display
-
-  def ready_to_play?
-    value = @ready_to_play
-    @ready_to_play = !@ready_to_play
-    value
-  end
+  attr_reader :current_player
 
   # =====
 
@@ -36,7 +34,7 @@ class Round < ActiveRecord::Base
       groups.flat_map(&:players).map(&:reload)
 
       @current_player = current_group.next_player
-      @result_display = @current_player.play
+      update!(play_result: @current_player.play)
 
       # TODO: Alternative way?
       areas.flat_map(&:shots).map(&:reload)
@@ -52,21 +50,23 @@ class Round < ActiveRecord::Base
       group = current_group
       # group.set_to_next_area if group.players_gone_to_next_area?
     end
-    puts self
+    toggle!(:ready_to_play)
   end
 
   def ==(other)
     self.tournament == other.tournament && self.number == other.number
   end
 
+  # TODO: Remove to_s()
   def to_s
-    if @ready_to_play
+    if ready_to_play?
       group = current_group
-      (["#{group} about to stroke from #{group.next_player.shot.area}"] \
-        + group.players.map(&:ball)).
-        join("\n")
+      safe_join(
+        ["#{group} about to stroke from #{group.next_player.shot.area}"] \
+        + group.players.map(&:ball),
+        '<br>'.html_safe)
     else
-      result_display
+      play_result
     end
   end
 

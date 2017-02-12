@@ -1,1 +1,21 @@
-<%= @round %>
+<table>
+  <% if @round.ready_to_play? -%>
+    <% group = @round.current_group -%>
+    <tr>
+      <td><%= "#{group} about to stroke from #{group.next_player.shot.area}" %></td>
+    </tr>
+      <% group.players.each do |player| -%>
+        <tr>
+          <td><%= player.ball %></td>
+        </tr>
+      <% end -%>
+  <% else -%>
+    <tr>
+      <td><%= @round.play_result %></td>
+    </tr>
+  <% end -%>
+</table>
+
+<%= form_tag round_path, method: :patch do %>
+  <%= submit_tag :Proceed %>
+<% end -%>
