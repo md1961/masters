@@ -4,15 +4,20 @@
     <tr>
       <td><%= "#{group} about to stroke from #{group.next_player.shot.area}" %></td>
     </tr>
-      <% group.players.each do |player| -%>
-        <tr>
-          <td><%= player.ball %></td>
-        </tr>
-      <% end -%>
+    <% group.players.each do |player| -%>
+      <tr>
+        <td><%= player.ball.result_display %></td>
+      </tr>
+      <tr>
+        <td><%= player.ball.next_shot_display %></td>
+      </tr>
+    <% end -%>
   <% else -%>
-    <tr>
-      <td><%= @round.play_result %></td>
-    </tr>
+    <% eval(@round.play_result).each do |line| -%>
+      <tr>
+        <td><%= line %></td>
+      </tr>
+    <% end -%>
   <% end -%>
 </table>
 

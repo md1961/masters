@@ -70,10 +70,13 @@ class Ball < ActiveRecord::Base
     parse_next_use
   end
 
-  def to_s
+  def result_display
     "#{player.last_name} on #{hole}(Par #{hole.par}): " \
-      + (shot_count == 0 ? '' : "hit #{shot_count.ordinalize} shot onto #{lands} by '#{result}' : ") \
-      + "Next: #{shot} '#{next_use}'(#{next_adjust > 0 ? '+' : ''}#{next_adjust}), layup=#{is_layup}"
+      + (shot_count == 0 ? '' : "hit #{shot_count.ordinalize} shot onto #{lands} by '#{result}'")
+  end
+
+  def next_shot_display
+    "Next: #{shot} '#{next_use}'(#{next_adjust > 0 ? '+' : ''}#{next_adjust}), layup=#{is_layup}"
   end
 
   private

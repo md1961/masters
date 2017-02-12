@@ -34,7 +34,7 @@ class Player < ActiveRecord::Base
     ball.accept(club_result)
     ball.shot_count += 1
     ball.save!
-    "#{ball}\n(#{@info})"
+    @info
   end
 
   def swing_club

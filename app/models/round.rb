@@ -17,12 +17,6 @@ class Round < ActiveRecord::Base
     ready_to_play
   end
 
-  # FIXME: Not work on web.
-
-  attr_reader :current_player
-
-  # =====
-
   def current_group
     groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
   end
@@ -33,8 +27,10 @@ class Round < ActiveRecord::Base
       # TODO: Alternative way?
       groups.flat_map(&:players).map(&:reload)
 
-      @current_player = current_group.next_player
-      update!(play_result: @current_player.play)
+      player = current_group.next_player
+      info = player.play
+      # FIXME: Think how to hand result strings to view.
+      update!(play_result: [player.ball.result_display, player.ball.next_shot_display, info])
 
       # TODO: Alternative way?
       areas.flat_map(&:shots).map(&:reload)
