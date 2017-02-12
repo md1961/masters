@@ -53,17 +53,8 @@ class Round < ActiveRecord::Base
     self.tournament == other.tournament && self.number == other.number
   end
 
-  # TODO: Remove to_s()
   def to_s
-    if ready_to_play?
-      group = current_group
-      safe_join(
-        ["#{group} about to stroke from #{group.next_player.shot.area}"] \
-        + group.players.map(&:ball),
-        '<br>'.html_safe)
-    else
-      play_result
-    end
+    "Round #{number}"
   end
 
   private

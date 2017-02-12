@@ -12,12 +12,14 @@
         <td><%= player.ball.next_shot_display %></td>
       </tr>
     <% end -%>
-  <% else -%>
+  <% elsif @round.play_result -%>
     <% eval(@round.play_result).each do |line| -%>
       <tr>
         <td><%= line %></td>
       </tr>
     <% end -%>
+  <% else -%>
+    <%= "Ready to play #{@round}" %>
   <% end -%>
 </table>
 
