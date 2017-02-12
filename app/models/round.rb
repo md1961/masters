@@ -23,18 +23,10 @@ class Round < ActiveRecord::Base
 
   def proceed
     if ready_to_play?
-
-      # TODO: Alternative way?
-      groups.flat_map(&:players).map(&:reload)
-
       player = current_group.next_player
       info = player.play
       # FIXME: Think how to hand result strings to view.
       update!(play_result: [player.ball.result_display, player.ball.next_shot_display, info])
-
-      # TODO: Alternative way?
-      areas.flat_map(&:shots).map(&:reload)
-
       if areas.first.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(1)
