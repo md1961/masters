@@ -1,18 +1,30 @@
 <div style="margin-left: 500px">
 <%= form_tag round_path, method: :patch do %>
+  <% if @round.needs_input? -%>
+    <% @round.current_group.next_player.ball.next_use_options.each_with_index do |option, index| -%>
+      <%= radio_button_tag :shot_option, index %><%= option %>
+    <% end -%>
+    <br>
+  <% end -%>
   <%= submit_tag :Proceed %>
 <% end -%>
 </div>
 
 <table>
   <% if @round.ready_to_play? -%>
-    <% group = @round.current_group -%>
+    <% group = @round.current_group
+       player = group.next_player -%>
     <tr>
       <% if group.all_holed_out? -%>
-        <td><%= "#{group} holed out on #{group.next_player.shot.hole}" %></td>
+        <td><%= "#{group} holed out on #{player.shot.hole}" %></td>
       <% else -%>
-        <td><%= "#{group} about to stroke from #{group.next_player.shot.area}" %></td>
+        <td><%= "#{group} about to stroke from #{player.shot.area}" %></td>
       <% end -%>
+    </tr>
+  <% elsif @round.needs_input? -%>
+    <% player = @round.current_group.next_player -%>
+    <tr>
+      <td><%= "#{player} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
     </tr>
   <% elsif @round.play_result -%>
     <% eval(@round.play_result).each do |line| -%>
