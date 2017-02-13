@@ -24,6 +24,14 @@ class Group < ActiveRecord::Base
     !players_split? && area && area.next.open?
   end
 
+  def all_on_or_near_green?
+    players.all? { |player| player.shot.area.green? }
+  end
+
+  def all_holed_out?
+    players.all? { |player| player.ball.holed_out? }
+  end
+
   def tee_up_on(hole_number)
     shot = Shot.first_tee(hole_number)
     players.each { |player| player.create_ball!(shot: shot) }
@@ -46,6 +54,10 @@ class Group < ActiveRecord::Base
       tee_up_on(hole_number + 1)
       ["#{self} tee up on #{next_player.shot.hole}"]
     end
+  end
+
+  def ==(other)
+    self.number == other.number
   end
 
   def to_s
