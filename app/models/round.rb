@@ -36,7 +36,7 @@ class Round < ActiveRecord::Base
         needs_input!
         return
       end
-      array_of_play_results = current_group.play(index_option: Integer(shot_option))
+      array_of_play_results = current_group.play(index_option: shot_option && Integer(shot_option))
       # FIXME: Think how to hand result strings to view.
       update!(play_result: array_of_play_results)
       if areas.first.open? && groups.any?(&:not_started_yet?)
