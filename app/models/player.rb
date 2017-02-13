@@ -15,15 +15,12 @@ class Player < ActiveRecord::Base
 
   # TODO: Remove argument hole_number.
   def play(hole_number: 1, index_option: nil)
-    if ball.try(:next_use_optional?)
+    if ball.try(:holed_out?)
+      return
+    elsif ball.try(:next_use_optional?)
       raise "Need to specify index_option for next_use of '#{ball.next_use}'" unless index_option
       raise "Illegal index_option of '#{index_option}' (0 or 1 required)" unless [0, 1].include?(index_option)
       ball.choose_next_use(index_option)
-    elsif ball.try(:holed_out?)
-      hole_number = shot.hole.number + 1
-      end_of_round if hole_number > 18
-      ball.destroy
-      reload
     end
     unless ball
       _shot = Shot.first_tee(hole_number)

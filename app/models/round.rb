@@ -23,10 +23,9 @@ class Round < ActiveRecord::Base
 
   def proceed
     if ready_to_play?
-      player = current_group.next_player
-      info = player.play
+      array_of_play_results = current_group.play
       # FIXME: Think how to hand result strings to view.
-      update!(play_result: [player.ball.result_display, player.ball.next_shot_display, info])
+      update!(play_result: array_of_play_results)
       if areas.first.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(1)

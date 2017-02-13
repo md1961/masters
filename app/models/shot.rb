@@ -36,6 +36,19 @@ class Shot < ActiveRecord::Base
 
   private
 
+  # FIXME: The followings cause an error.
+=begin
+
+result
+=> "SL-P"
+>> prev_results
+=> ["SL-Ch", "SR-Ch", "All other Ch", "TROUBLE"]
+>> hole
+=> #<Hole id: 2, number: 2, par: 5, distance: 555>
+>> self
+=> #<Shot id: 8, number: 3, is_layup: false, area_id: 156, hole_id: 2>
+
+=end
     def look_up_in_prev_result(result)
       return result unless result
       value = result.sub(/\*\z/, '')
@@ -47,6 +60,7 @@ class Shot < ActiveRecord::Base
       elsif !prev_results.include?(result) && result =~ /\A[SML][LRC]-(Ch|P)\z/
         suffix = Regexp.last_match(1)
         re_result = /\AAll (:?other )?#{suffix}\z/
+        # FIXME: 
         value = prev_results.find { |r| r =~ re_result }
         raise StandardError, "Cannot find result matching #{re_result} in #{prev_results.inspect}" unless value
       end

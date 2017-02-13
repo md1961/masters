@@ -33,6 +33,21 @@ class Group < ActiveRecord::Base
     players.sort_by { |p| [p.ball, p.play_order] }.first
   end
 
+  def play
+    if players.any? { |player| !player.ball.holed_out? }
+      player = next_player
+      info = player.play
+      [player.ball.result_display, player.ball.next_shot_display, info]
+    else
+      # TODO: Update play_order of Grouping.
+      hole_number = players.first.shot.hole.number
+      # TODO: Modify end of round procedure.
+      return :end_of_round if hole_number == 18
+      tee_up_on(hole_number + 1)
+      ["#{self} tee up on #{next_player.shot.hole}"]
+    end
+  end
+
   def to_s
     "#{next_player}(Group ##{number})"
   end
