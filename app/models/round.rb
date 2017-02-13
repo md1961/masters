@@ -18,9 +18,7 @@ class Round < ActiveRecord::Base
   end
 
   def current_group
-    groups.detect(&:players_split?) \
-      || groups.reverse.detect(&:next_area_open?) \
-      || groups.detect(&:all_on_or_near_green?)
+    groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
   end
 
   def proceed

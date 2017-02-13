@@ -62,45 +62,6 @@ class Ball < ActiveRecord::Base
     parse_next_use
   end
 
-  H_DISTANCE_FACTOR = {
-    "IN"    => 100000,
-    "OK"    => 10000,
-    "Sd"    => -10,
-    "LC-Ch" => -100,
-    "LL-Ch" => -200,
-    "LR-Ch" => -300,
-    "ML-Ch" => -400,
-    "MR-Ch" => -500,
-    "SC-Ch" => -600,
-    "SL-Ch" => -700,
-    "SR-Ch" => -800,
-    "SC-P"  => -1000,
-    "SL-P"  => -2000,
-    "SR-P"  => -3000,
-    "LC*"   => -10100,
-    "LC"    => -10200,
-    "LL"    => -10300,
-    "LR"    => -10400,
-    "MC*"   => -10500,
-    "MC"    => -10600,
-    "ML"    => -10700,
-    "MR"    => -10800,
-    "SC*"   => -10900,
-    "SC"    => -11000,
-    "SL"    => -11100,
-    "SR"    => -11200,
-  }
-
-    def distance_factor(result)
-      if result.to_i > 0
-        1000 - result.to_i
-      else
-        raise "Cannot find key of '#{result}' in H_DISTANCE_FACTOR" unless H_DISTANCE_FACTOR.key?(result)
-        H_DISTANCE_FACTOR[result]
-      end
-    end
-    private :distance_factor
-
   def <=>(other)
     if self.shot != other.shot
       self.shot <=> other.shot
@@ -148,27 +109,6 @@ class Ball < ActiveRecord::Base
       hash.find { |k, _v| num.between?(*(k.split('-').map(&:to_i))) }[1]
     end
 
-    # FIXME: Handle optional next_use
-    # [ 0] "FW Layup",
-    # [ 1] "LI Layup",
-    # [ 2] "MI Layup",
-    # [ 3] "SI Layup",
-    # [ 4] "SI Layup (+1) or LI",
-    # [ 5] "SI Layup (+1) or LI (-2)",
-    # [ 6] "SI Layup or FW",
-    # [ 7] "SI Layup or FW (-1)",
-    # [ 8] "SI Layup or LI (-2)",
-    # [ 9] "Save, FW",
-    # [10] "Save, LI",
-    # [11] "{'1-2' => 'P', '3-6' => 'Ch'}",
-    # [12] "{'1-2' => 'Save, SI', '3-4' => 'Sand, P', '5-6' => 'LI'}",
-    # [13] "{'1-3' => 'MI', '4-6': SI'}",
-    # [14] "{'1-3' => 'P', '4-6' => 'Ch'}",
-    # [15] "{'1-3' => 'SI', '4-6' => 'Ch'}",
-    # [16] "{'1-3' => 'Save, LI Layup', '4-6' => 'Save, FW'}",
-    # [17] "{'1-3' => 'Save, LI', '4-5' => 'Save, MI', '6' -> 'Save, SI'}",
-    # [18] "{'1-3' => 'Save, LI', '4-6' => 'Save, LI Layup'}"
-
     def parse_next_use
       self.is_layup = false
       if next_use =~ RE_STRINGIFIED_HASH
@@ -196,4 +136,42 @@ class Ball < ActiveRecord::Base
       @info = ''
       decide_optional_next_use if next_use =~ RE_STRINGIFIED_HASH
     end
+
+    def distance_factor(result)
+      if result.to_i > 0
+        1000 - result.to_i
+      else
+        raise "Cannot find key of '#{result}' in H_DISTANCE_FACTOR" unless H_DISTANCE_FACTOR.key?(result)
+        H_DISTANCE_FACTOR[result]
+      end
+    end
+
+    H_DISTANCE_FACTOR = {
+      "IN"    => 100000,
+      "OK"    => 10000,
+      "Sd"    => -10,
+      "LC-Ch" => -100,
+      "LL-Ch" => -200,
+      "LR-Ch" => -300,
+      "ML-Ch" => -400,
+      "MR-Ch" => -500,
+      "SC-Ch" => -600,
+      "SL-Ch" => -700,
+      "SR-Ch" => -800,
+      "SC-P"  => -1000,
+      "SL-P"  => -2000,
+      "SR-P"  => -3000,
+      "LC*"   => -10100,
+      "LC"    => -10200,
+      "LL"    => -10300,
+      "LR"    => -10400,
+      "MC*"   => -10500,
+      "MC"    => -10600,
+      "ML"    => -10700,
+      "MR"    => -10800,
+      "SC*"   => -10900,
+      "SC"    => -11000,
+      "SL"    => -11100,
+      "SR"    => -11200,
+    }
 end
