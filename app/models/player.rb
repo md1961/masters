@@ -27,7 +27,7 @@ class Player < ActiveRecord::Base
       create_ball!(shot: _shot)
     end
     club_result = swing_club
-    self.shot = shot.next(ball.is_layup) unless ball.is_saved
+    self.shot = shot.next(ball.is_layup)
     ball.accept(club_result)
     ball.shot_count += 1
     ball.save!
