@@ -60,6 +60,7 @@ class Group < ActiveRecord::Base
   end
 
   def ==(other)
+    return false if other.nil? || !other.is_a?(Group)
     self.number == other.number
   end
 

@@ -39,6 +39,7 @@ class Round < ActiveRecord::Base
   end
 
   def ==(other)
+    return false if other.nil? || !other.is_a?(Round)
     self.tournament == other.tournament && self.number == other.number
   end
 
