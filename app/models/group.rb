@@ -53,8 +53,9 @@ class Group < ActiveRecord::Base
       hole_number = players.first.shot.hole.number
       # TODO: Modify end of round procedure.
       return :end_of_round if hole_number == 18
-      tee_up_on(hole_number + 1)
-      ["#{self} tee up on #{next_player.shot.hole}"]
+      hole_number += 1
+      tee_up_on(hole_number)
+      ["#{self} tee up on #{Hole.find_by(number: hole_number)}"]
     end
   end
 
