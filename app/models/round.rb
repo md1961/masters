@@ -3,6 +3,8 @@ class Round < ActiveRecord::Base
   has_many :areas , -> { order(:seq_num) }
   has_many :groups, -> { order(:number ) }
 
+  enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2}
+
   after_create :setup_group_for_round_one, :create_areas_for_round_one, if: :first_round?
 
   def self.num_players_per_group
@@ -11,10 +13,6 @@ class Round < ActiveRecord::Base
 
   def first_round?
     number == 1
-  end
-
-  def ready_to_play?
-    ready_to_play
   end
 
   def current_group
@@ -35,7 +33,7 @@ class Round < ActiveRecord::Base
         group.tee_up_on(1)
       end
     end
-    toggle!(:ready_to_play)
+    ready_to_play? ? displays_result! : ready_to_play!
   end
 
   def ==(other)

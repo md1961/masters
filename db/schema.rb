@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20170206104605) do
     t.integer "tournament_id"
     t.integer "number",                        null: false
     t.boolean "is_current",    default: false, null: false
-    t.boolean "ready_to_play", default: false, null: false
+    t.integer "status",        default: 0,     null: false
     t.string  "play_result"
   end
 
