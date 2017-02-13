@@ -36,6 +36,10 @@ class Ball < ActiveRecord::Base
     next_use =~ / or /
   end
 
+  def next_use_options
+    next_use.split(' or ')
+  end
+
   def accept(club_result)
     @info = ''
     self.next_adjust = 0
