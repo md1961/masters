@@ -18,11 +18,17 @@ class Round < ActiveRecord::Base
   end
 
   def current_group
-    groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
+    groups.detect(&:players_split?) \
+      || groups.reverse.detect(&:next_area_open?) \
+      || groups.detect(&:all_on_or_near_green?)
   end
 
   def proceed
-    if ready_to_play?
+    # TODO: Should move this block to another method.
+    if areas.all?(&:open?)
+      group1 = groups.find_by(number: 1)
+      group1.tee_up_on(1)
+    elsif ready_to_play?
       array_of_play_results = current_group.play
       # FIXME: Think how to hand result strings to view.
       update!(play_result: array_of_play_results)
@@ -30,12 +36,6 @@ class Round < ActiveRecord::Base
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(1)
       end
-    elsif areas.all?(&:open?)
-      group1 = groups.find_by(number: 1)
-      group1.tee_up_on(1)
-    else
-      group = current_group
-      # group.set_to_next_area if group.players_gone_to_next_area?
     end
     toggle!(:ready_to_play)
   end
