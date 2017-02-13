@@ -116,8 +116,7 @@ class Ball < ActiveRecord::Base
   end
 
   def result_display
-    "#{player.last_name} on #{hole}(Par #{hole.par}): " \
-      + (shot_count == 0 ? '' : "hit #{shot_count.ordinalize} shot onto #{lands} by '#{result}'")
+    shot_count == 0 ? '' : "hit #{shot_count.ordinalize} shot onto #{lands} by '#{result}'"
   end
 
   def next_shot_display

@@ -42,10 +42,12 @@ class Group < ActiveRecord::Base
   end
 
   def play
-    if players.any? { |player| !player.ball.holed_out? }
+    if !all_holed_out?
       player = next_player
       info = player.play
-      [player.ball.result_display, player.ball.next_shot_display, info]
+      hole = player.shot.hole
+      s = "#{player.last_name} on #{hole} (Par #{hole.par})"
+      [s, player.ball.result_display, player.ball.next_shot_display, info]
     else
       # TODO: Update play_order of Grouping.
       hole_number = players.first.shot.hole.number
