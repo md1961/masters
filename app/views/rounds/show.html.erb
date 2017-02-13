@@ -1,3 +1,9 @@
+<div style="margin-left: 500px">
+<%= form_tag round_path, method: :patch do %>
+  <%= submit_tag :Proceed %>
+<% end -%>
+</div>
+
 <table>
   <% if @round.ready_to_play? -%>
     <% group = @round.current_group -%>
@@ -43,7 +49,3 @@
     <% end -%>
   <% end -%>
 </table>
-
-<%= form_tag round_path, method: :patch do %>
-  <%= submit_tag :Proceed %>
-<% end -%>
