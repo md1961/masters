@@ -1,6 +1,7 @@
 <div style="margin-left: 500px">
 <%= form_tag round_path, method: :patch do %>
   <% if @round.needs_input? -%>
+    <%= hidden_field_tag :choosing_next_use, 1 %>
     <% @round.current_group.next_player.ball.next_use_options.each_with_index do |option, index| -%>
       <%= radio_button_tag :shot_option, index %><%= option %>
     <% end -%>

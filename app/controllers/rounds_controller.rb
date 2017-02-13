@@ -11,8 +11,13 @@ class RoundsController < ApplicationController
   end
 
   def update
-    @round.proceed
-    redirect_to @round
+    # TODO: Maybe this block is needless.
+    if params[:choosing_next_use] && params[:shot_option].nil?
+      render :show
+    else
+      @round.proceed(shot_option: params[:shot_option])
+      redirect_to @round
+    end
   end
 
   private

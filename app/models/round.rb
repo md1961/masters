@@ -23,22 +23,25 @@ class Round < ActiveRecord::Base
     groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
   end
 
-  def proceed
-    # TODO: Should move this block to another method.
+  def proceed(shot_option: nil)
+    if needs_input? && shot_option.present?
+      ready_to_play!
+    end
     if areas.all?(&:open?)
+    # TODO: Should move this block to another method.
       group1 = groups.find_by(number: 1)
       group1.tee_up_on(first_hole_number)
     elsif ready_to_play?
-      if current_group.needs_to_choose_shot?
-        needs_input?
-      else
-        array_of_play_results = current_group.play
-        # FIXME: Think how to hand result strings to view.
-        update!(play_result: array_of_play_results)
-        if areas.first.open? && groups.any?(&:not_started_yet?)
-          group = groups.detect(&:not_started_yet?)
-          group.tee_up_on(first_hole_number)
-        end
+      if current_group.needs_to_choose_shot? && shot_option.nil?
+        needs_input!
+        return
+      end
+      array_of_play_results = current_group.play(index_option: Integer(shot_option))
+      # FIXME: Think how to hand result strings to view.
+      update!(play_result: array_of_play_results)
+      if areas.first.open? && groups.any?(&:not_started_yet?)
+        group = groups.detect(&:not_started_yet?)
+        group.tee_up_on(first_hole_number)
       end
     end
     ready_to_play? ? displays_result! : ready_to_play!

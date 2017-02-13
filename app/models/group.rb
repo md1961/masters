@@ -45,10 +45,10 @@ class Group < ActiveRecord::Base
     players.sort_by { |p| [p.ball, p.play_order] }.first
   end
 
-  def play
+  def play(index_option: nil)
     if !all_holed_out?
       player = next_player
-      info = player.play
+      info = player.play(index_option: index_option)
       hole = player.shot.hole
       s = "#{player.last_name} on #{hole} (Par #{hole.par})"
       [s, player.ball.result_display, player.ball.next_shot_display, info]

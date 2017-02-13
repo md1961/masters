@@ -1,3 +1,5 @@
+# TODO: Progress display
+
 Hole.destroy_all
 Shot.destroy_all
 ShotJudge.destroy_all
