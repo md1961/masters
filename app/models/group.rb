@@ -32,6 +32,10 @@ class Group < ActiveRecord::Base
     players.all? { |player| player.ball.holed_out? }
   end
 
+  def needs_to_choose_shot?
+    next_player.ball.next_use_optional?
+  end
+
   def tee_up_on(hole_number)
     shot = Shot.first_tee(hole_number)
     players.each { |player| player.create_ball!(shot: shot) }
