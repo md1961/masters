@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20170206104605) do
     t.string  "lands"
     t.string  "next_use"
     t.boolean "is_layup",    default: false
+    t.boolean "is_saved",    default: false
     t.integer "next_adjust", default: 0
   end
 

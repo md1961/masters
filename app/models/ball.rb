@@ -115,8 +115,14 @@ class Ball < ActiveRecord::Base
 
     def parse_next_use
       self.is_layup = false
+      self.is_saved = false
       if next_use =~ RE_STRINGIFIED_HASH
         decide_optional_next_use
+      end
+      if next_use =~ /\ASave, (\w.*)\z/
+        self.next_use = Regexp.last_match(1)
+        self.shot_count += 1
+        self.is_saved = true
       end
       if next_use.sub!(/ \(([+-]?\d{1,2})\)\z/, '')
         self.next_adjust += Regexp.last_match(1).to_i
@@ -124,9 +130,6 @@ class Ball < ActiveRecord::Base
       if next_use =~ /\A([A-Z]{2}) Layup\z/
         self.next_use = Regexp.last_match(1)
         self.is_layup = true
-      elsif next_use =~ /\ASave, ([A-Z]{2})\z/
-        self.next_use = Regexp.last_match(1)
-        self.shot_count += 1
       end
     end
 
