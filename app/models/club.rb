@@ -9,7 +9,7 @@ class Club < ActiveRecord::Base
   end
 
   def swing(dice_adjust = 0)
-    return 'IN' if player.ball.ok?
+    raise "Should not reach here: return 'IN'" if player.ball.ok?
     dice = Dice.two_rolls
     @info = "'#{dice}'"
     unless dice_adjust.zero?

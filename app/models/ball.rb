@@ -13,7 +13,7 @@ class Ball < ActiveRecord::Base
   end
 
   def holed_out?
-    result == 'IN'
+    result == 'IN' || result == 'OK'
   end
 
   def ok?
@@ -47,6 +47,7 @@ class Ball < ActiveRecord::Base
       self.result      = club_result
       self.lands       = 'Green'
       self.next_use    = 'Putt'
+      self.shot_count += 1 if club_result == 'OK'
     else
       shot_judge = shot.judge(club_result)
       self.result      = club_result
