@@ -4,14 +4,6 @@ class Ball < ActiveRecord::Base
   belongs_to :player
   belongs_to :shot
 
-  def <=>(other)
-    if self.shot != other.shot
-      self.shot <=> other.shot
-    else
-      other.result.to_i <=> self.result.to_i
-    end
-  end
-
   attr_reader :info
 
   after_create :set_next_use_if_nil
@@ -68,6 +60,59 @@ class Ball < ActiveRecord::Base
     return unless next_use_optional?
     self.next_use = next_use.split(' or ')[index]
     parse_next_use
+  end
+
+  H_DISTANCE_FACTOR = {
+    "IN"    => 100000,
+    "OK"    => 10000,
+    "Sd"    => -10,
+    "LC-Ch" => -100,
+    "LL-Ch" => -200,
+    "LR-Ch" => -300,
+    "ML-Ch" => -400,
+    "MR-Ch" => -500,
+    "SC-Ch" => -600,
+    "SL-Ch" => -700,
+    "SR-Ch" => -800,
+    "SC-P"  => -1000,
+    "SL-P"  => -2000,
+    "SR-P"  => -3000,
+    "LC*"   => -10100,
+    "LC"    => -10200,
+    "LL"    => -10300,
+    "LR"    => -10400,
+    "MC*"   => -10500,
+    "MC"    => -10600,
+    "ML"    => -10700,
+    "MR"    => -10800,
+    "SC*"   => -10900,
+    "SC"    => -11000,
+    "SL"    => -11100,
+    "SR"    => -11200,
+  }
+
+    def distance_factor(result)
+      if result.to_i > 0
+        1000 - result.to_i
+      else
+        raise "Cannot find key of '#{result}' in H_DISTANCE_FACTOR" unless H_DISTANCE_FACTOR.key?(result)
+        H_DISTANCE_FACTOR[result]
+      end
+    end
+    private :distance_factor
+
+  def <=>(other)
+    if self.shot != other.shot
+      self.shot <=> other.shot
+    elsif self.result.nil? && other.result.nil?
+      self.player.grouping.play_order <=> other.player.grouping.play_order
+    elsif self.result.nil?
+      -1
+    elsif other.result.nil?
+      1
+    else
+      distance_factor(self.result) <=> distance_factor(other.result)
+    end
   end
 
   def result_display

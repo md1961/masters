@@ -34,6 +34,6 @@ class Group < ActiveRecord::Base
   end
 
   def to_s
-    "#{next_player}(Group ##{number}, w/#{(players - [next_player]).join(', ')})"
+    "#{next_player}(Group ##{number})"
   end
 end
