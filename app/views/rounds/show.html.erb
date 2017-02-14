@@ -44,7 +44,7 @@
       <tr>
         <% if index.zero? -%>
           <td rowspan="<%= group.players.size %>"
-              class="<%= group == @round.current_group && 'emphasized' %>">
+              class="<%= group == @round.current_group && 'current' %>">
             <%= group.number %>
           </td>
         <% end -%>
@@ -55,7 +55,9 @@
           <% hole = player.shot.try(:hole) %></td>
           <td><%= player %></td>
           <td><%= hole && "#{hole} (Par #{hole.par})" %></td>
-          <td><%= ball.result_display %></td>
+          <td class="emphasized"><%= ball.shot_count %></td>
+          <td><%= ball.lands %></td>
+          <td><%= ball.result %></td>
           <td><%= ball.next_shot_display %></td>
         <% end -%>
       </tr>

@@ -87,7 +87,15 @@ class Ball < ActiveRecord::Base
   end
 
   def result_display
-    shot_count == 0 ? '' : "hit #{shot_count.ordinalize} shot onto #{lands} by '#{result}'"
+    if shot_count == 0
+      ''
+    elsif ok?
+      "putt to OK distance to hole out on #{shot_count}"
+    elsif holed_out?
+      "sink to hole out on #{shot_count}"
+    else
+      "hit #{shot_count.ordinalize} shot onto #{lands} by '#{result}'"
+    end
   end
 
   def next_shot_display

@@ -15,9 +15,13 @@ td.numeric {
   text-align: right;
 }
 
-td.emphasized {
+td.current {
   color: white;
   background-color: black;
+}
+
+td.emphasized {
+  font-weight: bold;
 }
 
 span.button {
