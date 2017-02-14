@@ -13,7 +13,7 @@
 
 <table>
   <% group = @round.current_group
-     player = group.next_player -%>
+     player = group.try(:next_player) -%>
   <% if @round.ready_to_play? -%>
     <tr>
       <% if group.all_holed_out? -%>
