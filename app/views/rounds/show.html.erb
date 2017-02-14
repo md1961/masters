@@ -58,6 +58,7 @@
           <td class="numeric"><%= total_score_display(player, @round) %></td>
           <td><%= hole.try(:full_desc) %></td>
           <td class="emphasized"><%= ball.shot_count %></td>
+          <td><%= player == group.next_player ? 'n' : '' %></td>
           <td><%= ball.lands %></td>
           <td><%= ball.result %></td>
           <td><%= ball.next_shot_display %></td>
