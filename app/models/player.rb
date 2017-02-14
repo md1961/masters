@@ -35,25 +35,32 @@ class Player < ActiveRecord::Base
     @info
   end
 
-  def swing_club
-    club = clubs.find_by(name: ball.next_use.downcase)
-    result = club.swing(ball.next_adjust)
-    @info = club.info
-    if result == '(1)' && ball.next_adjust == 0
-      max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
-      dice = Dice.roll
-      result = dice <= max_roll_for_in ? 'IN' : '1'
-      @info += ", '#{result}' from dice '#{dice}'"
-    elsif ball.superlative? && result.to_i > 0 && !shot.is_layup
-      dice = Dice.roll
-      result = (result.to_i - dice).abs.to_s
-      result = 'IN' if result == '0'
-      @info += ", '#{result}' from dice '#{dice}' after superlative"
-    end
-    result
+  def ==(other)
+    return false if other.nil? || !other.is_a?(Player)
+    self.last_name == other.last_name && self.first_name == other.first_name
   end
 
   def to_s
     "#{last_name}" #, #{first_name}"
   end
+
+  private
+
+    def swing_club
+      club = clubs.find_by(name: ball.next_use.downcase)
+      result = club.swing(ball.next_adjust)
+      @info = club.info
+      if result == '(1)' && ball.next_adjust == 0
+        max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
+        dice = Dice.roll
+        result = dice <= max_roll_for_in ? 'IN' : '1'
+        @info += ", '#{result}' from dice '#{dice}'"
+      elsif ball.superlative? && result.to_i > 0 && !shot.is_layup
+        dice = Dice.roll
+        result = (result.to_i - dice).abs.to_s
+        result = 'IN' if result == '0'
+        @info += ", '#{result}' from dice '#{dice}' after superlative"
+      end
+      result
+    end
 end
