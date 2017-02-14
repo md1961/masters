@@ -7,6 +7,10 @@ class Hole < ActiveRecord::Base
     self.number <=> other.number
   end
 
+  def full_desc
+    "#{self} (Par #{par})"
+  end
+
   def to_s
     "No.#{number}"
   end
