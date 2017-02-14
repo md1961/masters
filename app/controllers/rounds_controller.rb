@@ -2,8 +2,6 @@ class RoundsController < ApplicationController
   before_action :set_round, only: [:show, :update]
 
   def index
-    # TODO: Possible to Round.destroy_all ?
-    Ball .destroy_all
     redirect_to Round.create!(number: 1)
   end
 
