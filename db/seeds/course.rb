@@ -1,9 +1,9 @@
-# TODO: Progress display
-
-Hole.destroy_all
-Shot.destroy_all
+Hole     .destroy_all
+Shot     .destroy_all
 ShotJudge.destroy_all
 
+
+STDERR.print '01 '
 hole01 = Hole.create!(number: 1, par: 4, distance: 400)
   shot01_1 = hole01.shots.create!(number: 1, is_layup: false)
     shot01_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -28,6 +28,7 @@ hole01 = Hole.create!(number: 1, par: 4, distance: 400)
     shot01_4.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
     shot01_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '02 '
 hole02 = Hole.create!(number: 2, par: 5, distance: 555)
   shot02_1 = hole02.shots.create!(number: 1, is_layup: false)
     shot02_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -65,6 +66,7 @@ hole02 = Hole.create!(number: 2, par: 5, distance: 555)
     shot02_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot02_4.shot_judges.create!(prev_result: 'TROUBLE'     , lands: 'Trees'     , next_use: 'P', next_adjust: -6)
 
+STDERR.print '03 '
 hole03 = Hole.create!(number: 3, par: 4, distance: 360)
   shot03_1 = hole03.shots.create!(number: 1, is_layup: false)
     shot03_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -89,6 +91,7 @@ hole03 = Hole.create!(number: 3, par: 4, distance: 360)
     shot03_4.shot_judges.create!(prev_result: 'ML-Ch'       , lands: 'Sand'      , next_use: 'Sd')
     shot03_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '04 '
 hole04 = Hole.create!(number: 4, par: 3, distance: 205)
   shot04_1 = hole04.shots.create!(number: 1, is_layup: false)
     shot04_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'LI')
@@ -104,6 +107,7 @@ hole04 = Hole.create!(number: 4, par: 3, distance: 205)
     shot04_3.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
     shot04_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '05 '
 hole05 = Hole.create!(number: 5, par: 4, distance: 435)
   shot05_1 = hole05.shots.create!(number: 1, is_layup: false)
     shot05_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -129,6 +133,7 @@ hole05 = Hole.create!(number: 5, par: 4, distance: 435)
     shot05_4.shot_judges.create!(prev_result: 'SL-Ch'       , lands: 'Sand'      , next_use: 'Sd')
     shot05_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '06 '
 hole06 = Hole.create!(number: 6, par: 3, distance: 180)
   shot06_1 = hole06.shots.create!(number: 1, is_layup: false)
     shot06_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'MI')
@@ -144,6 +149,7 @@ hole06 = Hole.create!(number: 6, par: 3, distance: 180)
     shot06_3.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
     shot06_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '07 '
 hole07 = Hole.create!(number: 7, par: 4, distance: 365)
   shot07_1 = hole07.shots.create!(number: 1, is_layup: false)
     shot07_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -176,6 +182,7 @@ hole07 = Hole.create!(number: 7, par: 4, distance: 365)
     shot07_4.shot_judges.create!(prev_result: 'Sd'          , lands: 'Sand'      , next_use: 'Sd')
     shot07_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '08 '
 hole08 = Hole.create!(number: 8, par: 5, distance: 535)
   shot08_1 = hole08.shots.create!(number: 1, is_layup: false)
     shot08_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -208,6 +215,7 @@ hole08 = Hole.create!(number: 8, par: 5, distance: 535)
     shot08_4.shot_judges.create!(prev_result: 'All Ch' , lands: 'Near Green', next_use: 'Ch')
     shot08_4.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees'     , next_use: 'P', next_adjust: -6)
 
+STDERR.print '09 '
 hole09 = Hole.create!(number: 9, par: 4, distance: 435)
   shot09_1 = hole09.shots.create!(number: 1, is_layup: false)
     shot09_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -234,6 +242,7 @@ hole09 = Hole.create!(number: 9, par: 4, distance: 435)
     shot09_4.shot_judges.create!(prev_result: 'Sd'   , lands: 'Sand', next_use: 'Sd')
     shot09_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '10 '
 hole10 = Hole.create!(number:10, par: 4, distance: 485)
   shot10_1 = hole10.shots.create!(number: 1, is_layup: false)
     shot10_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -259,6 +268,7 @@ hole10 = Hole.create!(number:10, par: 4, distance: 485)
     shot10_4.shot_judges.create!(prev_result: 'SR-Ch', lands: 'Sand', next_use: 'Sd')
     shot10_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '11 '
 hole11 = Hole.create!(number:11, par: 4, distance: 455)
   shot11_1 = hole11.shots.create!(number: 1, is_layup: false)
     shot11_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -290,6 +300,7 @@ hole11 = Hole.create!(number:11, par: 4, distance: 455)
     shot11_4.shot_judges.create!(prev_result: 'LR-Ch', lands: 'Sand', next_use: 'Sd')
     shot11_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '12 '
 hole12 = Hole.create!(number:12, par: 3, distance: 155)
   shot12_1 = hole12.shots.create!(number: 1, is_layup: false)
     shot12_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: "{'1-3' => 'MI', '4-6' => 'SI'}")
@@ -316,6 +327,7 @@ hole12 = Hole.create!(number:12, par: 3, distance: 155)
     shot12_3.shot_judges.create!(prev_result: 'LC-Ch', lands: 'Sand', next_use: 'Sd')
     shot12_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '13 '
 hole13 = Hole.create!(number:13, par: 5, distance: 465)
   shot13_1 = hole13.shots.create!(number: 1, is_layup: false)
     shot13_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -365,6 +377,7 @@ hole13 = Hole.create!(number:13, par: 5, distance: 465)
     shot13_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot13_4.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'P', next_adjust: -6)
 
+STDERR.print '14 '
 hole14 = Hole.create!(number:14, par: 4, distance: 405)
   shot14_1 = hole14.shots.create!(number: 1, is_layup: false)
     shot14_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -386,6 +399,7 @@ hole14 = Hole.create!(number:14, par: 4, distance: 405)
   shot14_4 = hole14.shots.create!(number: 4, is_layup: false)
     shot14_4.shot_judges.create!(prev_result: 'All Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '15 '
 hole15 = Hole.create!(number:15, par: 5, distance: 500)
   shot15_1 = hole15.shots.create!(number: 1, is_layup: false)
     shot15_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -432,6 +446,7 @@ hole15 = Hole.create!(number:15, par: 5, distance: 500)
     shot15_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot15_4.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'P', next_adjust: -6)
 
+STDERR.print '16 '
 hole16 = Hole.create!(number:16, par: 3, distance: 170)
   shot16_1 = hole16.shots.create!(number: 1, is_layup: false)
     shot16_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'MI')
@@ -458,6 +473,7 @@ hole16 = Hole.create!(number:16, par: 3, distance: 170)
     shot16_3.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
     shot16_3.shot_judges.create!(prev_result: 'TROUBLE', lands: 'Trees', next_use: 'P', next_adjust: -6)
 
+STDERR.print '17 '
 hole17 = Hole.create!(number:17, par: 4, distance: 400)
   shot17_1 = hole17.shots.create!(number: 1, is_layup: false)
     shot17_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -486,6 +502,7 @@ hole17 = Hole.create!(number:17, par: 4, distance: 400)
     shot17_4.shot_judges.create!(prev_result: 'Sd'   , lands: 'Sand' , next_use: 'Sd')
     shot17_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
 
+STDERR.print '18 '
 hole18 = Hole.create!(number:18, par: 4, distance: 405)
   shot18_1 = hole18.shots.create!(number: 1, is_layup: false)
     shot18_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: 'Drive')
@@ -518,3 +535,5 @@ hole18 = Hole.create!(number:18, par: 4, distance: 405)
     shot18_4.shot_judges.create!(prev_result: 'ML-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'LL-Ch', lands: 'Rough', next_use: 'Ch', next_adjust: -2)
     shot18_4.shot_judges.create!(prev_result: 'All other Ch', lands: 'Near Green', next_use: 'Ch')
+
+STDERR.puts

@@ -20,26 +20,31 @@ SECOND_PUTT_RESULTS = [
 # Fourth putt is automatically sunk.
 
 
-Player.destroy_all
-Club.destroy_all
+Player    .destroy_all
+Club      .destroy_all
 ClubResult.destroy_all
+
 
 DICES = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map(&:to_i)
 
 def add_clubs(player, h_clubs)
+  STDERR.print "#{player.first_name[0]}#{player.last_name[0]}: "
   h_clubs.each do |name, results|
     raise StandardError, "illeagl size #{results.size} for #{name} of #{player}" unless results.size == DICES.size
+    STDERR.print "#{name[0, 2]} "
     club = player.clubs.create!(name: name)
     DICES.zip(results) do |dice, result|
       club.club_results.create!(dice: dice, result: result)
     end
   end
+  STDERR.puts
 end
 
 # If shot just after superlative drive land on green, rolls one dice and subtract it from distance.
 # If it becomes exactly zero, the ball goes into the cup.
 # (1) in 66 obtained unmodified: 1, 2 or 3 into the cup; 4, 5 or 6 lands 1 foot from the pin.
 #   After superlative drive: 1, 2, 3 or 4 into the cup; 5 or 6 lands 1 foot from the pin.
+
 
 =begin
 player = Player.create!(last_name: 'Aoki', first_name: 'Isao', overall: 25)
