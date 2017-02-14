@@ -31,6 +31,7 @@ class Player < ActiveRecord::Base
     self.shot = shot.next(ball)
     ball.accept(club_result)
     ball.shot_count += 1
+    write_score if ball.holed_out?
     ball.save!
     @info
   end
@@ -62,5 +63,11 @@ class Player < ActiveRecord::Base
         @info += ", '#{result}' from dice '#{dice}' after superlative"
       end
       result
+    end
+
+    def write_score
+      score_card = score_cards.find_or_create_by(round: round)
+      score = score_card.scores.find_or_create_by(hole: shot.hole)
+      score.update!(value: ball.shot_count)
     end
 end
