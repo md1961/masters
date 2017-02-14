@@ -165,6 +165,8 @@ class Ball < ActiveRecord::Base
     def distance_factor(result)
       if result.to_i > 0
         1000 - result.to_i
+      elsif result =~ /\Alayup-(\d{1,2})\z/
+        -50 - Regexp.last_match(1).to_i
       else
         raise "Cannot find key of '#{result}' in H_DISTANCE_FACTOR" unless H_DISTANCE_FACTOR.key?(result)
         H_DISTANCE_FACTOR[result]
