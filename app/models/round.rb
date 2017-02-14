@@ -6,7 +6,8 @@ class Round < ActiveRecord::Base
 
   enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2}
 
-  after_create :setup_group_for_round_one, :create_areas_for_round_one, if: :first_round?
+  after_create :create_areas_for_round_one, if: :first_round?
+  after_create :setup_groups_and_score_cards
 
   def self.num_players_per_group
     2
@@ -59,14 +60,23 @@ class Round < ActiveRecord::Base
 
   private
 
-    def setup_group_for_round_one
-      players_shuffled = Player.all.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
-      number = 1
+    def setup_groups_and_score_cards
+      if number == 1
+        players_shuffled = Player.all.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
+      else
+        raise 'Not implemented yet for Round 2 or later'
+      end
+
+      group_number = 1
       players_shuffled.each_slice(Round.num_players_per_group) do |players|
-        group = groups.create!(number: number, players: players)
+        group = groups.create!(number: group_number, players: players)
         group.groupings.find_by(player: players[0]).update!(play_order: 1)
         group.groupings.find_by(player: players[1]).update!(play_order: 2)
-        number += 1
+        group_number += 1
+      end
+
+      groups.flat_map(&:players).each do |player|
+        player.score_cards.create!(round: self)
       end
     end
 
