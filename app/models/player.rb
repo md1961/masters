@@ -49,6 +49,7 @@ class Player < ActiveRecord::Base
 
     def swing_club
       club = clubs.find_by(name: ball.next_use.downcase)
+      ball.club_used = club
       result = club.swing(ball.next_adjust)
       @info = club.info
       if result == '(1)' && ball.next_adjust == 0

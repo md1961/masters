@@ -6,6 +6,8 @@ module RoundsHelper
   end
 
   def area_display(player)
-    "#{player.ball.result.to_i == 0 ? 'near' : ''} #{player.shot.area}"
+    area = player.shot.area
+    preposition = area.green? && player.ball.result.to_i == 0 ? 'near' : ''
+    "#{preposition} #{area}"
   end
 end

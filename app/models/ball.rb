@@ -4,6 +4,7 @@ class Ball < ActiveRecord::Base
   belongs_to :player
   belongs_to :shot
 
+  attr_accessor :club_used
   attr_reader :info
 
   after_create :set_next_use_if_nil
@@ -86,13 +87,20 @@ class Ball < ActiveRecord::Base
     end
   end
 
+    def hole_result
+      i = shot_count - shot.hole.par
+      %w(par bogey double-bogey triple-bogey +4 +5 +6 +7 +8 +9 +10 DOUBLE-EAGLE Eagle birdie)[i]
+    end
+
   def result_display
     if shot_count == 0
       ''
     elsif ok?
-      "putt to OK distance to hole out on #{shot_count}"
+      "#{player} putt to OK distance to hole out on #{shot_count}. #{hole_result}"
     elsif holed_out?
-      "sink to hole out on #{shot_count}"
+      "#{player} sink to hole out on #{shot_count}. #{hole_result}"
+    elsif club_used.putt?
+      "#{player} putt as #{shot_count.ordinalize} shot to #{result}"
     elsif is_saved
       "#{player} hit #{(shot_count - 1).ordinalize} shot into #{lands}" \
         "and save on #{shot_count.ordinalize} shot by '#{result}'"
