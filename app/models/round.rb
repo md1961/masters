@@ -26,9 +26,8 @@ class Round < ActiveRecord::Base
   end
 
   def proceed(shot_option: nil)
-    if needs_input? && shot_option.present?
-      ready_to_play!
-    end
+    ready_to_play! if needs_input? && shot_option.present?
+    skips_result_display = false
     if areas.all?(&:open?)
     # TODO: Should move this block to another method.
       group1 = groups.find_by(number: 1)
@@ -38,15 +37,16 @@ class Round < ActiveRecord::Base
         needs_input!
         return
       end
-      array_of_play_results = current_group.play(index_option: shot_option && Integer(shot_option))
       # FIXME: Think how to hand result strings to view.
+      array_of_play_results = current_group.play(index_option: shot_option && Integer(shot_option))
+      skips_result_display = true if array_of_play_results.empty?
       update!(play_result: array_of_play_results)
       if areas.first.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(first_hole_number)
       end
     end
-    ready_to_play? ? displays_result! : ready_to_play!
+    ready_to_play? ? displays_result! : ready_to_play! unless skips_result_display
   end
 
   def ==(other)

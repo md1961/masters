@@ -12,18 +12,17 @@
 </div>
 
 <table>
+  <% group = @round.current_group
+     player = group.next_player -%>
   <% if @round.ready_to_play? -%>
-    <% group = @round.current_group
-       player = group.next_player -%>
     <tr>
       <% if group.all_holed_out? -%>
         <td><%= "#{group} holed out on #{player.shot.hole}" %></td>
       <% else -%>
-        <td><%= "#{group} on #{player.shot.area}" %></td>
+        <td><%= "#{player} on #{player.shot.area}" %></td>
       <% end -%>
     </tr>
   <% elsif @round.needs_input? -%>
-    <% player = @round.current_group.next_player -%>
     <tr>
       <td><%= "#{player} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
     </tr>
