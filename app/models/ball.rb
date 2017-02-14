@@ -88,10 +88,10 @@ class Ball < ActiveRecord::Base
     end
   end
 
-    def hole_result
-      i = shot_count - shot.hole.par
-      %w(par bogey double-bogey triple-bogey +4 +5 +6 +7 +8 +9 +10 DOUBLE-EAGLE Eagle birdie)[i]
-    end
+  def hole_result(offset = 0)
+    i = shot_count - shot.hole.par + offset
+    %w(par bogey double-bogey triple-bogey +4 +5 +6 +7 +8 +9 +10 DOUBLE-EAGLE Eagle birdie)[i]
+  end
 
   def result_display
     if shot_count == 0
