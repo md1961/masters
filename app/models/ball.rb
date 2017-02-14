@@ -16,6 +16,10 @@ class Ball < ActiveRecord::Base
     result == 'IN' || result == 'OK'
   end
 
+  def on_green?
+    result.to_i > 0 || holed_out?
+  end
+
   def ok?
     result == 'OK'
   end
@@ -50,7 +54,8 @@ class Ball < ActiveRecord::Base
       self.shot_count += 1 if club_result == 'OK'
     else
       shot_judge = shot.judge(club_result)
-      self.result      = club_result
+      result_prefix = is_layup && club_result.to_i > 0 ? 'layup-' : ''
+      self.result      = result_prefix + club_result
       self.lands       = shot_judge.lands
       self.next_use    = shot_judge.next_use
       self.next_adjust = shot_judge.next_adjust
@@ -97,7 +102,7 @@ class Ball < ActiveRecord::Base
       return unless lands =~ RE_STRINGIFIED_HASH
       dice = Dice.roll
       lands_orig = lands
-      self.lands    = look_up_optional_result(eval(lands   ), dice)
+      self.lands = look_up_optional_result(eval(lands), dice)
       @info = "'#{lands}' on dice '#{dice}' from #{lands_orig}"
       return unless next_use =~ RE_STRINGIFIED_HASH
       decide_optional_next_use(dice)

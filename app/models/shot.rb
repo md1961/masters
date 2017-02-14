@@ -16,8 +16,10 @@ class Shot < ActiveRecord::Base
     shot_judges.find_by(prev_result: look_up_in_prev_result(result))
   end
 
-  def next(is_layup)
-    Shot.find_by(hole: hole, number: number + 1, is_layup: is_layup) || self
+  def next(ball)
+    ball.on_green? \
+      ? Shot.where(hole: hole).order(:number).last \
+      : Shot.find_by(hole: hole, number: number + 1, is_layup: ball.is_layup) || self
   end
 
   def <=>(other)
