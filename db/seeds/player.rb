@@ -146,13 +146,32 @@ h_clubs = {
 }
 add_clubs(player, h_clubs)
 
+=begin
+player = Player.create!(last_name: 'Zoeller', first_name: 'Fuzzy', overall: 25)
+h_clubs = {
+  drive: %w(SL SC MR ML MR MC ML MC MC MC MC MC* LL LR LL LC* LR LC LC* LC LC*),
+  fw:    %w(SR-P SR-P SC-P SC-Ch MR-Ch LL-Ch LC-Ch SR-Ch 55 46 39 36 29 26 23 20 17 13 10 6 4),
+  li:    %w(SR-P SL-P LR-Ch ML-Ch SR-Ch LC-Ch SC-Ch 52 43 38 36 32 29 23 20 17 15 11 9 5 3),
+  mi:    %w(SR-Ch SC-Ch MR-Ch LL-Ch LR-Ch ML-Ch 56 45 40 37 32 28 24 21 18 16 14 11 8 5 2),
+  si:    %w(SR-Ch ML-Ch LR-Ch SC-Ch MR-Ch 50 36 31 28 26 23 21 19 17 14 12 10 7 5 3 1),
+  p:     %w(SR-Ch ML-Ch LR-Ch 45 31 26 23 21 19 17 15 13 12 11 9 8 6 5 4 2 (1)),
+  ch:    %w(52 38 28 19 15 13 12 11 10 9 8 7 6 5 5 4 3 3 2 1 IN),
+  sd:    %w(Sd 50 35 32 28 22 19 15 13 12 11 10 9 8 7 6 5 4 3 2 (1)),
+  putt:  %w(Miss-A 1-B 2-C 2-D 3-D 3 4 4 5 6 7 8 9 10 11 13 15 19 33 45 IN),
+}
+add_clubs(player, h_clubs)
 
-# Tournament    : year name
-# Round         : number tournament_id
-# PlayingAt     : seq_num hole_id name
-# Group         : number round_id playing_at_id
-# Grouping      : group_id player_id play_order
-#
-# Ball          : player_id shod_id shot_count result
-# ScoreCard     : player_id round_id
-# Score         : score_card_id hole_id value
+player = Player.create!(last_name: 'Kite', first_name: 'Tom', overall: 23)
+h_clubs = {
+  drive: %w(SL SR SC SC SC MR ML MR MC MC MC MC* MC MC MC MC* MC LL LC* LC LC*),
+  fw:    %w(SL-P SR-P SC-Ch MR-Ch LL-Ch LC-Ch SR-Ch ML-Ch 52 44 38 34 27 25 22 19 15 12 9 5 3),
+  li:    %w(SC-P MR-Ch ML-Ch SR-Ch LL-Ch SR-Ch ML-Ch 47 42 37 34 31 27 22 19 16 14 11 8 4 2),
+  mi:    %w(SL-Ch SR-Ch ML-Ch LR-Ch LC-Ch MR-Ch 53 43 39 35 30 26 23 19 17 15 13 10 7 4 1),
+  si:    %w(SL-Ch MR-Ch LC-Ch ML-Ch LR-Ch 48 34 28 26 24 22 20 18 15 13 11 9 6 4 2 1),
+  p:     %w(SC-Ch MR-Ch 48 31 22 20 19 18 16 14 13 12 11 9 8 6 5 4 3 1 (1)),
+  ch:    %w(47 33 23 16 12 11 10 9 8 7 6 6 5 4 4 3 2 2 1 1 IN),
+  sd:    %w(Sd 36 24 20 17 14 12 10 9 8 7 7 6 6 5 4 4 3 2 1 IN),
+  putt:  %w(Miss-A 1-B 2-C 3-D 3 4 4 5 6 7 8 9 10 11 13 16 19 25 41 IN IN),
+}
+add_clubs(player, h_clubs)
+=end
