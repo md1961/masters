@@ -19,7 +19,7 @@
       <% if group.all_holed_out? -%>
         <td><%= "#{group} holed out on #{player.shot.hole}" %></td>
       <% else -%>
-        <td><%= "#{player} on #{player.shot.area}" %></td>
+        <td><%= "#{player} on #{area_display(player)}" %></td>
       <% end -%>
     </tr>
   <% elsif @round.needs_input? -%>
