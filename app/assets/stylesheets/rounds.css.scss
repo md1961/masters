@@ -7,6 +7,10 @@ body {
   font-size: small;
 }
 
+div#button_to_proceed {
+  margin-left: 400px;
+}
+
 div.error {
   color: red;
 }
@@ -35,4 +39,6 @@ body.real {
 table#players_info {
   font-size: x-small;
   margin-top: 20px;
+  position: fixed;
+  top: 100px;
 }
