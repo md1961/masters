@@ -93,8 +93,12 @@ class Ball < ActiveRecord::Base
       "putt to OK distance to hole out on #{shot_count}"
     elsif holed_out?
       "sink to hole out on #{shot_count}"
+    elsif is_saved
+      "#{player} hit #{(shot_count - 1).ordinalize} shot into #{lands}" \
+        "and save on #{shot_count.ordinalize} shot by '#{result}'"
     else
-      "hit #{shot_count.ordinalize} shot onto #{lands} by '#{result}'"
+      preposition = %w(Trees Sand Water).include?(lands) ? 'into' : 'onto'
+      "#{player} hit #{shot_count.ordinalize} shot #{preposition} #{lands} by '#{result}'"
     end
   end
 

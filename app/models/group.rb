@@ -50,8 +50,7 @@ class Group < ActiveRecord::Base
       player = next_player
       info = player.play(index_option: index_option)
       hole = player.shot.hole
-      s = "#{player.last_name} on #{hole} (Par #{hole.par})"
-      [s, player.ball.result_display, player.ball.next_shot_display, info]
+      [hole.full_desc, player.ball.result_display, player.ball.next_shot_display, info]
     else
       # TODO: Update play_order of Grouping.
       hole_number = players.first.shot.hole.number

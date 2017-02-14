@@ -19,7 +19,7 @@
       <% if group.all_holed_out? -%>
         <td><%= "#{group} holed out on #{player.shot.hole}" %></td>
       <% else -%>
-        <td><%= "#{group} about to stroke from #{player.shot.area}" %></td>
+        <td><%= "#{group} on #{player.shot.area}" %></td>
       <% end -%>
     </tr>
   <% elsif @round.needs_input? -%>
@@ -28,9 +28,11 @@
       <td><%= "#{player} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
     </tr>
   <% elsif @round.play_result -%>
-    <% eval(@round.play_result).each do |line| -%>
+    <% eval(@round.play_result).each.with_index(1) do |line, line_no| -%>
       <tr>
-        <td><%= line %></td>
+        <td class="<%= line_no > 2 && 'smaller' %>">
+          <%= line %>
+        </td>
       </tr>
     <% end -%>
   <% else -%>
@@ -54,7 +56,7 @@
         <% else -%>
           <% hole = player.shot.try(:hole) %></td>
           <td><%= player %></td>
-          <td><%= hole && "#{hole} (Par #{hole.par})" %></td>
+          <td><%= hole.try(:full_desc) %></td>
           <td class="emphasized"><%= ball.shot_count %></td>
           <td><%= ball.lands %></td>
           <td><%= ball.result %></td>

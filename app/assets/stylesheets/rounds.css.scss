@@ -5,6 +5,10 @@
 body {
   font-family: "arial",sans-serif;
   font-size: small;
+
+  td.smaller {
+    font-size: x-small;
+  }
 }
 
 div#button_to_proceed {
