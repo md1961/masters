@@ -2,12 +2,14 @@ class RoundsController < ApplicationController
   before_action :set_round, only: [:show, :update]
 
   def index
-    Round.destroy_all
+    # TODO: Possible to Round.destroy_all ?
     Ball .destroy_all
     redirect_to Round.create!(number: 1)
   end
 
   def show
+    session[:style] = params[:style] if params[:style]
+    @style = session[:style]
   end
 
   def update

@@ -9,10 +9,38 @@ body {
   td.smaller {
     font-size: x-small;
   }
+
+  div#button_to_proceed {
+    margin-left: 400px;
+  }
+
+  table#players_info {
+    font-size: x-small;
+    position: fixed;
+    top: 120px;
+  }
 }
 
-div#button_to_proceed {
-  margin-left: 400px;
+body.large {
+  font-size: large;
+
+  td.smaller {
+    font-size: medium;
+  }
+
+  div#button_to_proceed {
+    margin-left: 500px;
+  }
+
+  table#players_info {
+    font-size: medium;
+    position: fixed;
+    top: 160px;
+
+    td {
+      padding: 0px 5px;
+    }
+  }
 }
 
 div.error {
@@ -35,14 +63,4 @@ td.emphasized {
 span.button {
   font-size: xx-small;
   cursor: pointer;
-}
-
-body.real {
-}
-
-table#players_info {
-  font-size: x-small;
-  margin-top: 20px;
-  position: fixed;
-  top: 100px;
 }
