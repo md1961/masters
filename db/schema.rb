@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206104605) do
+ActiveRecord::Schema.define(version: 20170214021711) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "round_id"
@@ -89,6 +89,23 @@ ActiveRecord::Schema.define(version: 20170206104605) do
 
   add_index "rounds", ["tournament_id", "number"], name: "index_rounds_on_tournament_id_and_number", unique: true
   add_index "rounds", ["tournament_id"], name: "index_rounds_on_tournament_id"
+
+  create_table "score_cards", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "round_id"
+  end
+
+  add_index "score_cards", ["player_id"], name: "index_score_cards_on_player_id"
+  add_index "score_cards", ["round_id"], name: "index_score_cards_on_round_id"
+
+  create_table "scores", force: :cascade do |t|
+    t.integer "score_card_id"
+    t.integer "hole_id"
+    t.integer "value"
+  end
+
+  add_index "scores", ["hole_id"], name: "index_scores_on_hole_id"
+  add_index "scores", ["score_card_id"], name: "index_scores_on_score_card_id"
 
   create_table "shot_judges", force: :cascade do |t|
     t.string  "prev_result"

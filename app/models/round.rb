@@ -2,6 +2,7 @@ class Round < ActiveRecord::Base
   belongs_to :tournament
   has_many :areas , -> { order(:seq_num) }
   has_many :groups, -> { order(:number ) }
+  has_many :score_cards
 
   enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2}
 

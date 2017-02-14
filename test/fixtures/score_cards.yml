@@ -1,11 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  player_id: 
   round_id: 
-  seq_num: 1
-  name: one
 
 two:
+  player_id: 
   round_id: 
-  seq_num: 2
-  name: two

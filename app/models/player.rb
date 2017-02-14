@@ -1,5 +1,6 @@
 class Player < ActiveRecord::Base
   has_many :clubs
+  has_many :score_cards
   has_one :grouping
   has_one :group, through: :grouping
   has_one :round, through: :group

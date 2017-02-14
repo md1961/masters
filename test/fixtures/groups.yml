@@ -3,9 +3,7 @@
 one:
   round_id: 
   number: 1
-  playing_at_id: 
 
 two:
   round_id: 
-  number: 1
-  playing_at_id: 
+  number: 2

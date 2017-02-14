@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  round_id: 
-  seq_num: 1
-  name: one
+  score_card_id: 
+  hole_id: 
+  value: 1
 
 two:
-  round_id: 
-  seq_num: 2
-  name: two
+  score_card_id: 
+  hole_id: 
+  value: 1
