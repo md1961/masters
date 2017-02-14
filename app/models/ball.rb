@@ -53,6 +53,7 @@ class Ball < ActiveRecord::Base
       self.lands       = 'Green'
       self.next_use    = 'Putt'
       self.shot_count += 1 if club_result == 'OK'
+      self.shot = shot.next(self)
     else
       shot_judge = shot.judge(club_result)
       result_prefix = is_layup && club_result.to_i > 0 ? 'layup-' : ''
