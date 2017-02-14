@@ -47,7 +47,7 @@ class Group < ActiveRecord::Base
 
   def play(index_option: nil)
     if all_holed_out?
-      # TODO: Update play_order of Grouping.
+      update_play_order
       hole_number = players.first.shot.hole.number
       # TODO: Modify end of round procedure.
       return :end_of_round if hole_number == 18
@@ -70,4 +70,11 @@ class Group < ActiveRecord::Base
   def to_s
     "Group ##{number} (#{players.map(&:to_s).join(', ')})"
   end
+
+  private
+
+    def update_play_order
+      players.sort_by { |p| [p.ball.shot_count, p.grouping.play_order] }.
+        inject(1) { |order, player| player.grouping.update!(play_order: order); order + 1 }
+    end
 end
