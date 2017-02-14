@@ -2,7 +2,8 @@ class RoundsController < ApplicationController
   before_action :set_round, only: [:show, :update]
 
   def index
-    redirect_to Round.create!(number: 1)
+    # FIXME: Redirect_to last created, or show a list.
+    redirect_to Round.last
   end
 
   def show

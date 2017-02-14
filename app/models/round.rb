@@ -4,6 +4,8 @@ class Round < ActiveRecord::Base
   has_many :groups, -> { order(:number ) }
   has_many :score_cards
 
+  # FIXME: Add COLUMN created_at.
+
   enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2}
 
   after_create :create_areas_for_round_one, if: :first_round?
