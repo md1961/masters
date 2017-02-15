@@ -30,7 +30,7 @@ body {
     margin-top: 20px;
 
     td {
-      width: 10px;
+      width: 16px;
     }
 
     caption {
@@ -66,6 +66,10 @@ body.large {
 
   table.score_card {
     font-size: medium;
+
+    td {
+      width: 24px;
+    }
   }
 }
 

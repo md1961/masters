@@ -114,8 +114,14 @@ class Ball < ActiveRecord::Base
     end
   end
 
-  def next_shot_display
-    "Next: #{shot} '#{next_use}'(#{next_adjust > 0 ? '+' : ''}#{next_adjust}), layup=#{is_layup}"
+  def next_shot_display(informative = false)
+    next_adjust_display = "(#{next_adjust > 0 ? '+' : ''}#{next_adjust})"
+    if informative
+      "Next: #{shot} '#{next_use}'#{next_adjust_display}, layup=#{is_layup}"
+    else
+      distance = on_green? ? " #{result}" : ''
+      "from #{lands}#{distance} with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
+    end
   end
 
   private

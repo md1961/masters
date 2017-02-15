@@ -15,13 +15,19 @@
   <% group = @round.current_group
      player = group.try(:next_player) -%>
   <% if @round.ready_to_play? -%>
-    <tr>
-      <% if group.all_holed_out? -%>
+    <% if group.all_holed_out? -%>
+      <tr>
         <td><%= "#{group} holed out on #{player.shot.hole}" %></td>
-      <% else -%>
-        <td><%= "#{player} on #{area_display(player)} #{target_display(player.ball)}" %></td>
-      <% end -%>
-    </tr>
+      </tr>
+    <% else -%>
+      <% ball = player.ball -%>
+      <tr>
+        <td><%= "#{player} on #{area_display(player)} #{target_display(ball)}" %></td>
+      </tr>
+      <tr>
+        <td><%= ball.next_shot_display %></td>
+      </tr>
+    <% end -%>
   <% elsif @round.needs_input? -%>
     <tr>
       <td><%= "#{player} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
@@ -64,7 +70,7 @@
           <td class="<%= result && result.end_with?('*') && 'emphasized' %>">
             <%= result %>
           </td>
-          <td><%= ball.next_shot_display %></td>
+          <td><%= ball.next_shot_display(true) %></td>
         <% end -%>
       </tr>
     <% end -%>
