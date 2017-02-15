@@ -59,11 +59,13 @@ class Group < ActiveRecord::Base
       []
     else
       player = next_player
-      is_putting = true if player.ball.on_green?
+      ball = player.ball
+      is_putting = true if ball.on_green?
       info = player.play(index_option: index_option)
-      @message = player.ball.direct_in? ? 'IN!' : is_putting ? 'miss' : nil
+      @message = ball.direct_in? ? 'IN!' : is_putting ? 'miss' : nil
       hole = player.shot.hole
-      [hole.full_desc, player.ball.result_display, player.ball.next_shot_display, info]
+      next_shot = "( next will be: #{ball.next_shot_display} )"
+      [hole.full_desc, ball.result_display, next_shot, info]
     end
   end
 

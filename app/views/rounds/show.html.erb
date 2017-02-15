@@ -34,7 +34,7 @@
     </tr>
   <% elsif @round.play_result -%>
     <% if @message -%>
-      <%= @message %>
+      <span id="message"><%= @message %></span>
     <% end -%>
     <% eval(@round.play_result).each.with_index(1) do |line, line_no| -%>
       <tr>
