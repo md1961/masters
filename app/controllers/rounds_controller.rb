@@ -7,8 +7,6 @@ class RoundsController < ApplicationController
   end
 
   def show
-    session[:style] = params[:style] if params[:style]
-    @style = session[:style]
     @message = params[:message]
   end
 
