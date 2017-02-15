@@ -20,10 +20,14 @@ body {
     top: 120px;
   }
 
-  table.score_card {
-    font-size: x-small;
+  div#score_cards {
     position: fixed;
     top: 300px;
+  }
+
+  table.score_card {
+    font-size: x-small;
+    margin-top: 20px;
 
     td {
       width: 10px;
@@ -56,9 +60,12 @@ body.large {
     }
   }
 
+  div#score_cards {
+    top: 400px;
+  }
+
   table.score_card {
     font-size: medium;
-    top: 400px;
   }
 }
 

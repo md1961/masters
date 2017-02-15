@@ -68,7 +68,11 @@
   <% end -%>
 </table>
 
-<% if player -%>
-  <span id="toggle_score_card_display" class="button">[+]</span>
-  <%= render player.score_cards.find_by(round: @round) %>
+<% if group -%>
+  <div id="score_cards">
+    <span id="toggle_score_card_display" class="button">[+]</span>
+    <% group.players.each do |player| -%>
+      <%= render player.score_cards.find_by(round: @round) %>
+    <% end -%>
+  </div>
 <% end -%>

@@ -1,7 +1,7 @@
 module RoundsHelper
 
-  def total_score_display(player = nil, round = nil, score: nil)
-    score = player.score_cards.find_by(round: round).total_score if player && round
+  def total_score_display(player, round)
+    score = player.score_cards.find_by(round: round).total_score
     score.zero? ? 'even' : format('%+d', score)
   end
 
@@ -26,6 +26,6 @@ module RoundsHelper
     total_value = scores[0, index + 1].map { |s| s.try(:value) || 0 }.sum
     par = score.hole.par
     total_par = Hole.where('number <= ?', score.hole.number).sum(:par)
-    value && value == par ? nil : total_value - total_par
+    value && value == par ? nil : format('%+d', total_value - total_par).sub('+0', ' 0')
   end
 end
