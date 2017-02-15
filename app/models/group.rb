@@ -57,7 +57,7 @@ class Group < ActiveRecord::Base
       update_play_order
       hole_number = players.first.shot.hole.number
       hole_number += 1
-      hole_number = 1 if hole_number == 18
+      hole_number = 1 if hole_number == 19
       # FIXME: Add attribute starting_hole to Round
       starting_hole = 1
       if hole_number == starting_hole
