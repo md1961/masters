@@ -18,6 +18,10 @@ class Round < ActiveRecord::Base
     2
   end
 
+  def dice_roll_for_club_on_12_tee
+    1  # for {'1-3' => 'MI', '4-6' => 'SI'}
+  end
+
   def first_round?
     number == 1
   end

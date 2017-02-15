@@ -50,9 +50,8 @@ class Player < ActiveRecord::Base
     def swing_club
       # FIXME: Move to Round or else.
       if ball.shot.hole.number == 12 && ball.shot.number == 1
-        dice_roll_for_club_on_12_tee = 1  # for {'1-3' => 'MI', '4-6' => 'SI'}
         ball.instance_variable_set('@info', '')
-        ball.send(:decide_optional_next_use, dice_roll_for_club_on_12_tee)
+        ball.send(:decide_optional_next_use, round.dice_roll_for_club_on_12_tee)
       end
       #
       club = clubs.find_by(name: ball.next_use.downcase)
