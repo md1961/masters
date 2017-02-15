@@ -1,4 +1,5 @@
-<% holes = Hole.all -%>
+<% holes = Hole.order(:number)
+   scores = holes.map { |hole| score_card.scores.find_by(hole: hole) } -%>
 
 <table class="score_card" hidden>
   <caption><%= score_card.player %></caption>
@@ -16,9 +17,17 @@
   </thead>
   <tbody>
     <tr>
-      <% holes.each do |hole| -%>
-        <% score = score_card.scores.find_by(hole: hole) -%>
+      <% scores.each do |score| -%>
         <td class="numeric"><%= score.try(:value) %></td>
+      <% end -%>
+    </tr>
+    <tr>
+      <% total_par   = 0
+         total_value = 0 -%>
+      <% scores.size.times do |index| -%>
+        <td class="numeric">
+          <%= cum_score_display(index, scores) %>
+        </td>
       <% end -%>
     </tr>
   </tbody>

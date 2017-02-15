@@ -25,6 +25,10 @@ body {
     position: fixed;
     top: 300px;
 
+    td {
+      width: 10px;
+    }
+
     caption {
       text-align: left;
     }
@@ -50,6 +54,11 @@ body.large {
     td {
       padding: 0px 5px;
     }
+  }
+
+  table.score_card {
+    font-size: medium;
+    top: 400px;
   }
 }
 
