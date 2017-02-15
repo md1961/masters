@@ -109,7 +109,8 @@ class Ball < ActiveRecord::Base
         "and save on #{shot_count.ordinalize} shot by '#{result}'"
     else
       preposition = %w(Trees Sand Water).include?(lands) ? 'into' : 'onto'
-      "#{player} hit #{shot_count.ordinalize} shot #{preposition} #{lands} by '#{result}'"
+      superlative = result.try(:end_with?, '*') ? ' (superlative)' : ''
+      "#{player} hit #{shot_count.ordinalize} shot #{preposition} #{lands} by '#{result}'#{superlative}"
     end
   end
 

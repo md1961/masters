@@ -11,10 +11,10 @@ class Club < ActiveRecord::Base
   def swing(dice_adjust = 0)
     raise "Should not reach here: return 'IN'" if player.ball.ok?
     dice = Dice.two_rolls
-    @info = "'#{dice}'"
+    @info = "#{dice}"
     unless dice_adjust.zero?
       dice = dice_adjusted(dice, dice_adjust)
-      @info = "'#{dice}'(#{format("%+d", dice_adjust)} of #{@info})"
+      @info = "#{dice}(#{format("%+d", dice_adjust)} of #{@info})"
     end
     raw_result = club_results.find_by(dice: dice).result unless player.ball.third_putt?
     result = raw_result

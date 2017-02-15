@@ -4,6 +4,7 @@ class Round < ActiveRecord::Base
   has_many :groups, -> { order(:number ) }
   has_many :score_cards
 
+  # FIXME: Add COLUMN club_id_for_12_tee, or else.
   # FIXME: Add COLUMN created_at.
 
   enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2}
