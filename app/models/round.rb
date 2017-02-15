@@ -9,6 +9,8 @@ class Round < ActiveRecord::Base
 
   enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2}
 
+  attr_reader :message
+
   after_create :create_areas_for_round_one, if: :first_round?
   after_create :setup_groups_and_score_cards
 
@@ -31,6 +33,7 @@ class Round < ActiveRecord::Base
   def proceed(shot_option: nil)
     ready_to_play! if needs_input? && shot_option.present?
     skips_result_display = false
+    @message = nil
     if areas.all?(&:open?)
     # TODO: Should move this block to another method.
       group1 = groups.find_by(number: 1)
@@ -44,6 +47,7 @@ class Round < ActiveRecord::Base
       array_of_play_results = current_group.play(index_option: shot_option && Integer(shot_option))
       skips_result_display = true if array_of_play_results.empty?
       update!(play_result: array_of_play_results)
+      @message = current_group.message
       if areas.first.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(first_hole_number)

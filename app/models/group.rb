@@ -3,6 +3,8 @@ class Group < ActiveRecord::Base
   has_many :groupings, -> { order(:play_order) }
   has_many :players, through: :groupings
 
+  attr_reader :message
+
   def players_gone_to_next_area?
     players.none? { |player| player.shot.area == area }
   end
@@ -46,6 +48,7 @@ class Group < ActiveRecord::Base
   end
 
   def play(index_option: nil)
+    @message = nil
     if all_holed_out?
       update_play_order
       hole_number = players.first.shot.hole.number
@@ -56,7 +59,9 @@ class Group < ActiveRecord::Base
       []
     else
       player = next_player
+      is_putting = true if player.ball.on_green?
       info = player.play(index_option: index_option)
+      @message = player.ball.direct_in? ? 'IN!' : is_putting ? 'miss' : nil
       hole = player.shot.hole
       [hole.full_desc, player.ball.result_display, player.ball.next_shot_display, info]
     end

@@ -9,6 +9,7 @@ class RoundsController < ApplicationController
   def show
     session[:style] = params[:style] if params[:style]
     @style = session[:style]
+    @message = params[:message]
   end
 
   def update
@@ -17,7 +18,7 @@ class RoundsController < ApplicationController
       render :show
     else
       @round.proceed(shot_option: params[:shot_option])
-      redirect_to @round
+      redirect_to round_path(@round, message: @round.message)
     end
   end
 

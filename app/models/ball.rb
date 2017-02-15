@@ -18,6 +18,10 @@ class Ball < ActiveRecord::Base
     result == 'IN' || result == 'OK'
   end
 
+  def direct_in?
+    result == 'IN'
+  end
+
   def on_green?
     result.to_i > 0 || holed_out?
   end
@@ -84,6 +88,8 @@ class Ball < ActiveRecord::Base
       -1
     elsif other.result.nil?
       1
+    elsif self.next_adjust != other.next_adjust
+      self.next_adjust <=> other.next_adjust
     else
       distance_factor(self.result) <=> distance_factor(other.result)
     end
@@ -119,8 +125,9 @@ class Ball < ActiveRecord::Base
     if informative
       "Next: #{shot} '#{next_use}'#{next_adjust_display}, layup=#{is_layup}"
     else
+      from = lands.blank? ? '' : lands == 'Water' ? 'from Water Fringe' : "from #{lands}"
       distance = on_green? ? " #{result}" : ''
-      "from #{lands}#{distance} with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
+      "#{from}#{distance} with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
     end
   end
 

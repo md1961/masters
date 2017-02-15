@@ -33,6 +33,9 @@
       <td><%= "#{player} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
     </tr>
   <% elsif @round.play_result -%>
+    <% if @message -%>
+      <%= @message %>
+    <% end -%>
     <% eval(@round.play_result).each.with_index(1) do |line, line_no| -%>
       <tr>
         <td class="<%= line_no > 2 && 'smaller' %>">
