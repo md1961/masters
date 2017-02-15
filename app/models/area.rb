@@ -40,6 +40,6 @@ class Area < ActiveRecord::Base
   end
 
   def to_s
-    "#{shots.first.hole} #{name.capitalize}"
+    "#{shots.first.hole.full_desc} #{name.capitalize}"
   end
 end

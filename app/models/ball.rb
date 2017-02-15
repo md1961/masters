@@ -129,7 +129,8 @@ class Ball < ActiveRecord::Base
     else
       from = lands.blank? ? '' : lands == 'Water' ? 'from Water Fringe' : "from #{lands}"
       distance = on_green? ? " #{result}" : ''
-      "#{from}#{distance} with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
+      "#{(shot_count + 1).ordinalize} shot #{from}#{distance}" \
+        " with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
     end
   end
 
