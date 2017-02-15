@@ -7,7 +7,7 @@ class Round < ActiveRecord::Base
   # FIXME: Add COLUMN club_id_for_12_tee, or else.
   # FIXME: Add COLUMN created_at.
 
-  enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2}
+  enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2, finished: 99}
 
   attr_reader :message
 
@@ -24,6 +24,10 @@ class Round < ActiveRecord::Base
 
   def first_round?
     number == 1
+  end
+
+  def final_round?
+    number == tournament.num_rounds
   end
 
   def first_hole_number
