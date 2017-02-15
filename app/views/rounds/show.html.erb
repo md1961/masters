@@ -67,3 +67,8 @@
     <% end -%>
   <% end -%>
 </table>
+
+<% if player -%>
+  <span id="toggle_score_card_display" class="button">[+]</span>
+  <%= render player.score_cards.find_by(round: @round) %>
+<% end -%>

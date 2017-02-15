@@ -1,0 +1,25 @@
+<% holes = Hole.all -%>
+
+<table class="score_card" hidden>
+  <caption><%= score_card.player %></caption>
+  <thead>
+    <tr>
+      <% holes.each do |hole| -%>
+        <td class="numeric"><%= hole.number %></td>
+      <% end -%>
+    </tr>
+    <tr>
+      <% holes.each do |hole| -%>
+        <td class="numeric"><%= hole.par %></td>
+      <% end -%>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% holes.each do |hole| -%>
+        <% score = score_card.scores.find_by(hole: hole) -%>
+        <td class="numeric"><%= score.try(:value) %></td>
+      <% end -%>
+    </tr>
+  </tbody>
+</table>
