@@ -7,8 +7,8 @@ module RoundsHelper
 
   def area_display(player)
     area = player.shot.area
-    preposition = area.green? && player.ball.result.to_i == 0 ? 'near' : ''
-    "#{preposition} #{area}"
+    modifier = area.green? && player.ball.result.to_i == 0 ? 'vicinity' : ''
+    "#{area} #{modifier}"
   end
 
   def target_display(ball)
