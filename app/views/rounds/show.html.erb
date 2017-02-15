@@ -7,7 +7,7 @@
       <% end -%>
       <br>
     <% end -%>
-    <%= submit_tag :Proceed %>
+    <%= submit_tag :Proceed, disabled: @message %>
   <% end -%>
 </div>
 
@@ -38,7 +38,7 @@
     <% end -%>
     <% eval(@round.play_result).each.with_index(1) do |line, line_no| -%>
       <tr class="delayed_display" <%= @message && 'hidden' %>>
-        <td class="<%= line_no > 2 && 'smaller' %>">
+        <td class="<%= line_no >= 3 && 'smaller' %> <%= line_no >= 4 && 'italic' %>">
           <%= line %>
         </td>
       </tr>
