@@ -37,7 +37,7 @@
       <div id="message"><%= @message %></div>
     <% end -%>
     <% eval(@round.play_result).each.with_index(1) do |line, line_no| -%>
-      <tr>
+      <tr class="delayed_display" <%= @message && 'hidden' %>>
         <td class="<%= line_no > 2 && 'smaller' %>">
           <%= line %>
         </td>

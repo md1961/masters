@@ -9,3 +9,7 @@ $ ->
       $(this).text('[-]')
     else
       $(this).text('[+]')
+
+	setTimeout ->
+		$('tr.delayed_display').show()
+	, 1500
