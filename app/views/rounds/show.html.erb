@@ -60,7 +60,9 @@
           <td class="emphasized"><%= ball.shot_count %></td>
           <td><%= player == group.next_player ? 'n' : '' %></td>
           <td><%= ball.lands %></td>
-          <td><%= ball.result %></td>
+          <td class="<%= ball.result.end_with?('*') && 'emphasized' %>">
+            <%= ball.result %>
+          </td>
           <td><%= ball.next_shot_display %></td>
         <% end -%>
       </tr>
