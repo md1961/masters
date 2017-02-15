@@ -38,6 +38,10 @@ class Round < ActiveRecord::Base
     # TODO: Should move this block to another method.
       group1 = groups.find_by(number: 1)
       group1.tee_up_on(first_hole_number)
+    elsif current_group.nil?
+      displays_result!
+      update!(play_result: "End of Round #{number}")
+      return
     elsif ready_to_play?
       if current_group.needs_to_choose_shot? && shot_option.nil?
         needs_input!

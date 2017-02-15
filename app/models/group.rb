@@ -23,7 +23,7 @@ class Group < ActiveRecord::Base
 
   def next_area_open?
     area = players_area_uniq.first
-    !players_split? && area && area.next.open?
+    !round_finished? && !players_split? && area && area.next.open?
   end
 
   def all_on_or_near_green?
@@ -36,6 +36,10 @@ class Group < ActiveRecord::Base
 
   def needs_to_choose_shot?
     next_player.ball.next_use_optional?
+  end
+
+  def round_finished?
+    players.all? { |player| player.ball.nil? }
   end
 
   def tee_up_on(hole_number)
@@ -52,10 +56,15 @@ class Group < ActiveRecord::Base
     if all_holed_out?
       update_play_order
       hole_number = players.first.shot.hole.number
-      # TODO: Modify end of round procedure.
-      return :end_of_round if hole_number == 18
       hole_number += 1
-      tee_up_on(hole_number)
+      hole_number = 1 if hole_number == 18
+      # FIXME: Add attribute starting_hole to Round
+      starting_hole = 1
+      if hole_number == starting_hole
+        finish_round
+      else
+        tee_up_on(hole_number)
+      end
       []
     else
       player = next_player
@@ -83,5 +92,9 @@ class Group < ActiveRecord::Base
     def update_play_order
       players.sort_by { |p| [p.ball.shot_count, p.grouping.play_order] }.
         inject(1) { |order, player| player.grouping.update!(play_order: order); order + 1 }
+    end
+
+    def finish_round
+      players.each { |player| player.update!(ball: nil) }
     end
 end
