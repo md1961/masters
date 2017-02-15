@@ -80,7 +80,9 @@ class Ball < ActiveRecord::Base
   end
 
   def <=>(other)
-    if self.shot != other.shot
+    if other.nil? || !other.is_a?(Ball)
+      -1
+    elsif self.shot != other.shot
       self.shot <=> other.shot
     elsif self.result.nil? && other.result.nil?
       self.player.grouping.play_order <=> other.player.grouping.play_order
