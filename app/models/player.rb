@@ -56,12 +56,12 @@ class Player < ActiveRecord::Base
         max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
         dice = Dice.roll
         result = dice <= max_roll_for_in ? 'IN' : '1'
-        @info += ", '#{result}' from dice '#{dice}'"
+        @info += ", '#{result}' from dice #{dice}"
       elsif ball.superlative? && result.to_i > 0 && !shot.is_layup
         dice = Dice.roll
         result = (result.to_i - dice).abs.to_s
         result = 'IN' if result == '0'
-        @info += ", '#{result}' from dice '#{dice}' after superlative"
+        @info += ", '#{result}' from dice #{dice} after superlative"
       end
       result
     end

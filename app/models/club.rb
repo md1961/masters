@@ -46,7 +46,7 @@ class Club < ActiveRecord::Base
     def dice_adjusted(dice, adjust)
       @@dices ||= club_results.pluck(:dice).sort
       index = @@dices.index(dice)
-      raise StandardError, "No dice '#{dice}' in ClubResult of #{club} of #{player}" unless index
+      raise StandardError, "No dice #{dice} in ClubResult of #{club} of #{player}" unless index
       index += adjust
       index =  0 if index < 0
       index = -1 if index >= @@dices.size

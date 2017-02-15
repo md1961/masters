@@ -126,7 +126,7 @@ class Ball < ActiveRecord::Base
       dice = Dice.roll
       lands_orig = lands
       self.lands = look_up_optional_result(eval(lands), dice)
-      @info = "'#{lands}' on dice '#{dice}' from #{lands_orig}"
+      @info = "'#{lands}' on dice #{dice} from #{lands_orig}"
       return unless next_use =~ RE_STRINGIFIED_HASH
       decide_optional_next_use(dice)
     end
@@ -135,7 +135,7 @@ class Ball < ActiveRecord::Base
       dice = Dice.roll unless dice
       next_use_orig = next_use
       self.next_use = look_up_optional_result(eval(next_use), dice)
-      @info += (@info.present? ? ', ' : '') + "'#{next_use}' on dice '#{dice}' from #{next_use_orig}"
+      @info += (@info.present? ? ', ' : '') + "'#{next_use}' on dice #{dice} from #{next_use_orig}"
     end
 
     def look_up_optional_result(hash, num)
