@@ -56,12 +56,13 @@
           <% hole = player.shot.try(:hole) %></td>
           <td><%= player %></td>
           <td class="numeric"><%= total_score_display(player, @round) %></td>
-          <td><%= hole.try(:full_desc) %></td>
+          <td class="numeric"><%= hole.try(:full_desc) %></td>
           <td class="emphasized"><%= ball.shot_count %></td>
           <td><%= player == group.next_player ? 'n' : '' %></td>
           <td><%= ball.lands %></td>
-          <td class="<%= ball.result.end_with?('*') && 'emphasized' %>">
-            <%= ball.result %>
+          <% result = ball.result -%>
+          <td class="<%= result && result.end_with?('*') && 'emphasized' %>">
+            <%= result %>
           </td>
           <td><%= ball.next_shot_display %></td>
         <% end -%>
