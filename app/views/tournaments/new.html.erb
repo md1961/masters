@@ -11,5 +11,10 @@
     <%= f.label :num_rounds %>
     <%= f.text_field :num_rounds %>
   </div>
+  <div>
+    <% Player.all.each do |player| -%>
+      <%= check_box_tag "player[#{player.id}]", true, true %><%= player %>
+    <% end -%>
+  </div>
   <%= f.submit %>
 <% end -%>

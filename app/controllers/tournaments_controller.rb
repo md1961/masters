@@ -33,7 +33,9 @@ class TournamentsController < ApplicationController
 
   def create
     @tournament = Tournament.new
-    if @tournament.update(tournament_params)
+    player_ids = params[:player].select { |_id, bool| bool == 'true' }.keys.map(&:to_i)
+    if @tournament.update(tournament_params) && !player_ids.empty?
+      @tournament.players = Player.find(player_ids)
       redirect_to @tournament
     else
       render :new
