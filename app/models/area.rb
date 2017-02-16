@@ -27,6 +27,14 @@ class Area < ActiveRecord::Base
     end
   end
 
+  def hole
+    shots.first.hole
+  end
+
+  def final?
+    hole.number == round.final_hole_number && green?
+  end
+
   def open?
     shots.flat_map(&:players).none? { |player| player.round == round }
   end
@@ -40,6 +48,6 @@ class Area < ActiveRecord::Base
   end
 
   def to_s
-    "#{shots.first.hole.full_desc} #{name.capitalize}"
+    "#{hole.full_desc} #{name.capitalize}"
   end
 end
