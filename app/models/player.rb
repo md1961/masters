@@ -13,7 +13,7 @@ class Player < ActiveRecord::Base
   attr_accessor :info
 
   def finished_round?
-    ball.finished_round?
+    ball&.finished_round?
   end
 
   def play_order
