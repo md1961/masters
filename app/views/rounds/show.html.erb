@@ -19,6 +19,14 @@
       <tr>
         <td><%= "#{group} holed out on #{player.shot.hole}" %></td>
       </tr>
+      <tr>
+        <td><%= hole_result_display(group) %></td>
+      </tr>
+      <% if player.shot.hole.number == @round.final_hole_number -%>
+        <tr>
+          <td><%= round_result_display(group) %></td>
+        </tr>
+      <% end -%>
     <% else -%>
       <% ball = player.ball -%>
       <tr>
@@ -62,16 +70,17 @@
         <% if ball.nil? -%>
           <td><%= player %></td>
         <% else -%>
-          <% hole = player.shot.try(:hole) %></td>
+          <% hole = player.shot.try(:hole)
+             is_fin = ball.finished_round? -%>
           <td><%= player %></td>
           <td class="numeric"><%= total_score_display(player, @round) %></td>
           <td class="numeric"><%= hole.try(:full_desc) %></td>
-          <td class="emphasized"><%= ball.shot_count %></td>
-          <td><%= player == group.next_player ? 'n' : '' %></td>
-          <td><%= ball.lands %></td>
+          <td class="emphasized"><%= is_fin ? nil : ball.shot_count %></td>
+          <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>
+          <td><%= is_fin ? nil : ball.lands %></td>
           <% result = ball.result -%>
           <td class="<%= result && result.end_with?('*') && 'emphasized' %>">
-            <%= result %>
+            <%= is_fin ? 'FIN' : result %>
           </td>
           <td><%= ball.next_shot_display(true) %></td>
         <% end -%>

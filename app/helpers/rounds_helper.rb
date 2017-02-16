@@ -19,6 +19,20 @@ module RoundsHelper
     end
   end
 
+  def hole_result_display(group)
+    group.players.map { |player|
+      ball = player.ball
+      "#{player} #{ball.shot_count} (#{ball.hole_result})"
+    }.join(', ')
+  end
+
+  def round_result_display(group)
+    group.players.map { |player|
+      score_card = player.score_cards.find_by(round: @round)
+      "#{player} #{score_card.total_value} (#{score_card.total_score})"
+    }.join(', ')
+  end
+
   def cum_score_display(index, scores)
     score = scores[index]
     return nil unless score
