@@ -30,6 +30,9 @@
     <% else -%>
       <% ball = player.ball -%>
       <tr>
+        <td><%= player.shot.hole.full_desc(with_distance: true) %></td>
+      </tr>
+      <tr>
         <td><%= "#{player} on #{area_display(player)} #{target_display(ball)}" %></td>
       </tr>
       <tr>

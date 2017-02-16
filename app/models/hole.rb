@@ -11,8 +11,9 @@ class Hole < ActiveRecord::Base
     self.number <=> other.number
   end
 
-  def full_desc
-    "#{self} (Par #{par})"
+  def full_desc(with_distance: false)
+    distance_display = with_distance ? ", #{distance} yard" : ''
+    "#{self} (Par #{par}#{distance_display})"
   end
 
   def to_s

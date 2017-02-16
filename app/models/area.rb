@@ -48,6 +48,6 @@ class Area < ActiveRecord::Base
   end
 
   def to_s
-    "#{hole.full_desc} #{name.capitalize}"
+    name.capitalize
   end
 end
