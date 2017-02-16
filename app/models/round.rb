@@ -4,7 +4,7 @@ class Round < ActiveRecord::Base
   has_many :groups, -> { order(:number ) }
   has_many :score_cards
 
-  # FIXME: Add COLUMN club_id_for_12_tee, or else.
+  # FIXME: Add COLUMN club_name_for_12_tee, or else.
   # FIXME: Add COLUMN created_at.
 
   # FIXME: Add attribute first_hole_number, or else
@@ -52,7 +52,7 @@ class Round < ActiveRecord::Base
         needs_input!
         return
       end
-      # FIXME: Think how to hand result strings to view.
+      # TODO: Think how to hand result strings to view.
       array_of_play_results = current_group.play(index_option: shot_option && Integer(shot_option))
       will_toggle_status = false if array_of_play_results.empty?
       update!(play_result: array_of_play_results)

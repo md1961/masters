@@ -3,7 +3,6 @@ class Ball < ActiveRecord::Base
 
   belongs_to :player
   belongs_to :shot
-  # FIXME: Add belongs_to :round.
 
   attr_accessor :club_used
   attr_reader :info

@@ -11,6 +11,7 @@ class CreateBalls < ActiveRecord::Migration
       t.boolean :is_layup   , default: false
       t.boolean :is_saved   , default: false
       t.integer :next_adjust, default: 0
+      t.integer :status     , null: false, default: 0
     end
   end
 end

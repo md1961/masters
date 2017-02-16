@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20170214021711) do
     t.boolean "is_layup",    default: false
     t.boolean "is_saved",    default: false
     t.integer "next_adjust", default: 0
+    t.integer "status",      default: 0,     null: false
   end
 
   add_index "balls", ["player_id"], name: "index_balls_on_player_id"
@@ -81,10 +82,11 @@ ActiveRecord::Schema.define(version: 20170214021711) do
 
   create_table "rounds", force: :cascade do |t|
     t.integer "tournament_id"
-    t.integer "number",                        null: false
-    t.boolean "is_current",    default: false, null: false
-    t.integer "status",        default: 0,     null: false
+    t.integer "number",                               null: false
+    t.boolean "is_current",           default: false, null: false
+    t.integer "status",               default: 0,     null: false
     t.string  "play_result"
+    t.string  "club_name_for_12_tee"
   end
 
   add_index "rounds", ["tournament_id", "number"], name: "index_rounds_on_tournament_id_and_number", unique: true
