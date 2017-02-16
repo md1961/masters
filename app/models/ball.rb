@@ -3,12 +3,25 @@ class Ball < ActiveRecord::Base
 
   belongs_to :player
   belongs_to :shot
-  # FIXME: Add belongs_to :round
+  # FIXME: Add belongs_to :round.
 
   attr_accessor :club_used
   attr_reader :info
 
   after_create :set_next_use_if_nil
+
+  # TODO: Use enum instead.
+  KEYWORD_FOR_FINISH_ROUND = 'FINISHED'.freeze
+
+  def finish_round!
+    self.shot = nil
+    self.result = "#{KEYWORD_FOR_FINISH_ROUND} #{player.round}"
+    save!
+  end
+
+  def finished_round?
+    result && result.start_with?(KEYWORD_FOR_FINISH_ROUND)
+  end
 
   def hole
     shot.try(:hole)
@@ -99,7 +112,7 @@ class Ball < ActiveRecord::Base
 
   def hole_result(offset = 0)
     i = shot_count - shot.hole.par + offset
-    %w(par bogey double-bogey triple-bogey +4 +5 +6 +7 +8 +9 +10 DOUBLE-EAGLE Eagle birdie)[i]
+    %w(par bogey double-bogey triple-bogey +4 +5 +6 +7 +8 +9 +10 DOUBLE-EAGLE EAGLE Birdie)[i]
   end
 
   def result_display
@@ -191,7 +204,9 @@ class Ball < ActiveRecord::Base
     end
 
     def distance_factor(result)
-      if result.to_i > 0
+      if finished_round?
+        H_DISTANCE_FACTOR['IN'] + 100
+      elsif result.to_i > 0
         1000 - result.to_i
       elsif result =~ /\Alayup-(\d{1,2})\z/
         -50 - Regexp.last_match(1).to_i
