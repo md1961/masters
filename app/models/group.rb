@@ -65,18 +65,18 @@ class Group < ActiveRecord::Base
       else
         tee_up_on(hole_number)
       end
-      []
+      nil
     else
       player = next_player
       ball = player.ball
-      is_putting = true if ball.on_green?
+      was_putting = true if ball.on_green?
       info = player.play(index_option: index_option)
-      @message = ball.direct_in? ? 'IN!' : is_putting ? 'miss' : nil
-      hole = player.shot.hole
-      next_shot = ball.holed_out? ? nil : "( next will be: #{ball.next_shot_display} )"
-      [hole.full_desc, ball.result_display, next_shot, info]
+      @message = ball.direct_in? ? 'IN!' : was_putting ? 'miss' : nil
+      "player_id=#{player.id}&club_used=#{ball.club_used}&#{info}"
     end
   end
+
+  RE_PLAYER_ID_AND_INFO = /\Aplayer_id=(\d+)&club_used=(\w+)&(.*)\z/
 
   def ==(other)
     return false if other.nil? || !other.is_a?(Group)

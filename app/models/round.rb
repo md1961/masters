@@ -52,10 +52,10 @@ class Round < ActiveRecord::Base
         needs_input!
         return
       end
-      # TODO: Think how to hand result strings to view.
-      array_of_play_results = current_group.play(index_option: shot_option && Integer(shot_option))
-      will_toggle_status = false if array_of_play_results.empty?
-      update!(play_result: array_of_play_results)
+      # TODO: 
+      player_id_and_info = current_group.play(index_option: shot_option && Integer(shot_option))
+      will_toggle_status = false if player_id_and_info.nil?
+      update!(play_result: player_id_and_info)
       @message = current_group.try(:message)
       if areas.first.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
@@ -64,7 +64,7 @@ class Round < ActiveRecord::Base
     end
     if groups.all?(&:round_finished?)
       finished!
-      update!(play_result: ["#{self} finished"])
+      update!(play_result: "#{self} finished")
     elsif will_toggle_status
       ready_to_play? ? displays_result! : ready_to_play!
     end

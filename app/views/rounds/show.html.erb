@@ -47,11 +47,28 @@
     <% if @message -%>
       <div id="message"><%= @message %></div>
     <% end -%>
-    <% eval(@round.play_result).each.with_index(1) do |line, line_no| -%>
+    <% if @round.play_result =~ Group::RE_PLAYER_ID_AND_INFO -%>
+      <%# TODO: Refactor this mess. %>
+      <% p = Player.find(Regexp.last_match(1).to_i)
+         club_used = Regexp.last_match(2)
+         info = Regexp.last_match(3)
+         b = p.ball
+         b.club_used = p.clubs.find_by(name: club_used.downcase) -%>
       <tr class="delayed_display" <%= @message && 'hidden' %>>
-        <td class="<%= line_no >= 3 && 'smaller' %> <%= line_no >= 4 && 'italic' %>">
-          <%= line %>
-        </td>
+        <td><%= p.shot.hole.full_desc %></td>
+      </tr>
+      <tr class="delayed_display" <%= @message && 'hidden' %>>
+        <td><%= b.result_display %></td>
+      </tr>
+      <tr class="delayed_display smaller" <%= @message && 'hidden' %>>
+        <td><%= b.holed_out? ? nil : "( next will be: #{b.next_shot_display} )" %></td>
+      </tr>
+      <tr class="delayed_display italic" <%= @message && 'hidden' %>>
+        <td><%= info %></td>
+      </tr>
+    <% else -%>
+      <tr class="delayed_display" <%= @message && 'hidden' %>>
+        <td><%= @round.play_result %></td>
       </tr>
     <% end -%>
   <% else -%>
