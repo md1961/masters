@@ -11,8 +11,10 @@ class RoundsController < ApplicationController
   end
 
   def update
+    if @round.finished?
+      redirect_to @round.tournament
     # TODO: Maybe this block is needless.
-    if params[:choosing_next_use] && params[:shot_option].nil?
+    elsif params[:choosing_next_use] && params[:shot_option].nil?
       render :show
     else
       @round.proceed(shot_option: params[:shot_option])

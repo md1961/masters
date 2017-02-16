@@ -45,32 +45,29 @@ class Round < ActiveRecord::Base
   # TODO: Refactor proceed() by splitting or else.
   def proceed(shot_option: nil)
     self.status = :ready_to_play if needs_input? && shot_option.present?
-    skips_result_display = false
+    will_toggle_status = true
     @message = nil
-    if areas.all?(&:open?)
-    # TODO: Should move this block to another method.
-      group1 = groups.find_by(number: 1)
-      group1.tee_up_on(first_hole_number)
-    elsif groups.all?(&:round_finished?)
-      finished!
-      update!(play_result: ["#{self} finished"])
-      return
-    elsif ready_to_play?
+    if ready_to_play?
       if current_group.needs_to_choose_shot? && shot_option.nil?
         needs_input!
         return
       end
       # FIXME: Think how to hand result strings to view.
       array_of_play_results = current_group.play(index_option: shot_option && Integer(shot_option))
-      skips_result_display = true if array_of_play_results.empty?
+      will_toggle_status = false if array_of_play_results.empty?
       update!(play_result: array_of_play_results)
-      @message = current_group.message
+      @message = current_group.try(:message)
       if areas.first.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(first_hole_number)
       end
     end
-    ready_to_play? ? displays_result! : ready_to_play! unless skips_result_display
+    if groups.all?(&:round_finished?)
+      finished!
+      update!(play_result: ["#{self} finished"])
+    elsif will_toggle_status
+      ready_to_play? ? displays_result! : ready_to_play!
+    end
   end
 
   def ==(other)
@@ -85,19 +82,26 @@ class Round < ActiveRecord::Base
   private
 
     def setup_groups_and_score_cards
-      if number == 1
-        players_shuffled = Player.all.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
-      else
-        raise 'Not implemented yet for Round 2 or later'
-      end
+      Area.all.each { |area| area.update!(round: self) } if number >= 2
 
+      if number == 1
+        players_sorted = Player.all.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
+      else
+        # TODO: Add sort item if total is equal.
+        players_sorted = Player.all.sort_by(&:tournament_stroke).reverse
+      end
       group_number = 1
-      players_shuffled.each_slice(Round.num_players_per_group) do |players|
+      players_sorted.each_slice(Round.num_players_per_group) do |players|
         group = groups.create!(number: group_number, players: players)
         group.groupings.find_by(player: players[0]).update!(play_order: 1)
         group.groupings.find_by(player: players[1]).update!(play_order: 2)
         group_number += 1
       end
+
+      raise "All Area should be open" unless areas.all?(&:open?)
+
+      group1 = groups.find_by(number: 1)
+      group1.tee_up_on(first_hole_number)
 
       groups.flat_map(&:players).each do |player|
         player.score_cards.create!(round: self)
