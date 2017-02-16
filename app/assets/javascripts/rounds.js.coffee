@@ -13,4 +13,4 @@ $ ->
 	setTimeout ->
 		$('tr.delayed_display').show()
 		$('input[type="submit"]').prop('disabled', false)
-	, 1500
+	, 1000
