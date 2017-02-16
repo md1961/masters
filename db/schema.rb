@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214021711) do
+ActiveRecord::Schema.define(version: 20170216052710) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "round_id"
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(version: 20170214021711) do
     t.integer "par",      null: false
     t.integer "distance", null: false
   end
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer "tournament_id"
+    t.integer "player_id"
+  end
+
+  add_index "invitations", ["player_id"], name: "index_invitations_on_player_id"
+  add_index "invitations", ["tournament_id"], name: "index_invitations_on_tournament_id"
 
   create_table "players", force: :cascade do |t|
     t.string  "last_name",  null: false

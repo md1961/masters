@@ -1,5 +1,7 @@
 class Player < ActiveRecord::Base
   has_many :clubs
+  has_many :invitations
+  has_many :tournaments, through: :invitations
   has_many :score_cards
   has_one :grouping
   has_one :group, through: :grouping
