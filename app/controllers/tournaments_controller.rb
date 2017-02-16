@@ -26,4 +26,23 @@ class TournamentsController < ApplicationController
       end
     end
   end
+
+  def new
+    @tournament = Tournament.new
+  end
+
+  def create
+    @tournament = Tournament.new
+    if @tournament.update(tournament_params)
+      redirect_to @tournament
+    else
+      render :new
+    end
+  end
+
+  private
+
+    def tournament_params
+      params.require(:tournament).permit(:year, :name, :num_rounds)
+    end
 end

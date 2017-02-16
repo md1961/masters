@@ -1,0 +1,15 @@
+<%= form_for @tournament do |f| -%>
+  <div>
+    <%= f.label :year %>
+    <%= f.text_field :year %>
+  </div>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :num_rounds %>
+    <%= f.text_field :num_rounds %>
+  </div>
+  <%= f.submit %>
+<% end -%>
