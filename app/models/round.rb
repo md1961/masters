@@ -85,10 +85,10 @@ class Round < ActiveRecord::Base
       Area.all.each { |area| area.update!(round: self) } if number >= 2
 
       if number == 1
-        players_sorted = Player.all.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
+        players_sorted = tournament.players.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
       else
         # TODO: Add sort item if total is equal.
-        players_sorted = Player.all.sort_by(&:tournament_stroke).reverse
+        players_sorted = tournament.players.sort_by(&:tournament_stroke).reverse
       end
       group_number = 1
       players_sorted.each_slice(Round.num_players_per_group) do |players|
