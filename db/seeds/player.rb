@@ -24,13 +24,18 @@ Player    .destroy_all
 Club      .destroy_all
 ClubResult.destroy_all
 
+DICES = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map(&:to_i).freeze
 
-DICES = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map(&:to_i)
+CLUB_NAMES = %w(drive fw li mi si p ch sd putt).map(&:to_sym).freeze
 
 def add_clubs(player, h_clubs)
+  if h_clubs.keys.sort != CLUB_NAMES.sort
+    missing_clubs = (CLUB_NAMES - h_clubs.keys).join("', '")
+    raise StandardError, "Missing club '#{missing_clubs}' for #{player}"
+  end
   STDERR.print "#{player.first_name[0]}#{player.last_name[0]}: "
   h_clubs.each do |name, results|
-    raise StandardError, "illeagl size #{results.size} for #{name} of #{player}" unless results.size == DICES.size
+    raise StandardError, "Illeagl size #{results.size} for #{name} of #{player}" unless results.size == DICES.size
     STDERR.print "#{name[0, 2]} "
     club = player.clubs.create!(name: name)
     DICES.zip(results) do |dice, result|
@@ -194,7 +199,7 @@ h_clubs = {
   fw:    %w(SC-P SR-P SL-P SC-P SR-Ch LC-Ch MR-Ch SL-Ch ML-Ch LL-Ch 53 41 34 30 28 25 20 16 12 8 6),
   li:    %w(SR-P SL-P SC-P SL-Ch MR-Ch LC-Ch LR-Ch SC-Ch ML-Ch 50 41 37 33 29 25 20 17 14 11 7 5),
   mi:    %w(SC-P ML-Ch SR-Ch LL-Ch SC-Ch LC-Ch MR-Ch 56 44 39 35 32 27 24 20 18 16 13 9 6 3),
-  #FIXME: SI missing.
+  si:    %w(ML-Ch MR-Ch SC-Ch LR-Ch SL-Ch LC-Ch 49 38 34 31 26 24 22 19 17 13 11 8 6 4 2),
   p:     %w(SL-Ch LR-Ch ML-Ch 47 29 24 21 19 17 15 14 13 11 10 9 7 6 5 3 2 (1)),
   ch:    %w(51 35 25 18 13 12 11 10 9 8 7 6 5 5 4 4 3 2 2 1 IN),
   sd:    %w(Sd 47 33 30 26 20 18 14 13 12 10 9 8 8 7 6 5 4 3 2 (1)),
