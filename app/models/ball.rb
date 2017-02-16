@@ -63,9 +63,8 @@ class Ball < ActiveRecord::Base
   end
 
   def accept(club_result)
-    self.is_layup = false
-    self.is_saved = false
     self.next_adjust = 0
+    self.is_saved = false
     @info = ''
     if !shot.is_layup && (%w(IN OK).include?(club_result) || club_result.to_i > 0)
       self.result      = club_result
@@ -80,6 +79,7 @@ class Ball < ActiveRecord::Base
       self.lands       = shot_judge.lands
       self.next_use    = shot_judge.next_use
       self.next_adjust = shot_judge.next_adjust
+      self.is_layup = false
       decide_optional_lands
       parse_next_use
       self.shot_count += 1 if lands == 'Water'
@@ -130,7 +130,7 @@ class Ball < ActiveRecord::Base
       "#{player} hit #{(shot_count - 1).ordinalize} shot into #{lands}" \
         " and save on #{shot_count.ordinalize} shot by '#{result}'"
     else
-      preposition = %w(Trees Sand Water).include?(lands) ? 'into' : 'onto'
+      preposition = ['Trees', 'Sand', 'Water', 'Fairway Trap'].include?(lands) ? 'into' : 'onto'
       superlative = result.try(:end_with?, '*') ? ' (superlative)' : ''
       "#{player} hit #{shot_count.ordinalize} shot #{preposition} #{lands} by '#{result}'#{superlative}"
     end
