@@ -63,8 +63,10 @@ class Ball < ActiveRecord::Base
   end
 
   def accept(club_result)
-    @info = ''
+    self.is_layup = false
+    self.is_saved = false
     self.next_adjust = 0
+    @info = ''
     if !shot.is_layup && (%w(IN OK).include?(club_result) || club_result.to_i > 0)
       self.result      = club_result
       self.lands       = 'Green'
@@ -126,7 +128,7 @@ class Ball < ActiveRecord::Base
       "#{player} putt as #{shot_count.ordinalize} shot to #{result}"
     elsif is_saved
       "#{player} hit #{(shot_count - 1).ordinalize} shot into #{lands}" \
-        "and save on #{shot_count.ordinalize} shot by '#{result}'"
+        " and save on #{shot_count.ordinalize} shot by '#{result}'"
     else
       preposition = %w(Trees Sand Water).include?(lands) ? 'into' : 'onto'
       superlative = result.try(:end_with?, '*') ? ' (superlative)' : ''
@@ -141,7 +143,7 @@ class Ball < ActiveRecord::Base
     else
       from = lands.blank? ? '' : lands == 'Water' ? 'from Water Fringe' : "from #{lands}"
       distance = on_green? ? " #{result}" : ''
-      "#{(shot_count + 1).ordinalize} shot #{from}#{distance}" \
+      "#{(shot_count + 1).ordinalize} #{is_layup ? 'layup ' : ''}shot #{from}#{distance}" \
         " with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
     end
   end
@@ -172,8 +174,6 @@ class Ball < ActiveRecord::Base
     end
 
     def parse_next_use
-      self.is_layup = false
-      self.is_saved = false
       if next_use =~ RE_STRINGIFIED_HASH
         decide_optional_next_use
       end
