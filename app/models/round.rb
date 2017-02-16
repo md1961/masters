@@ -7,6 +7,14 @@ class Round < ActiveRecord::Base
   # FIXME: Add COLUMN club_id_for_12_tee, or else.
   # FIXME: Add COLUMN created_at.
 
+  # FIXME: Add attribute first_hole_number, or else
+  def first_hole_number
+    1
+  end
+  def final_hole_number
+    first_hole_number == 1 ? 18 : first_hole_number - 1
+  end
+
   enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2, finished: 99}
 
   attr_reader :message
@@ -30,25 +38,22 @@ class Round < ActiveRecord::Base
     number == tournament.num_rounds
   end
 
-  def first_hole_number
-    1
-  end
-
   def current_group
     groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
   end
 
+  # TODO: Refactor proceed() by splitting or else.
   def proceed(shot_option: nil)
-    ready_to_play! if needs_input? && shot_option.present?
+    self.status = :ready_to_play if needs_input? && shot_option.present?
     skips_result_display = false
     @message = nil
     if areas.all?(&:open?)
     # TODO: Should move this block to another method.
       group1 = groups.find_by(number: 1)
       group1.tee_up_on(first_hole_number)
-    elsif current_group.nil?
-      displays_result!
-      update!(play_result: "End of Round #{number}")
+    elsif groups.all?(&:round_finished?)
+      finished!
+      update!(play_result: ["#{self} finished"])
       return
     elsif ready_to_play?
       if current_group.needs_to_choose_shot? && shot_option.nil?
