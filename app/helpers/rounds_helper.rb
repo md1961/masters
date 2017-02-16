@@ -1,8 +1,12 @@
 module RoundsHelper
 
+  def score_formatted(value)
+    value.zero? ? 'even' : format('%+d', value)
+  end
+
   def total_score_display(player, round)
     score = player.score_cards.find_by(round: round).total_score
-    score.zero? ? 'even' : format('%+d', score)
+    score_formatted(score)
   end
 
   def area_display(player)
@@ -29,7 +33,7 @@ module RoundsHelper
   def round_result_display(group)
     group.players.map { |player|
       score_card = player.score_cards.find_by(round: @round)
-      "#{player} #{score_card.total_value} (#{score_card.total_score})"
+      "#{player} #{score_card.total_value} (#{score_formatted(score_card.total_score)})"
     }.join(', ')
   end
 
