@@ -3,6 +3,10 @@ class Hole < ActiveRecord::Base
 
   has_many :shots
 
+  def self.total_par
+    Hole.sum(:par)
+  end
+
   def <=>(other)
     self.number <=> other.number
   end
