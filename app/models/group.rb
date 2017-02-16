@@ -22,8 +22,10 @@ class Group < ActiveRecord::Base
   end
 
   def next_area_open?
+    return false if round_finished?
+    return false if players_split?
     area = players_area_uniq.first
-    !round_finished? && !players_split? && area && area.next.open?
+    area && (area.final? || area.next.try(:open?))
   end
 
   def all_on_or_near_green?
@@ -39,7 +41,7 @@ class Group < ActiveRecord::Base
   end
 
   def round_finished?
-    players.all? { |player| player.ball.nil? }
+    players.all? { |player| player.finished_round? }
   end
 
   def tee_up_on(hole_number)
@@ -58,9 +60,7 @@ class Group < ActiveRecord::Base
       hole_number = players.first.shot.hole.number
       hole_number += 1
       hole_number = 1 if hole_number == 19
-      # FIXME: Add attribute starting_hole to Round
-      starting_hole = 1
-      if hole_number == starting_hole
+      if hole_number == round.first_hole_number
         finish_round
       else
         tee_up_on(hole_number)
@@ -95,6 +95,6 @@ class Group < ActiveRecord::Base
     end
 
     def finish_round
-      players.each { |player| player.update!(ball: nil) }
+      players.each { |player| player.ball.finish_round! }
     end
 end
