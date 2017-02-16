@@ -73,7 +73,7 @@ class Group < ActiveRecord::Base
       info = player.play(index_option: index_option)
       @message = ball.direct_in? ? 'IN!' : is_putting ? 'miss' : nil
       hole = player.shot.hole
-      next_shot = "( next will be: #{ball.next_shot_display} )"
+      next_shot = ball.holed_out? ? nil : "( next will be: #{ball.next_shot_display} )"
       [hole.full_desc, ball.result_display, next_shot, info]
     end
   end
