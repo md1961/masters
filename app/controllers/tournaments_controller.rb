@@ -10,21 +10,20 @@ class TournamentsController < ApplicationController
     round = @tournament.current_round
     if round.nil?
       @tournament.start
-    elsif round.finished?
-      if round.final_round?
-        @tournament.finish
-      else
-        ActiveRecord::Base.transaction do
-          begin
-            round.update!(is_current: false)
-            rounds.create!(number: round.number + 1, is_current: true)
-          rescue => e
-            raise 'Failed to advance to next round due to: ' + e.message
-          end
+    elsif !round.finished?
+      redirect_to round
+    elsif round.final_round?
+      @tournament.finish
+      render text: "#{@tournament} finished"
+    else
+      ActiveRecord::Base.transaction do
+        begin
+          round.update!(is_current: false)
+          redirect_to @tournament.rounds.create!(number: round.number + 1, is_current: true)
+        rescue => e
+          raise 'Failed to advance to next round due to: ' + e.message
         end
       end
-    else
-      redirect_to round
     end
   end
 end
