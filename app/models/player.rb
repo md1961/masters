@@ -18,6 +18,12 @@ class Player < ActiveRecord::Base
     grouping.play_order
   end
 
+  def tournament_stroke(round_number_upto: nil)
+    round_number_upto = 9999 unless round_number_upto
+    rounds = round.tournament.rounds.where('number <= ?', round_number_upto)
+    score_cards.where(round: rounds).map(&:total_value).sum
+  end
+
   # TODO: Remove argument hole_number.
   def play(hole_number: 1, index_option: nil)
     if ball.try(:holed_out?)
