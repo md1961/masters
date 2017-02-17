@@ -44,13 +44,20 @@ body {
     left: 500px;
 
     table {
+      float: left;
+
       caption {
         text-align: left;
       }
 
       td {
+        text-align: center;
         padding: 2px 4px;
       }
+    }
+
+    table#green_map {
+      margin-left: 30px;
     }
   }
 

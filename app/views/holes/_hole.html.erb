@@ -1,10 +1,23 @@
-<table class="hole">
+<table id="fairway_map">
   <caption><%= hole.full_desc(with_distance: true) %></caption>
   <% fairway_landings(hole).each do |row| -%>
     <tr>
-      <% row.each do |shot_judges| -%>
-        <td><%= shot_judges %></td>
+      <% row.each do |shot_judge| -%>
+        <td><%= shot_judge %></td>
       <% end -%>
     </tr>
   <% end -%>
 </table>
+
+<table id="green_map">
+  <caption>&nbsp;</caption>
+  <% green_landings(hole).each do |row| -%>
+    <tr>
+      <% row.each do |shot_judge| -%>
+        <td><%= shot_judge %></td>
+      <% end -%>
+    </tr>
+  <% end -%>
+</table>
+
+<div style="clear: left;" />
