@@ -41,6 +41,7 @@ body {
 
   div#hole_map {
     position: fixed;
+    top: 30px;
     left: 500px;
 
     table {
@@ -81,7 +82,7 @@ body {
   }
 }
 
-body.large {
+body.pretty {
   font-size: large;
 
   td.smaller {
@@ -104,6 +105,28 @@ body.large {
 
   div#score_cards {
     top: 400px;
+    left: 300px;
+  }
+
+  div#leader_board {
+    position: fixed;
+    top: 400px;
+
+    table {
+      td {
+        color: yellow;
+        background-color: black;
+        padding: 2px 12px;
+      }
+    }
+  }
+
+  div#hole_map {
+    left: 600px;
+
+    table {
+      font-size: small;
+    }
   }
 
   table.score_card {
