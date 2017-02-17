@@ -39,6 +39,17 @@ body {
     left: 200px;
   }
 
+  div#hole_map {
+    position: fixed;
+    left: 500px;
+
+    table {
+      td {
+        padding: 2px 4px;
+      }
+    }
+  }
+
   table#leaders {
     td {
       padding: 0px 5px;

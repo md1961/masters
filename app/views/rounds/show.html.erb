@@ -130,3 +130,9 @@
     <% end -%>
   </table>
 </div>
+
+<div id="hole_map">
+  <% if hole = player&.shot&.hole -%>
+    <%= render hole %>
+  <% end -%>
+</div>

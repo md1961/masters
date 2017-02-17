@@ -1,0 +1,9 @@
+<table class="hole">
+  <% fairway_landings(hole).each do |row| -%>
+    <tr>
+      <% row.each do |shot_judges| -%>
+        <td><%= shot_judges %></td>
+      <% end -%>
+    </tr>
+  <% end -%>
+</table>

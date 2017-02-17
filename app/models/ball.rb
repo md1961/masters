@@ -9,6 +9,8 @@ class Ball < ActiveRecord::Base
 
   after_create :set_next_use_if_nil
 
+  # TODO: Add COLUMN club_id, shot_judge_id
+
   # TODO: Use enum instead.
   KEYWORD_FOR_FINISH_ROUND = 'FINISHED'.freeze
 
