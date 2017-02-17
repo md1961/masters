@@ -122,7 +122,7 @@ class Ball < ActiveRecord::Base
     elsif ok?
       "#{player} putt to OK distance to the hole out on #{shot_count}. #{hole_result}"
     elsif holed_out?
-      verb = club_used.putt? ? 'sink' : 'shot DIRECTLY'
+      verb = club_used.putt? ? 'sunk' : 'shot DIRECTLY'
       "#{player} #{verb} into the hole out on #{shot_count}. #{hole_result}"
     elsif club_used.putt?
       "#{player} putt as #{shot_count.ordinalize} shot to #{result}"

@@ -1,11 +1,6 @@
 class RoundsController < ApplicationController
   before_action :set_round, only: [:show, :update]
 
-  def index
-    # FIXME: Redirect_to last created, or show a list.
-    redirect_to Round.last
-  end
-
   def show
     @message = params[:message]
   end
@@ -13,7 +8,6 @@ class RoundsController < ApplicationController
   def update
     if @round.finished?
       redirect_to @round.tournament
-    # TODO: Maybe this block is needless.
     elsif params[:choosing_next_use] && params[:shot_option].nil?
       render :show
     else
