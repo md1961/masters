@@ -47,6 +47,14 @@ class Area < ActiveRecord::Base
     round.areas.find_by(seq_num: seq_num + 1)
   end
 
+  def eql?(other)
+    seq_num == other.seq_num
+  end
+
+  def hash
+    seq_num.hash
+  end
+
   def to_s
     name.capitalize
   end
