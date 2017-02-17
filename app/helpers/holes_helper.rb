@@ -6,7 +6,9 @@ module HolesHelper
     return [] if hole.par <= 3
     LANDING_GRIDS.map do |row|
       row.map do |result|
-        hole.shots.find_by(number: 2).judge(result)
+        shot_judge = hole.shots.find_by(number: 2).judge(result)
+        clazz = shot_judge.lands.gsub(' ', '').underscore
+        content_tag :td, shot_judge, class: clazz
       end
     end
   end
@@ -16,7 +18,10 @@ module HolesHelper
     LANDING_GRIDS.map do |row|
       row.map do |result|
         result += '-Ch'
-        result == 'MC-Ch' ? 'GREEN' : hole.shots.find_by(number: shot_number).judge(result)
+        shot_judge = hole.shots.find_by(number: shot_number).judge(result)
+        is_green = result == 'MC-Ch'
+        clazz = is_green ? 'green' : shot_judge.lands.gsub(' ', '').underscore
+        content_tag :td, is_green ? 'P' : shot_judge, class: clazz
       end
     end
   end

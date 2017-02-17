@@ -16,5 +16,6 @@ class ShotJudge < ActiveRecord::Base
         "#{lands}, "
       end
     "#{lands_display}#{next_use}#{next_adjust_display}"
+    "#{next_use}#{next_adjust_display}"
   end
 end

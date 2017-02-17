@@ -126,6 +126,34 @@ body.pretty {
 
     table {
       font-size: small;
+
+      td.fairway, td.near_green {
+        color: black;
+        background-color: lawngreen;
+      }
+
+      td.green {
+        color: yellow;
+        background-color: seagreen;
+      }
+
+      td.trees {
+        color: white;
+        background-color: darkgreen;
+      }
+
+      td.fairway_trap, td.sand {
+        color: black;
+        background-color: wheat;
+      }
+    }
+
+    table#fairway_map td {
+      width: 100px;
+    }
+
+    table#green_map td {
+      width: 40px;
     }
   }
 
