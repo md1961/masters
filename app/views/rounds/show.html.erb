@@ -132,6 +132,9 @@
 </div>
 
 <div id="hole_map">
+  <div>
+    <span id="toggle_hole_map_display" class="button">[+]</span>
+  </div>
   <% if hole = player&.shot&.hole -%>
     <%= render hole %>
   <% end -%>

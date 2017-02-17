@@ -17,6 +17,13 @@ $ ->
     else
       $(this).text('[+]')
 
+  $('span#toggle_hole_map_display').click ->
+    $('table.hole_map').toggle()
+    if $(this).text() == '[+]'
+      $(this).text('[-]')
+    else
+      $(this).text('[+]')
+
 	setTimeout ->
 		$('tr.delayed_display').show()
 		$('input[type="submit"]').prop('disabled', false)

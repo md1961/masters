@@ -1,4 +1,4 @@
-<table id="fairway_map">
+<table id="fairway_map" class="hole_map" <%= @style.blank? && 'hidden' %>>
   <caption><%= hole.full_desc(with_distance: true) %></caption>
   <% fairway_landings(hole).each do |row| -%>
     <tr>
@@ -9,7 +9,7 @@
   <% end -%>
 </table>
 
-<table id="green_map">
+<table id="green_map" class="hole_map" <%= @style.blank? && 'hidden' %>>
   <caption>&nbsp;</caption>
   <% green_landings(hole).each do |row| -%>
     <tr>
