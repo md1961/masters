@@ -4,9 +4,6 @@ class Round < ActiveRecord::Base
   has_many :groups, -> { order(:number ) }
   has_many :score_cards
 
-  # FIXME: Add COLUMN club_name_for_12_tee, or else.
-  # FIXME: Add COLUMN created_at.
-
   # FIXME: Add attribute first_hole_number, or else
   def first_hole_number
     1
@@ -52,7 +49,6 @@ class Round < ActiveRecord::Base
         needs_input!
         return
       end
-      # TODO: 
       player_id_and_info = current_group.play(index_option: shot_option && Integer(shot_option))
       will_toggle_status = false if player_id_and_info.nil?
       update!(play_result: player_id_and_info)
@@ -83,6 +79,11 @@ class Round < ActiveRecord::Base
 
     def setup_groups_and_score_cards
       Area.all.each { |area| area.update!(round: self) } if number >= 2
+
+      tee_shot_on_hole_12 = Shot.find_by(hole: Hole.find_by(number: 12), number: 1)
+      h_option_tee_shot_12 = tee_shot_on_hole_12.shot_judges.first.next_use
+      dice = Dice.roll
+      self.club_name_for_12_tee = Ball.look_up_optional_result(h_option_tee_shot_12, dice)
 
       if number == 1
         players_sorted = tournament.players.map { |p| [p, rand] }.sort_by(&:last).map(&:first)

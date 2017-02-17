@@ -148,6 +148,10 @@ class Ball < ActiveRecord::Base
     end
   end
 
+  def self.look_up_optional_result(hash, num)
+    hash.find { |k, _v| num.between?(*(k.split('-').map(&:to_i))) }[1]
+  end
+
   private
 
     RE_STRINGIFIED_HASH = /\A{.*}\z/
@@ -156,7 +160,7 @@ class Ball < ActiveRecord::Base
       return unless lands =~ RE_STRINGIFIED_HASH
       dice = Dice.roll
       lands_orig = lands
-      self.lands = look_up_optional_result(eval(lands), dice)
+      self.lands = Ball.look_up_optional_result(eval(lands), dice)
       @info = "'#{lands}' on dice #{dice} from #{lands_orig}"
       return unless next_use =~ RE_STRINGIFIED_HASH
       decide_optional_next_use(dice)
@@ -165,12 +169,8 @@ class Ball < ActiveRecord::Base
     def decide_optional_next_use(dice = nil)
       dice = Dice.roll unless dice
       next_use_orig = next_use
-      self.next_use = look_up_optional_result(eval(next_use), dice)
+      self.next_use = Ball.look_up_optional_result(eval(next_use), dice)
       @info += (@info.present? ? ', ' : '') + "'#{next_use}' on dice #{dice} from #{next_use_orig}"
-    end
-
-    def look_up_optional_result(hash, num)
-      hash.find { |k, _v| num.between?(*(k.split('-').map(&:to_i))) }[1]
     end
 
     def parse_next_use
@@ -191,15 +191,14 @@ class Ball < ActiveRecord::Base
       end
     end
 
-    # FIXME: Implement round-wise choice for tee shot on No.12
-
     def set_next_use_if_nil
-      shot_judges = shot.shot_judges
-      self.next_use = shot_judges.first.next_use if next_use.nil? && shot_judges.size == 1
+      if shot&.hole.number == 12 && shot&.number = 1
+        self.next_use = player.round.club_name_for_12_tee
+      else
+        shot_judges = shot.shot_judges
+        self.next_use = shot_judges.first.next_use if next_use.nil? && shot_judges.size == 1
+      end
       save!
-
-      @info = ''
-      decide_optional_next_use if next_use =~ RE_STRINGIFIED_HASH
     end
 
     def distance_factor(result)
