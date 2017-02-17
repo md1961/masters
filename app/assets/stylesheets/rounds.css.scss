@@ -22,6 +22,10 @@ body {
     font-size: x-small;
     position: fixed;
     top: 120px;
+
+    td {
+      padding: 0px 3px;
+    }
   }
 
   div#score_cards {

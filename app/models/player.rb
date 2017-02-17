@@ -26,7 +26,6 @@ class Player < ActiveRecord::Base
     score_cards.where(round: rounds).map(&:total_value).sum
   end
 
-  # TODO: Remove argument hole_number.
   def play(hole_number: 1, index_option: nil)
     if ball.try(:holed_out?)
       return

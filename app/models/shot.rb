@@ -7,7 +7,6 @@ class Shot < ActiveRecord::Base
   has_many :balls
   has_many :players, through: :balls
 
-  # TODO: Remove argument hole_number.
   def self.first_tee(hole_number = 1)
     find_by(hole: Hole.find_by(number: hole_number), number: 1)
   end

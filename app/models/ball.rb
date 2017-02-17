@@ -139,7 +139,7 @@ class Ball < ActiveRecord::Base
   def next_shot_display(informative = false)
     next_adjust_display = "(#{next_adjust > 0 ? '+' : ''}#{next_adjust})"
     if informative
-      "Next: #{shot} '#{next_use}'#{next_adjust_display}, layup=#{is_layup}"
+      "next: #{next_use}#{is_layup ? ' Layup' : ''} #{next_adjust_display}, #{shot}"
     else
       from = lands.blank? ? '' : lands == 'Water' ? 'from Water Fringe' : "from #{lands}"
       distance = on_green? ? " #{result}" : ''
