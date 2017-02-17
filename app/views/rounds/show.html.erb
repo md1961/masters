@@ -120,7 +120,7 @@
 
 <div id="leader_board">
   <span id="toggle_leader_board_display" class="button">[+]</span>
-  <table id="leaders" hidden>
+  <table id="leaders" <%= @style.blank? && 'hidden' %>>
     <% @round.tournament.players.sort_by(&:leader_sorter).each do |player| -%>
       <tr>
         <td><%= player %></td>

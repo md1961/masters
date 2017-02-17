@@ -1,7 +1,7 @@
 <% holes = Hole.order(:number)
    scores = holes.map { |hole| score_card.scores.find_by(hole: hole) } -%>
 
-<table class="score_card table_base" hidden>
+<table class="score_card table_base" <%= @style.blank? && 'hidden' %>>
   <caption><%= score_card.player %></caption>
   <thead>
     <tr>
