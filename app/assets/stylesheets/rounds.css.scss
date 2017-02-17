@@ -45,6 +45,12 @@ body {
       text-align: left;
     }
   }
+
+  div#leader_board {
+    position: fixed;
+    top: 300px;
+    left: 500px;
+  }
 }
 
 body.large {

@@ -10,6 +10,13 @@ $ ->
     else
       $(this).text('[+]')
 
+  $('span#toggle_leader_board_display').click ->
+    $('table#leaders').toggle()
+    if $(this).text() == '[+]'
+      $(this).text('[-]')
+    else
+      $(this).text('[+]')
+
 	setTimeout ->
 		$('tr.delayed_display').show()
 		$('input[type="submit"]').prop('disabled', false)

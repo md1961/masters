@@ -117,3 +117,16 @@
     <% end -%>
   </div>
 <% end -%>
+
+<div id="leader_board">
+  <span id="toggle_leader_board_display" class="button">[+]</span>
+  <table id="leaders" hidden>
+    <% @round.tournament.players.sort_by(&:leader_sorter).each do |player| -%>
+      <tr>
+        <td><%= player %></td>
+        <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
+        <td class="numeric"><%= player.hole_finished %></td>
+      </tr>
+    <% end -%>
+  </table>
+</div>

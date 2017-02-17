@@ -33,6 +33,27 @@ class Player < ActiveRecord::Base
     tournament_stroke(round_number_upto: round_number_upto) - total_par
   end
 
+  def leader_sorter
+    [tournament_score, hole_finished_sorter]
+  end
+
+  def hole_finished
+    if finished_round?
+      'F'
+    elsif ball.nil?
+      '-'
+    else
+      number = shot.hole.number - 1
+      number.zero? ? '-' : number.to_s
+    end
+  end
+
+  def hole_finished_sorter
+    h = hole_finished
+    n = h == '-' ? -1 : h == 'F' ? 20 : h.to_i
+    -n
+  end
+
   def play(hole_number: 1, index_option: nil)
     if ball.try(:holed_out?)
       return
