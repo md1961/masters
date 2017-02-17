@@ -4,13 +4,6 @@ module RoundsHelper
     value.zero? ? 'even' : format('%+d', value)
   end
 
-  def total_score_display(player, round)
-    total_stroke = player.tournament_stroke(round_number_upto: round.number - 1)
-    total_score = total_stroke - Hole.total_par * (round.number - 1)
-    total_score += player.score_cards.find_by(round: round).total_score
-    score_formatted(total_score)
-  end
-
   def area_display(player)
     area = player.shot.area
     modifier = area.green? && player.ball.result.to_i == 0 ? 'vicinity' : ''

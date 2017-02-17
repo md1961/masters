@@ -93,7 +93,7 @@
           <% hole = player.shot.try(:hole)
              is_fin = ball.finished_round? -%>
           <td><%= player %></td>
-          <td class="numeric"><%= total_score_display(player, @round) %></td>
+          <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
           <td class="numeric"><%= hole.try(:full_desc) %></td>
           <td class="emphasized"><%= is_fin ? nil : ball.shot_count %></td>
           <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>

@@ -11,9 +11,7 @@ class ScoreCard < ActiveRecord::Base
     total_value - total_par
   end
 
-  private
-
-    def total_par
-      Hole.where(id: scores.pluck(:hole_id)).sum(:par)
-    end
+  def total_par
+    Hole.where(id: scores.where('value > 0').pluck(:hole_id)).sum(:par)
+  end
 end

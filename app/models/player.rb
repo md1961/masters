@@ -26,6 +26,13 @@ class Player < ActiveRecord::Base
     score_cards.where(round: rounds).map(&:total_value).sum
   end
 
+  def tournament_score(round_number_upto: nil)
+    round_number_upto = 9999 unless round_number_upto
+    rounds = round.tournament.rounds.where('number <= ?', round_number_upto)
+    total_par = score_cards.where(round: rounds).map(&:total_par).sum
+    tournament_stroke(round_number_upto: round_number_upto) - total_par
+  end
+
   def play(hole_number: 1, index_option: nil)
     if ball.try(:holed_out?)
       return
@@ -59,12 +66,6 @@ class Player < ActiveRecord::Base
   private
 
     def swing_club
-      # FIXME: Move to Round or else.
-      if ball.shot.hole.number == 12 && ball.shot.number == 1
-        ball.instance_variable_set('@info', '')
-        ball.send(:decide_optional_next_use, round.dice_roll_for_club_on_12_tee)
-      end
-      #
       club = clubs.find_by(name: ball.next_use.downcase)
       ball.club_used = club
       result = club.swing(ball.next_adjust)
