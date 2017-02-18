@@ -10,7 +10,7 @@ class ClubResult < ActiveRecord::Base
     mi:    /\A(:?S[LRC]-P|[SML][LRC]-Ch|\d{1,2})\z/,
     si:    /\A(:?S[LRC]-P|[SML][LRC]-Ch|\d{1,2})\z/,
     p:     /\A(:?[SML][LRC]-Ch|\d{1,2}|\(1\))\z/,
-    ch:    /\A(:?\d{1,2}|IN)\z/,
+    ch:    /\A(:?Ch|\d{1,2}|IN)\z/,
     sd:    /\A(:?Sd|\d{1,2}|\(1\)|IN)\z/,
     putt:  /\A(:?Miss-A|\d{1,2}(:?-[BCD])?|IN)\z/,
   }.stringify_keys.freeze
