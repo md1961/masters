@@ -6,28 +6,59 @@
   <thead>
     <tr>
       <% holes.each do |hole| -%>
-        <th class="numeric"><%= hole.number %></th>
+        <th><%= hole.number %></th>
+        <% if hole.number == 9 -%>
+          <th>In</th>
+        <% elsif hole.number == 18 -%>
+          <th>Out</th>
+          <th>T</th>
+        <% end -%>
       <% end -%>
     </tr>
     <tr>
       <% holes.each do |hole| -%>
-        <th class="numeric"><%= hole.par %></th>
+        <th><%= hole.par %></th>
+        <% if hole.number % 9 == 0 -%>
+          <th>36</th>
+          <% if hole.number == 18 -%>
+            <th>72</th>
+          <% end -%>
+        <% end -%>
       <% end -%>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <% scores.each do |score| -%>
-        <td class="numeric"><%= score.try(:value) %></td>
+      <% total_in  = 0
+         total_out = 0 -%>
+      <% scores.each.with_index(1) do |score, number| -%>
+        <% value = score&.value
+           hole  = score&.hole
+           number <= 9 ? total_in += value : total_out += value if score -%>
+        <td class="numeric">
+          <%= value %>
+        </td>
+        <% if number == 9 -%>
+          <td class="numeric"><%= score && total_in %></td>
+        <% elsif number == 18 -%>
+          <td class="numeric"><%= score && total_out %></td>
+          <td class="numeric"><%= score && total_in + total_out %></td>
+        <% end -%>
       <% end -%>
     </tr>
     <tr>
       <% total_par   = 0
          total_value = 0 -%>
-      <% scores.size.times do |index| -%>
+      <% 1.upto(scores.size) do |number| -%>
         <td class="numeric">
-          <%= cum_score_display(index, scores) %>
+          <%= cum_score_display(number, scores) %>
         </td>
+        <% if number == 9 -%>
+          <td />
+        <% elsif number == 18 -%>
+          <td />
+          <td />
+        <% end -%>
       <% end -%>
     </tr>
   </tbody>

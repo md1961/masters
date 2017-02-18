@@ -32,11 +32,11 @@ module RoundsHelper
     }.join(', ')
   end
 
-  def cum_score_display(index, scores)
-    score = scores[index]
+  def cum_score_display(number, scores)
+    score = scores[number - 1]
     return nil unless score
     value = score.value
-    total_value = scores[0, index + 1].map { |s| s.try(:value) || 0 }.sum
+    total_value = scores[0, number].map { |s| s.try(:value) || 0 }.sum
     par = score.hole.par
     total_par = Hole.where('number <= ?', score.hole.number).sum(:par)
     value && value == par ? nil : format('%+d', total_value - total_par).sub('+0', ' 0')
