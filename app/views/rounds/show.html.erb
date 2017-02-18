@@ -60,11 +60,11 @@
       <tr class="delayed_display" <%= @message && 'hidden' %>>
         <td><%= b.result_display %></td>
       </tr>
-      <tr class="delayed_display smaller" <%= @message && 'hidden' %>>
-        <td><%= b.holed_out? ? nil : "( next will be: #{b.next_shot_display} )" %></td>
+      <tr class="delayed_display" <%= @message && 'hidden' %>>
+        <td class="smaller"><%= b.holed_out? ? nil : "( next will be: #{b.next_shot_display} )" %></td>
       </tr>
       <tr class="delayed_display italic" <%= @message && 'hidden' %>>
-        <td><%= info %></td>
+        <td class="italic"><%= info %></td>
       </tr>
     <% else -%>
       <tr class="delayed_display" <%= @message && 'hidden' %>>
