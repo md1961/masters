@@ -20,6 +20,7 @@ class Club < ActiveRecord::Base
       @info = "#{dice}(#{format("%+d", dice_adjust)} of #{@info})"
     end
     raw_result = club_results.find_by(dice: dice).result unless player.ball.third_putt?
+    raw_result = add_random_direction(raw_result) if raw_result == 'Ch'
     result = raw_result
     if putt?
       ball_on = player.ball.result.to_i
@@ -54,5 +55,9 @@ class Club < ActiveRecord::Base
       index =  0 if index < 0
       index = -1 if index >= @@dices.size
       @@dices[index]
+    end
+
+    def add_random_direction(raw_result)
+      "#{%w(SL SC SR ML MR LL LC LR).sample}-#{raw_result}"
     end
 end
