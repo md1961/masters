@@ -31,14 +31,20 @@ CLUB_NAMES = %w(drive fw li mi si p ch sd putt).map(&:to_sym).freeze
 def add_clubs(player, h_clubs)
   if h_clubs.keys.sort != CLUB_NAMES.sort
     missing_clubs = (CLUB_NAMES - h_clubs.keys).join("', '")
-    raise StandardError, "Missing club '#{missing_clubs}' for #{player}"
+    raise "Missing club '#{missing_clubs}' for #{player}"
   end
   STDERR.print "#{player.first_name[0]}#{player.last_name[0]}: "
   h_clubs.each do |name, results|
-    raise StandardError, "Illeagl size #{results.size} for #{name} of #{player}" unless results.size == DICES.size
+    raise "Illeagl size #{results.size} for #{name} of #{player}" unless results.size == DICES.size
     STDERR.print "#{name[0, 2]} "
     club = player.clubs.create!(name: name)
+    result_before = nil
     DICES.zip(results) do |dice, result|
+      if result_before.to_i > 0 && result.to_i > 0
+        is_ordered = result_before.to_i >= result.to_i
+        is_ordered = !is_ordered if club.putt?
+        raise "Misorder in '#{result_before}' and '#{result}' for #{name} of #{player}" unless is_ordered
+      end
       club.club_results.create!(dice: dice, result: result)
     end
   end
@@ -274,5 +280,19 @@ h_clubs = {
   ch:    %w(52 38 28 19 15 13 12 11 10 9 8 7 6 5 5 4 3 3 2 1 IN),
   sd:    %w(Sd 47 33 30 26 20 18 14 13 12 10 9 8 8 7 6 5 4 3 2 (1)),
   putt:  %w(Miss-A 1-B 2-C 3-D 3 4 4 5 6 7 8 9 10 11 13 16 19 25 41 IN IN),
+}
+add_clubs(player, h_clubs)
+
+player = Player.create!(last_name: 'Fergus', first_name: 'Keith', overall: 25)
+h_clubs = {
+  drive: %w(SR SL SC MR ML MR MC* MC MC MC MC MC* MC MC LR LR LL LC LC* LC LC*),
+  fw:    %w(SR-P SR-P SC-P SC-Ch MR-Ch LL-Ch LC-Ch SR-Ch 55 46 39 36 29 26 23 20 17 13 10 6 4),
+  li:    %w(SR-P SL-P LR-Ch ML-Ch SR-Ch LC-Ch SC-Ch 52 43 38 36 32 29 23 20 17 15 11 9 5 3),
+  mi:    %w(SR-Ch SC-Ch MR-Ch LL-Ch LR-Ch ML-Ch 56 45 40 37 32 28 24 21 18 16 14 11 8 5 2),
+  si:    %w(SR-Ch ML-Ch LR-Ch SC-Ch MR-Ch 50 36 31 28 26 23 21 19 17 14 12 10 7 5 3 1),
+  p:     %w(SR-Ch ML-Ch LR-Ch MR-Ch 46 30 26 24 20 19 17 15 13 12 10 9 7 6 5 3 (1)),
+  ch:    %w(Ch 50 34 23 18 15 13 12 11 10 9 8 7 6 5 5 4 3 2 1 IN),
+  sd:    %w(Sd 47 33 30 26 20 18 14 13 12 10 9 8 8 7 6 5 4 3 2 (1)),
+  putt:  %w(Miss-A 1-B 2-C 2-D 3 3 4 4 5 6 7 8 9 10 12 14 16 22 35 50 IN),
 }
 add_clubs(player, h_clubs)
