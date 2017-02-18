@@ -3,15 +3,15 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  $('span#toggle_score_card_display').click ->
-    $('table.score_card').toggle()
+  $('span#toggle_leader_board_display').click ->
+    $('table#leaders').toggle()
     if $(this).text() == '[+]'
       $(this).text('[-]')
     else
       $(this).text('[+]')
 
-  $('span#toggle_leader_board_display').click ->
-    $('table#leaders').toggle()
+  $('span#toggle_score_card_display').click ->
+    $('table.score_card').toggle()
     if $(this).text() == '[+]'
       $(this).text('[-]')
     else

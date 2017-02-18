@@ -15,7 +15,7 @@ body {
   }
 
   div#button_to_proceed {
-    margin-left: 400px;
+    margin-left: 320px;
   }
 
   table#players_info {
@@ -31,12 +31,31 @@ body {
   div#leader_board {
     position: fixed;
     top: 300px;
+
+    table {
+      td {
+        padding: 0px 5px;
+      }
+    }
   }
 
   div#score_cards {
     position: fixed;
     top: 300px;
     left: 200px;
+
+    table {
+      font-size: x-small;
+      margin-top: 10px;
+
+      td {
+        width: 16px;
+      }
+
+      caption {
+        text-align: left;
+      }
+    }
   }
 
   div#hole_map {
@@ -61,25 +80,6 @@ body {
       margin-left: 30px;
     }
   }
-
-  table#leaders {
-    td {
-      padding: 0px 5px;
-    }
-  }
-
-  table.score_card {
-    font-size: x-small;
-    margin-top: 20px;
-
-    td {
-      width: 16px;
-    }
-
-    caption {
-      text-align: left;
-    }
-  }
 }
 
 body.pretty {
@@ -90,7 +90,7 @@ body.pretty {
   }
 
   div#button_to_proceed {
-    margin-left: 500px;
+    margin-left: 400px;
   }
 
   table#players_info {
@@ -106,6 +106,14 @@ body.pretty {
   div#score_cards {
     top: 400px;
     left: 300px;
+
+    table {
+      font-size: medium;
+
+      td {
+        width: 24px;
+      }
+    }
   }
 
   div#leader_board {
@@ -122,10 +130,14 @@ body.pretty {
   }
 
   div#hole_map {
-    left: 600px;
+    left: 500px;
 
     table {
       font-size: small;
+
+      caption {
+        font-size: medium;
+      }
 
       td.fairway, td.near_green {
         color: black;
@@ -174,14 +186,6 @@ body.pretty {
 
     table#green_map td {
       width: 40px;
-    }
-  }
-
-  table.score_card {
-    font-size: medium;
-
-    td {
-      width: 24px;
     }
   }
 
