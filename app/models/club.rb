@@ -8,6 +8,9 @@ class Club < ActiveRecord::Base
     name == 'putt'
   end
 
+  # TODO: Alter direction of Ch and P randomly.
+  # TODO: Interpolate distance randomly.
+
   def swing(dice_adjust = 0)
     raise "Should not reach here: return 'IN'" if player.ball.ok?
     dice = Dice.two_rolls

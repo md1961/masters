@@ -1,7 +1,7 @@
 module RoundsHelper
 
   def score_formatted(value)
-    value.zero? ? 'even' : format('%+d', value)
+    value.zero? ? 'Even' : format('%+d', value)
   end
 
   def area_display(player)
