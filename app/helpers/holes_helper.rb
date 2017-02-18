@@ -2,28 +2,47 @@ module HolesHelper
 
   LANDING_GRIDS = [%w(SL ML LL), %w(SC MC LC), %w(SR MR LR)]
 
+    def hole_map_element(shot_judge, players)
+      players = players.empty? ? '&nbsp'.html_safe : players.join(',')
+      safe_join([shot_judge, players], '<br>'.html_safe)
+    end
+
+    # TODO: Move to Round?
+    def players_in_landings(result)
+      @round.current_group.players.find_all do |player|
+        player_result = player.ball.result
+        if result == 'MC-Ch'
+          player_result.to_i > 0
+        else
+          player_result == result
+        end
+      end
+    end
+
   def fairway_landings(hole)
     return [[content_tag(:td, nil)] * 3] * 3 if hole.par <= 3
     LANDING_GRIDS.map do |row|
       row.map do |result|
         shot_judge = hole.shots.find_by(number: 2).judge(result)
+        players = players_in_landings(result)
         clazz = shot_judge.lands.gsub(' ', '').underscore
-        content_tag :td, shot_judge, class: clazz
+        content_tag :td, hole_map_element(shot_judge, players), class: clazz
       end
     end
   end
 
   def green_landings(hole)
-    shot_number = hole.par - 1
-    LANDING_GRIDS.map do |row|
-      row.map do |result|
-        result += '-Ch'
+    shot_number = hole.par == 3 ? 2 : 3
+    LANDING_GRIDS.map { |row| [row.first] + row }.map do |row|
+      row.map.with_index do |result, i|
+        result += i == 0 ? '-P' : '-Ch'
         is_green = result == 'MC-Ch'
-        shot_judge = hole.shots.find_by(number: shot_number).judge(result)
+        shot_judge = hole.shots.find_by(number: shot_number, is_layup: false).judge(result)
         lands = shot_judge.lands
         lands = eval(lands).values.join(' ') if lands.start_with?('{')
+        players = players_in_landings(result)
         clazz = is_green ? 'green' : lands.gsub(' ', '').underscore
-        content_tag :td, is_green ? 'P' : shot_judge, class: clazz
+        content_tag :td, hole_map_element(is_green ? 'P' : shot_judge, players), class: clazz
       end
     end
   end
