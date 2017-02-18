@@ -80,7 +80,7 @@ class Group < ActiveRecord::Base
 
   def ==(other)
     return false if other.nil? || !other.is_a?(Group)
-    self.number == other.number
+    self.round == other.round && self.number == other.number
   end
 
   def to_s
