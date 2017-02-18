@@ -41,11 +41,11 @@ def add_clubs(player, h_clubs)
     result_before = nil
     DICES.zip(results) do |dice, result|
       if result_before.to_i > 0 && result.to_i > 0
-        is_ordered = result_before.to_i >= result.to_i
-        is_ordered = !is_ordered if club.putt?
+        is_ordered = result_before.to_i.send(club.putt? ? '<=' : '>=', result.to_i)
         raise "Misorder in '#{result_before}' and '#{result}' for #{name} of #{player}" unless is_ordered
       end
       club.club_results.create!(dice: dice, result: result)
+      result_before = result
     end
   end
   STDERR.puts
