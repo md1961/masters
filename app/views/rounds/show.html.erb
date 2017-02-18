@@ -33,10 +33,10 @@
         <td><%= player.shot.hole.full_desc(with_distance: true) %></td>
       </tr>
       <tr>
-        <td class="italic"><%= "#{player} on #{area_display(player)} #{target_display(ball)}" %></td>
+        <td class="italic"><%= pre_shot_display(player) %></td>
       </tr>
       <tr>
-        <td class="italic"><%= ball.next_shot_display %></td>
+        <td class="italic"><%= ball.on_green? ? nil : ball.next_shot_display %></td>
       </tr>
     <% end -%>
   <% elsif @round.needs_input? -%>

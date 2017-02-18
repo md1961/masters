@@ -18,6 +18,12 @@ module RoundsHelper
     end
   end
 
+  def pre_shot_display(player)
+    ball = player.ball
+    distance = ball.on_green? ? " #{ball.result}" : ''
+    "#{player} on #{area_display(player)}#{distance} #{target_display(ball)}"
+  end
+
   def hole_result_display(group)
     group.players.map { |player|
       ball = player.ball
