@@ -126,7 +126,12 @@
 
 <% unless @round.groups.empty? -%>
   <div id="score_cards">
-    <span id="toggle_score_card_display" class="button">[=&gt;]</span>
+    <% @round.groups.each do |group| -%>
+      <% is_current = group == @round.current_group -%>
+      <span class="toggle_score_card_display button <%= is_current && 'current' %>">
+        <%= group.number %>
+      </span>
+    <% end -%>
     <% @round.groups.each do |group| -%>
       <% group.players.each do |player| -%>
         <%= render player.score_cards.find_by(round: @round) %>

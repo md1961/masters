@@ -10,13 +10,6 @@ $ ->
     else
       $(this).text('[+]')
 
-  $('span#toggle_score_card_display').click ->
-    $('table.score_card').toggle()
-    if $(this).text() == '[+]'
-      $(this).text('[-]')
-    else
-      $(this).text('[+]')
-
   $('span#toggle_hole_map_display').click ->
     $('table.hole_map').toggle()
     if $(this).text() == '[+]'
@@ -24,7 +17,12 @@ $ ->
     else
       $(this).text('[+]')
 
-	setTimeout ->
-		$('tr.delayed_display').show()
-		$('input[type="submit"]').prop('disabled', false)
-	, 1000
+  $('span.toggle_score_card_display').click ->
+    num = $(this).text().replace(/\s|\r?\n/g, '');
+    $('table.score_card').hide()
+    $("table.score_card.group#{num}").show()
+
+  setTimeout ->
+    $('tr.delayed_display').show()
+    $('input[type="submit"]').prop('disabled', false)
+  , 1000
