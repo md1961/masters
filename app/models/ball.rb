@@ -61,7 +61,7 @@ class Ball < ActiveRecord::Base
   end
 
   def next_use_options
-    next_use.split(' or ')
+    next_use.split(' or ').map { |s| s + (!next_adjust.zero? ? format(' (%+d)', next_adjust) : '') }
   end
 
   def accept(club_result)
