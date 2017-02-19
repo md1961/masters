@@ -43,7 +43,7 @@ class Player < ActiveRecord::Base
     elsif ball.nil?
       '-'
     else
-      number = shot.hole.number - 1
+      number = shot.hole.number - (ball.holed_out? ? 0 : 1)
       number.zero? ? '-' : number.to_s
     end
   end
