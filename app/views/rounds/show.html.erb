@@ -114,7 +114,7 @@
 
 <div id="leader_board">
   <span id="toggle_leader_board_display" class="button"><%= label_for_toggle_button %></span>
-  <table id="leaders" class="table_base" <%= @style.blank? && 'hidden' %>>
+  <table id="leaders" class="<%= @style.present? && 'table_base' %>" <%= @style.blank? && 'hidden' %>>
     <% @round.tournament.players.sort_by(&:leader_sorter).each do |player| -%>
       <tr>
         <td><%= player %></td>

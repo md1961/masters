@@ -3,7 +3,8 @@
    player = score_card.player
    hides_at_first = @style.blank? || player.group != player.round.group_to_display -%>
 
-  <table class="score_card table_base group<%= player.group.number %>" <%= hides_at_first && 'hidden' %>>
+ <table class="score_card <%= @style.present? && 'table_base' %>
+               group<%= player.group.number %>" <%= hides_at_first && 'hidden' %>>
   <caption><%= player %></caption>
   <thead>
     <tr>
