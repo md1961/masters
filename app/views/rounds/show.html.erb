@@ -83,7 +83,7 @@
       <tr>
         <% if index.zero? -%>
           <td rowspan="<%= group.players.size %>"
-              class="<%= group == @round.current_group && 'current' %>">
+              class="<%= group == @round.group_to_display && 'current' %>">
             <%= group.number %>
           </td>
         <% end -%>
@@ -128,7 +128,7 @@
 <% unless @round.groups.empty? -%>
   <div id="score_cards">
     <% @round.groups.each do |group| -%>
-      <% is_current = group == @round.current_group -%>
+      <% is_current = group == @round.group_to_display -%>
       <span class="toggle_score_card_display button <%= is_current && 'current' %>">
         <%= group.number %>
       </span>
@@ -145,7 +145,7 @@
   <div>
     <span id="toggle_hole_map_display" class="button"><%= label_for_toggle_button %></span>
   </div>
-  <% if hole = player&.shot&.hole -%>
+  <% if hole = @round.group_to_display.players.first&.shot&.hole -%>
     <%= render hole %>
   <% end -%>
 </div>

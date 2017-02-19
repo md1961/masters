@@ -3,7 +3,7 @@ class Group < ActiveRecord::Base
   has_many :groupings, -> { order(:play_order) }
   has_many :players, through: :groupings
 
-  attr_reader :message
+  attr_reader :play_finished, :message
 
   def players_gone_to_next_area?
     players.none? { |player| player.shot.area == area }
@@ -44,6 +44,10 @@ class Group < ActiveRecord::Base
     players.all? { |player| player.finished_round? }
   end
 
+  def prev
+    round.groups.order(:number)[number - 1 - 1]
+  end
+
   def tee_up_on(hole_number)
     shot = Shot.first_tee(hole_number)
     players.each { |player| player.create_ball!(shot: shot) }
@@ -54,6 +58,7 @@ class Group < ActiveRecord::Base
   end
 
   def play(index_option: nil)
+    @play_finished = !all_on_or_near_green?
     @message = nil
     if all_holed_out?
       update_play_order
@@ -72,6 +77,7 @@ class Group < ActiveRecord::Base
       was_putting = true if ball.on_green?
       info = player.play(index_option: index_option)
       @message = ball.direct_in? ? 'IN!' : was_putting ? 'miss' : nil
+      # FIXME:
       "player_id=#{player.id}&club_used=#{ball.club_used}&#{info}"
     end
   end

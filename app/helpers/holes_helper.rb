@@ -2,19 +2,14 @@ module HolesHelper
 
   LANDING_GRIDS = [%w(SL ML LL), %w(SC MC LC), %w(SR MR LR)]
 
-    def hole_map_element(shot_judge, players)
-      players = players.empty? ? '&nbsp'.html_safe : players.join(',')
-      safe_join([shot_judge, players], '<br>'.html_safe)
-    end
-
     # TODO: Move to Round?
     def players_in_landings(result)
-      @round.current_group.players.find_all do |player|
+      @round.group_to_display.players.find_all do |player|
         player_result = player.ball.result
         if result == 'MC-Ch'
           player_result.to_i > 0
         else
-          player_result == result
+          player_result&.sub(/\*\z/, '') == result
         end
       end
     end
@@ -45,5 +40,10 @@ module HolesHelper
         content_tag :td, hole_map_element(is_green ? 'P' : shot_judge, players), class: clazz
       end
     end
+  end
+
+  def hole_map_element(shot_judge, players)
+    players = players.empty? ? '&nbsp'.html_safe : players.join(',')
+    safe_join([shot_judge, players], '<br>'.html_safe)
   end
 end

@@ -4,6 +4,8 @@ class Round < ActiveRecord::Base
   has_many :groups, -> { order(:number ) }
   has_many :score_cards
 
+  # FIXME: Add attribute current_player, or else
+
   # FIXME: Add attribute first_hole_number, or else
   def first_hole_number
     1
@@ -12,7 +14,7 @@ class Round < ActiveRecord::Base
     first_hole_number == 1 ? 18 : first_hole_number - 1
   end
 
-  enum status: {displays_result: 0, ready_to_play: 1, needs_input: 2, finished: 99}
+  enum status: {displays_result: 0, ready_to_play: 1, changing_group: 2, needs_input: 3, finished: 99}
 
   attr_reader :message
 
@@ -39,9 +41,17 @@ class Round < ActiveRecord::Base
     groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
   end
 
+  def group_to_display
+    changing_group? ? current_group.prev : current_group
+  end
+
   # TODO: Refactor proceed() by splitting or else.
   def proceed(shot_option: nil)
-    self.status = :ready_to_play if needs_input? && shot_option.present?
+    if (needs_input? && shot_option.present?)
+      self.status = :ready_to_play
+    elsif changing_group?
+      self.status = :displays_result
+    end
     will_toggle_status = true
     @message = nil
     if ready_to_play?
@@ -49,8 +59,15 @@ class Round < ActiveRecord::Base
         needs_input!
         return
       end
-      player_id_and_info = current_group.play(index_option: shot_option && Integer(shot_option))
-      will_toggle_status = false if player_id_and_info.nil?
+      group_to_play = current_group
+      # FIXME:
+      player_id_and_info = group_to_play.play(index_option: shot_option && Integer(shot_option))
+      if player_id_and_info.nil?
+        will_toggle_status = false
+      elsif groups.none?(&:players_split?) && group_to_play.play_finished
+        changing_group!
+        will_toggle_status = false
+      end
       update!(play_result: player_id_and_info)
       @message = current_group.try(:message)
       if areas.first.open? && groups.any?(&:not_started_yet?)
@@ -61,6 +78,7 @@ class Round < ActiveRecord::Base
     if groups.all?(&:round_finished?)
       finished!
       update!(play_result: "#{self} finished")
+    # FIXME: Move to start of the method.
     elsif will_toggle_status
       ready_to_play? ? displays_result! : ready_to_play!
     end
