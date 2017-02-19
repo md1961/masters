@@ -127,6 +127,9 @@
 
 <% unless @round.groups.empty? -%>
   <div id="score_cards">
+    <% if @style.blank? -%>
+      <span class="hide_score_card_display button">[-]</span>
+    <% end -%>
     <% @round.groups.each do |group| -%>
       <% is_current = group == @round.group_to_display -%>
       <span class="toggle_score_card_display button <%= is_current && 'current' %>">

@@ -17,6 +17,9 @@ $ ->
     else
       $(this).text('[+]')
 
+  $('span.hide_score_card_display').click ->
+    $('table.score_card').hide()
+
   $('span.toggle_score_card_display').click ->
     num = $(this).text().replace(/\s|\r?\n/g, '');
     $('table.score_card').hide()
