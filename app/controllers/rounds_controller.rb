@@ -22,7 +22,7 @@ class RoundsController < ApplicationController
       begin
         @round = Round.find(params[:id])
       rescue ActiveRecord::RecordNotFound => e
-        redirect_to rounds_path
+        redirect_to tournaments_path
       end
     end
 end
