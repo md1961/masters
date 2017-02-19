@@ -45,7 +45,7 @@ class Group < ActiveRecord::Base
   end
 
   def prev_playing
-    groups_playing = round.groups.reject(&:round_finished?)
+    groups_playing = round.groups.reject(&:not_started_yet?).reject(&:round_finished?)
     index = groups_playing.index(self)
     groups_playing[index - 1]
   end

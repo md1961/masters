@@ -8,9 +8,9 @@ class Tournament < ActiveRecord::Base
   end
 
   def new_round!
-    round = current_round
-    round&.update!(is_current: false)
-    new_round_number = (round&.number || 0) + 1
+    current_round_number = current_round&.number
+    current_round&.update!(is_current: false)
+    new_round_number = current_round_number.to_i + 1
     rounds.create!(number: new_round_number, is_current: true)
   end
 

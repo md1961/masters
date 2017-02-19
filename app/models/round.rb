@@ -70,7 +70,7 @@ class Round < ActiveRecord::Base
       end
       update!(play_result: player_id_and_info)
       @message = current_group.try(:message)
-      if areas.first.open? && groups.any?(&:not_started_yet?)
+      if areas.first.open? && areas.second.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(first_hole_number)
       end
@@ -99,7 +99,7 @@ class Round < ActiveRecord::Base
       Area.all.each { |area| area.update!(round: self) } if number >= 2
 
       tee_shot_on_hole_12 = Shot.find_by(hole: Hole.find_by(number: 12), number: 1)
-      h_option_tee_shot_12 = tee_shot_on_hole_12.shot_judges.first.next_use
+      h_option_tee_shot_12 = eval(tee_shot_on_hole_12.shot_judges.first.next_use)
       dice = Dice.roll
       self.club_name_for_12_tee = Ball.look_up_optional_result(h_option_tee_shot_12, dice)
 
@@ -109,6 +109,8 @@ class Round < ActiveRecord::Base
         # TODO: Add sort item if total is equal.
         players_sorted = tournament.players.sort_by(&:tournament_stroke).reverse
       end
+      # FIXME: Can destroy old Grouping's ?
+      Grouping.destroy_all
       group_number = 1
       players_sorted.each_slice(Round.num_players_per_group) do |players|
         group = groups.create!(number: group_number, players: players)
@@ -116,6 +118,7 @@ class Round < ActiveRecord::Base
         group.groupings.find_by(player: players[1]).update!(play_order: 2)
         group_number += 1
       end
+      players_sorted.each { |player| player.ball.destroy }
 
       raise "All Area should be open" unless areas.all?(&:open?)
 

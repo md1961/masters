@@ -145,7 +145,7 @@
   <div>
     <span id="toggle_hole_map_display" class="button"><%= label_for_toggle_button %></span>
   </div>
-  <% if hole = @round.group_to_display.players.first&.shot&.hole -%>
+  <% if hole = @round.group_to_display&.players&.first&.shot&.hole -%>
     <%= render hole %>
   <% end -%>
 </div>
