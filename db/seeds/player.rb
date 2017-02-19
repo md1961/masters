@@ -336,3 +336,17 @@ h_clubs = {
   putt:  %w(Miss-A 1-B 2-C 3-D 3 4 4 5 6 7 8 9 10 11 13 16 19 25 41 IN IN),
 }
 add_clubs(player, h_clubs)
+
+player = Player.create!(last_name: 'Renner', first_name: 'Jack', overall: 24)
+h_clubs = {
+  drive: %w(SL SR SL SC SC SC SC* SC MR MC MC ML MC MC MC MC* MC MC MC* LC LC*),
+  fw:    %w(SR-P SR-P SC-P SC-Ch MR-Ch LL-Ch LC-Ch SR-Ch 55 46 39 36 29 26 23 20 17 13 10 6 4),
+  li:    %w(SR-P SL-P LR-Ch ML-Ch SR-Ch LC-Ch SC-Ch 52 43 38 36 32 29 23 20 17 15 11 9 5 3),
+  mi:    %w(SR-Ch SC-Ch MR-Ch LL-Ch LR-Ch ML-Ch 56 45 40 37 32 28 24 21 18 16 14 11 8 5 2),
+  si:    %w(SR-Ch ML-Ch LR-Ch SC-Ch MR-Ch 50 36 31 28 26 23 21 19 17 14 12 10 7 5 3 1),
+  p:     %w(SL-Ch LR-Ch ML-Ch 42 29 24 21 19 17 15 14 13 11 10 9 7 6 5 3 2 (1)),
+  ch:    %w(51 35 25 18 13 12 11 10 9 8 7 6 5 5 4 4 3 2 2 1 IN),
+  sd:    %w(Sd 45 31 28 24 19 17 13 12 11 10 9 8 7 6 5 5 4 3 2 (1)),
+  putt:  %w(Miss-A 1-B 2-C 2-D 3 3 4 4 5 6 7 8 9 10 12 13 16 22 34 49 IN),
+}
+add_clubs(player, h_clubs)

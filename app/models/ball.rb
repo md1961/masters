@@ -110,6 +110,7 @@ class Ball < ActiveRecord::Base
       self.next_adjust <=> other.next_adjust
     else
       distance_factor(self.result) <=> distance_factor(other.result)
+      # TODO: Order randomly if equal, but needs to remember the ordering.
     end
   end
 

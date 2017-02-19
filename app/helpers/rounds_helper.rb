@@ -6,16 +6,19 @@ module RoundsHelper
 
   def area_display(player)
     area = player.shot.area
-    modifier = area.green? && player.ball.result.to_i == 0 ? 'vicinity' : ''
+    modifier = \
+      if player.ball.superlative?
+        'with excellent lie'
+      elsif area.green? && player.ball.result.to_i == 0
+        'vicinity'
+      else
+        ''
+      end
     "#{area} #{modifier}"
   end
 
   def target_display(ball)
-    if ball.on_green?
-      "putting for #{ball.hole_result(1)}"
-    else
-      ''
-    end
+    ball.on_green? ? "putting for #{ball.hole_result(1)}" : ''
   end
 
   def pre_shot_display(player)
