@@ -44,8 +44,10 @@ class Group < ActiveRecord::Base
     players.all? { |player| player.finished_round? }
   end
 
-  def prev
-    round.groups.order(:number)[number - 1 - 1]
+  def prev_playing
+    groups_playing = round.groups.reject(&:round_finished?)
+    index = groups_playing.index(self)
+    groups_playing[index - 1]
   end
 
   def tee_up_on(hole_number)

@@ -42,7 +42,7 @@ class Round < ActiveRecord::Base
   end
 
   def group_to_display
-    changing_group? ? current_group.prev : current_group
+    changing_group? ? current_group.prev_playing : current_group
   end
 
   # TODO: Refactor proceed() by splitting or else.
