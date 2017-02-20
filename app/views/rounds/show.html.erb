@@ -78,9 +78,9 @@
 </table>
 
 <table id="players_info">
-  <% groups_with_to_display_at_top.each do |group| -%>
+  <% groups_with_to_display_at_top.each_with_index do |group, index_group| -%>
     <% group.players.each_with_index do |player, index| -%>
-      <tr>
+      <tr <%= index_group >= num_groups_in_players_info && 'hidden' %>>
         <% if index.zero? -%>
           <td rowspan="<%= group.players.size %>"
               class="<%= group == @round.group_to_display && 'current' %>">
