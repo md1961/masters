@@ -79,7 +79,7 @@
 
 <div id="players_info">
   <table>
-    <% groups_with_to_display_at_top.each_with_index do |group, index_group| -%>
+    <% groups_for_players_info.each_with_index do |group, index_group| -%>
       <% group.players.each_with_index do |player, index| -%>
         <tr class="<%= index_group >= num_groups_in_players_info && 'not_to_display' %>">
           <% if index.zero? -%>

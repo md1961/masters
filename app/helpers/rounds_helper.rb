@@ -4,8 +4,16 @@ module RoundsHelper
     5
   end
 
-  def groups_with_to_display_at_top
-    @round.groups.rotate(@round.group_to_display.number - 1)
+  def groups_for_players_info
+    offset_from_bottom_of_to_display = 1
+    groups = @round.groups
+    number_to_display = @round.group_to_display.number
+    n_scroll_out = number_to_display - (num_groups_in_players_info - offset_from_bottom_of_to_display)
+    if n_scroll_out <= 0
+      groups
+    else
+      groups.rotate(n_scroll_out)
+    end
   end
 
   def score_formatted(value)
