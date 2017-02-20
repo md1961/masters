@@ -40,6 +40,10 @@ body {
     top: 300px;
 
     table {
+      tr.not_to_display {
+        display: none;
+      }
+
       td {
         padding: 0px 5px;
       }

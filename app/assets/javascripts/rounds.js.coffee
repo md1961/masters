@@ -17,7 +17,20 @@ $ ->
     else
       $(this).text('[+]')
 
-  $('span#toggle_players_info_display').click ->
+  $('span#toggle_leader_board_full_display').click ->
+    $('table#leaders tr.not_to_display').toggle()
+    $('div#players_info').toggle()
+    div = $('div#leader_board')
+    if div.css('position') == 'fixed'
+      div.css('position', 'static')
+    else
+      div.css('position', 'fixed')
+    if $(this).text() == '[ ... ]'
+      $(this).text('[ ^ ]')
+    else
+      $(this).text('[ ... ]')
+
+  $('span#toggle_players_info_full_display').click ->
     $('div#players_info table tr.not_to_display').toggle()
     $('div#leader_board').toggle()
     $('div#score_cards').toggle()

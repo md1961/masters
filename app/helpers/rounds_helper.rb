@@ -4,6 +4,10 @@ module RoundsHelper
     5
   end
 
+  def num_players_in_leader_board
+    10
+  end
+
   def groups_for_players_info
     offset_from_bottom_of_to_display = 1
     groups = @round.groups

@@ -112,7 +112,7 @@
       <% end -%>
     <% end -%>
   </table>
-  <span id="toggle_players_info_display" class="button">[ ... ]</span>
+  <span id="toggle_players_info_full_display" class="button">[ ... ]</span>
 </div>
 
 <% label_for_toggle_button = @style == 'pretty' ? '[-]' : '[+]' -%>
@@ -120,14 +120,15 @@
 <div id="leader_board">
   <span id="toggle_leader_board_display" class="button"><%= label_for_toggle_button %></span>
   <table id="leaders" class="<%= @style.present? && 'table_base' %>" <%= @style.blank? && 'hidden' %>>
-    <% @round.tournament.players.sort_by(&:leader_sorter).each do |player| -%>
-      <tr>
+    <% @round.tournament.players.sort_by(&:leader_sorter).each_with_index do |player, index| -%>
+      <tr class="<%= index >= num_players_in_leader_board && 'not_to_display' %>">
         <td><%= player %></td>
         <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
         <td class="numeric"><%= player.hole_finished %></td>
       </tr>
     <% end -%>
   </table>
+  <span id="toggle_leader_board_full_display" class="button">[ ... ]</span>
 </div>
 
 <% unless @round.groups.empty? -%>
