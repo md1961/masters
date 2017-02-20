@@ -13,15 +13,18 @@ class Club < ActiveRecord::Base
 
   def swing(dice_adjust = 0)
     raise "Should not reach here: return 'IN'" if player.ball.ok?
-    dice = Dice.two_rolls
-    @info = "#{dice}"
-    unless dice_adjust.zero?
-      dice = dice_adjusted(dice, dice_adjust)
-      @info = "#{dice}(#{format("%+d", dice_adjust)} of #{@info})"
+    raw_dice = Dice.two_rolls
+    if dice_adjust.zero?
+      dice = raw_dice
+      @info = "#{dice}"
+    else
+      dice = dice_adjusted(raw_dice, dice_adjust)
+      @info = "#{dice}(#{format("%+d", dice_adjust)} of #{raw_dice})"
     end
     raw_result = club_results.find_by(dice: dice).result unless player.ball.third_putt?
     raw_result = add_random_direction(raw_result) if raw_result == 'Ch'
     result = raw_result
+    info_add = nil
     if putt?
       ball_on = player.ball.result.to_i
       if player.ball.third_putt?
@@ -36,8 +39,11 @@ class Club < ActiveRecord::Base
       else
         result = 'OK'
       end
+    elsif raw_result == '(1)' && raw_dice != 66
+      result = '1'
+      info_add = ", converted to '1' for modified dice 66"
     end
-    @info = "'#{raw_result}' by #{self} on dice #{@info}"
+    @info = "'#{raw_result}' by #{self} on dice #{@info}" + (info_add ? info_add : '')
     result
   end
 

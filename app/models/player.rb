@@ -91,7 +91,7 @@ class Player < ActiveRecord::Base
       ball.club_used = club
       result = club.swing(ball.next_adjust)
       @info = club.info
-      if result == '(1)' && ball.next_adjust == 0
+      if result == '(1)'
         max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
         dice = Dice.roll
         result = dice <= max_roll_for_in ? 'IN' : '1'
