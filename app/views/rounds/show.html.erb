@@ -77,38 +77,41 @@
   <% end -%>
 </table>
 
-<table id="players_info">
-  <% groups_with_to_display_at_top.each_with_index do |group, index_group| -%>
-    <% group.players.each_with_index do |player, index| -%>
-      <tr <%= index_group >= num_groups_in_players_info && 'hidden' %>>
-        <% if index.zero? -%>
-          <td rowspan="<%= group.players.size %>"
-              class="<%= group == @round.group_to_display && 'current' %>">
-            <%= group.number %>
-          </td>
-        <% end -%>
-        <% ball = player.ball %>
-        <% if ball.nil? -%>
-          <td><%= player %></td>
-        <% else -%>
-          <% hole = player.shot.try(:hole)
-             is_fin = ball.finished_round? -%>
-          <td><%= player %></td>
-          <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
-          <td class="numeric"><%= hole.try(:full_desc) %></td>
-          <td class="emphasized"><%= is_fin ? nil : ball.shot_count %></td>
-          <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>
-          <td><%= is_fin ? nil : ball.lands %></td>
-          <% result = ball.result -%>
-          <td class="<%= result && result.end_with?('*') && 'emphasized' %>">
-            <%= is_fin ? 'FIN' : result %>
-          </td>
-          <td><%= ball.next_shot_display(true) %></td>
-        <% end -%>
-      </tr>
+<div id="players_info">
+  <table>
+    <% groups_with_to_display_at_top.each_with_index do |group, index_group| -%>
+      <% group.players.each_with_index do |player, index| -%>
+        <tr class="<%= index_group >= num_groups_in_players_info && 'not_to_display' %>">
+          <% if index.zero? -%>
+            <td rowspan="<%= group.players.size %>"
+                class="<%= group == @round.group_to_display && 'current' %>">
+              <%= group.number %>
+            </td>
+          <% end -%>
+          <% ball = player.ball %>
+          <% if ball.nil? -%>
+            <td><%= player %></td>
+          <% else -%>
+            <% hole = player.shot.try(:hole)
+               is_fin = ball.finished_round? -%>
+            <td><%= player %></td>
+            <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
+            <td class="numeric"><%= hole.try(:full_desc) %></td>
+            <td class="emphasized"><%= is_fin ? nil : ball.shot_count %></td>
+            <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>
+            <td><%= is_fin ? nil : ball.lands %></td>
+            <% result = ball.result -%>
+            <td class="<%= result && result.end_with?('*') && 'emphasized' %>">
+              <%= is_fin ? 'FIN' : result %>
+            </td>
+            <td><%= ball.next_shot_display(true) %></td>
+          <% end -%>
+        </tr>
+      <% end -%>
     <% end -%>
-  <% end -%>
-</table>
+  </table>
+  <span id="toggle_players_info_display" class="button">[ ... ]</span>
+</div>
 
 <% label_for_toggle_button = @style == 'pretty' ? '[-]' : '[+]' -%>
 

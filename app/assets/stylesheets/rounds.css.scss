@@ -18,13 +18,20 @@ body {
     margin-left: 320px;
   }
 
-  table#players_info {
-    font-size: x-small;
+  div#players_info {
     position: fixed;
     top: 120px;
 
-    td {
-      padding: 0px 3px;
+    table {
+      font-size: x-small;
+
+      tr.not_to_display {
+        display: none;
+      }
+
+      td {
+        padding: 0px 3px;
+      }
     }
   }
 
@@ -107,13 +114,16 @@ body.pretty {
     margin-left: 400px;
   }
 
-  table#players_info {
-    font-size: medium;
+  div#players_info {
     position: fixed;
     top: 180px;
 
-    td {
-      padding: 0px 5px;
+    table {
+      font-size: medium;
+
+      td {
+        padding: 0px 5px;
+      }
     }
   }
 

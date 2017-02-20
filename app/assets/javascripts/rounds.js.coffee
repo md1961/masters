@@ -17,6 +17,15 @@ $ ->
     else
       $(this).text('[+]')
 
+  $('span#toggle_players_info_display').click ->
+    $('div#players_info table tr.not_to_display').toggle()
+    $('div#leader_board').toggle()
+    $('div#score_cards').toggle()
+    if $(this).text() == '[ ... ]'
+      $(this).text('[ ^ ]')
+    else
+      $(this).text('[ ... ]')
+
   $('span.hide_score_card_display').click ->
     $('table.score_card').hide()
 
