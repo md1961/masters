@@ -9,6 +9,12 @@ $ ->
     else
       elem.text(text1)
 
+  toggle_css = (elem, style, value1, value2) ->
+    if elem.css(style) == value1
+      elem.css(style, value2)
+    else
+      elem.css(style, value1)
+
   $('span#toggle_leader_board_display').click ->
     $('table#leaders').toggle()
     toggle_text($(this), '[+]', '[-]')
@@ -20,11 +26,7 @@ $ ->
   $('span#toggle_leader_board_full_display').click ->
     $('table#leaders tr.not_to_display').toggle()
     $('div#players_info').toggle()
-    div = $('div#leader_board')
-    if div.css('position') == 'fixed'
-      div.css('position', 'static')
-    else
-      div.css('position', 'fixed')
+    toggle_css($('div#leader_board'), 'position', 'fixed', 'static')
     toggle_text($(this), '[ ... ]', '[ ^ ]')
 
   $('span#toggle_players_info_full_display').click ->
