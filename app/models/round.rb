@@ -118,7 +118,7 @@ class Round < ActiveRecord::Base
         group.groupings.find_by(player: players[1]).update!(play_order: 2)
         group_number += 1
       end
-      players_sorted.each { |player| player.ball.destroy }
+      players_sorted.each { |player| player.ball&.destroy }
 
       raise "All Area should be open" unless areas.all?(&:open?)
 
