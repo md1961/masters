@@ -78,7 +78,7 @@
 </table>
 
 <table id="players_info">
-  <% @round.groups.each do |group| -%>
+  <% groups_with_to_display_at_top.each do |group| -%>
     <% group.players.each_with_index do |player, index| -%>
       <tr>
         <% if index.zero? -%>

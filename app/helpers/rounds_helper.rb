@@ -1,5 +1,9 @@
 module RoundsHelper
 
+  def groups_with_to_display_at_top
+    @round.groups.rotate(@round.group_to_display.number - 1)
+  end
+
   def score_formatted(value)
     value.zero? ? 'Even' : format('%+d', value)
   end
