@@ -50,7 +50,7 @@ module RoundsHelper
   def hole_result_display(group)
     group.players.map { |player|
       ball = player.ball
-      "#{player} #{ball.shot_count} (#{ball.hole_result})"
+      "#{player} #{ball.shot_count}(#{ball.hole_result}) to #{score_formatted(player.tournament_score)}"
     }.join(', ')
   end
 

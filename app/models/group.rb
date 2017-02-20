@@ -92,7 +92,7 @@ class Group < ActiveRecord::Base
   end
 
   def to_s
-    "Group ##{number} (#{players.map(&:to_s).join(', ')})"
+    "Group ##{number}"
   end
 
   private
