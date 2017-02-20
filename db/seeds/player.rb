@@ -28,12 +28,15 @@ DICES = %w(11 12 13 14 15 16 22 23 24 25 26 33 34 35 36 44 45 46 55 56 66).map(&
 
 CLUB_NAMES = %w(drive fw li mi si p ch sd putt).map(&:to_sym).freeze
 
+@count = 1
+
 def add_clubs(player, h_clubs)
   if h_clubs.keys.sort != CLUB_NAMES.sort
     missing_clubs = (CLUB_NAMES - h_clubs.keys).join("', '")
     raise "Missing club '#{missing_clubs}' for #{player}"
   end
-  STDERR.print "#{player.first_name[0]}#{player.last_name[0]}: "
+  STDERR.print format('%2d. %s: ', @count, player.first_name[0] + player.last_name[0])
+  @count += 1
   h_clubs.each do |name, results|
     raise "Illeagl size #{results.size} for #{name} of #{player}" unless results.size == DICES.size
     STDERR.print "#{name[0, 2]} "
