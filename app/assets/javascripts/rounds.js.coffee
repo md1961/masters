@@ -3,19 +3,19 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  toggle_text = (elem, text1, text2) ->
+    if elem.text() == text1
+      elem.text(text2)
+    else
+      elem.text(text1)
+
   $('span#toggle_leader_board_display').click ->
     $('table#leaders').toggle()
-    if $(this).text() == '[+]'
-      $(this).text('[-]')
-    else
-      $(this).text('[+]')
+    toggle_text($(this), '[+]', '[-]')
 
   $('span#toggle_hole_map_display').click ->
     $('table.hole_map').toggle()
-    if $(this).text() == '[+]'
-      $(this).text('[-]')
-    else
-      $(this).text('[+]')
+    toggle_text($(this), '[+]', '[-]')
 
   $('span#toggle_leader_board_full_display').click ->
     $('table#leaders tr.not_to_display').toggle()
@@ -25,19 +25,13 @@ $ ->
       div.css('position', 'static')
     else
       div.css('position', 'fixed')
-    if $(this).text() == '[ ... ]'
-      $(this).text('[ ^ ]')
-    else
-      $(this).text('[ ... ]')
+    toggle_text($(this), '[ ... ]', '[ ^ ]')
 
   $('span#toggle_players_info_full_display').click ->
     $('div#players_info table tr.not_to_display').toggle()
     $('div#leader_board').toggle()
     $('div#score_cards').toggle()
-    if $(this).text() == '[ ... ]'
-      $(this).text('[ ^ ]')
-    else
-      $(this).text('[ ... ]')
+    toggle_text($(this), '[ ... ]', '[ ^ ]')
 
   $('span.hide_score_card_display').click ->
     $('table.score_card').hide()
