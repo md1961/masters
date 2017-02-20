@@ -37,4 +37,4 @@ $ ->
   setTimeout ->
     $('tr.delayed_display').show()
     $('input[type="submit"]').prop('disabled', false)
-  , 1000
+  , parseInt($('div#message').attr('data-time_to_delay'))

@@ -3,6 +3,8 @@ class RoundsController < ApplicationController
 
   def show
     @message = params[:message]
+    distance = @round.current_group.next_player.ball.result.to_i
+    @time_to_delay = distance * 30 + 500
   end
 
   def update
