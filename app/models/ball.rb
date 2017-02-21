@@ -99,6 +99,8 @@ class Ball < ActiveRecord::Base
     parse_next_use
   end
 
+  RE_RESULT_LAYUP_NUMBERED = /\Alayup-(\d{1,2})\z/
+
   def <=>(other)
     if other.nil? || !other.is_a?(Ball)
       -1
@@ -110,6 +112,9 @@ class Ball < ActiveRecord::Base
       -1
     elsif other.result.nil?
       1
+    elsif m1 = self .result.match(RE_RESULT_LAYUP_NUMBERED) \
+       && m2 = other.result.match(RE_RESULT_LAYUP_NUMBERED)
+      m2 <=> m1
     elsif self.next_adjust != other.next_adjust
       self.next_adjust <=> other.next_adjust
     else
@@ -215,7 +220,7 @@ class Ball < ActiveRecord::Base
         H_DISTANCE_FACTOR['IN'] + 100
       elsif result.to_i > 0
         1000 - result.to_i
-      elsif result =~ /\Alayup-(\d{1,2})\z/
+      elsif result =~ RE_RESULT_LAYUP_NUMBERED
         -50 - Regexp.last_match(1).to_i
       else
         raise "Cannot find key of '#{result}' in H_DISTANCE_FACTOR" unless H_DISTANCE_FACTOR.key?(result)
