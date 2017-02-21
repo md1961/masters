@@ -9,7 +9,7 @@ module HolesHelper
         if result == 'MC-Ch'
           player_result.to_i > 0
         else
-          player_result&.sub(/\*\z/, '') == result
+          player_result&.sub(/\*\z/, '')&.sub(/\A(layup)-\d+\z/, '\1') == result
         end
       end
     end

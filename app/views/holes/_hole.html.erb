@@ -1,5 +1,5 @@
 <table id="fairway_map" class="hole_map" <%= @style.blank? && 'hidden' %>>
-  <caption><%= hole.full_desc(with_distance: true) %></caption>
+  <caption><%= hole.par == 3 ? '&nbsp;'.html_safe : hole.full_desc(with_distance: true) %></caption>
   <% fairway_landings(hole).each do |row| -%>
     <tr>
       <% row.each do |td| -%>
@@ -10,11 +10,18 @@
 </table>
 
 <table id="green_map" class="hole_map" <%= @style.blank? && 'hidden' %>>
-  <caption>&nbsp;</caption>
-  <% green_landings(hole).each do |row| -%>
+  <caption><%= hole.par >= 4 ? '&nbsp;'.html_safe : hole.full_desc(with_distance: true) %></caption>
+  <% green_landings(hole).each_with_index do |row, index_row| -%>
     <tr>
-      <% row.each do |td| -%>
+      <% row.each_with_index do |td, index_td| -%>
         <%= td %>
+        <% if hole.par == 5 && index_row == 0 && index_td == 0 -%>
+          <td rowspan="7" class="near_green">
+            (layup)
+            <br>
+            <%= players_in_landings('layup').join(', ') %>
+          </td>
+        <% end -%>
       <% end -%>
     </tr>
   <% end -%>
