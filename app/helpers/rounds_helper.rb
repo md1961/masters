@@ -56,10 +56,18 @@ module RoundsHelper
   end
 
   def hole_result_display(group)
-    group.players.map { |player|
-      ball = player.ball
-      "#{player} #{ball.shot_count}(#{ball.hole_result}) to #{score_formatted(player.tournament_score)}"
-    }.join(', ')
+    safe_join(group.players.map do |player|
+      content_tag :tr do
+        ball = player.ball
+        safe_join([
+          content_tag(:td, player.to_s),
+          content_tag(:td, ball.shot_count, class: 'numeric'),
+          content_tag(:td, "(#{ball.hole_result})"),
+          content_tag(:td, 'to'),
+          content_tag(:td, "#{score_formatted(player.tournament_score)}", class: 'numeric'),
+        ])
+      end
+    end)
   end
 
   def round_result_display(group)
