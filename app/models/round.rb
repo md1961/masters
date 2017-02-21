@@ -101,7 +101,7 @@ class Round < ActiveRecord::Base
       tee_shot_on_hole_12 = Shot.find_by(hole: Hole.find_by(number: 12), number: 1)
       h_option_tee_shot_12 = eval(tee_shot_on_hole_12.shot_judges.first.next_use)
       dice = Dice.roll
-      self.club_name_for_12_tee = Ball.look_up_optional_result(h_option_tee_shot_12, dice)
+      update!(club_name_for_12_tee: Ball.look_up_optional_result(h_option_tee_shot_12, dice))
 
       if number == 1
         players_sorted = tournament.players.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
