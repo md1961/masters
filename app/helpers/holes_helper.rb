@@ -2,7 +2,7 @@ module HolesHelper
 
   LANDING_GRIDS = [%w(SL ML LL), %w(SC MC LC), %w(SR MR LR)]
 
-    # TODO: Move to Round?
+    # TODO: Move players_in_landings() to Round ?
     def players_in_landings(result)
       @round.group_to_display.players.find_all do |player|
         player_result = player.ball.result

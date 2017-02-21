@@ -4,8 +4,7 @@ class TournamentsController < ApplicationController
     if Tournament.count == 0
       redirect_to new_tournament_path
     else
-      # FIXME: Redirect_to last created, or show a list.
-      redirect_to Tournament.last
+      redirect_to Tournament.order(:created_at).last
     end
   end
 

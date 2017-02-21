@@ -60,7 +60,7 @@ class Round < ActiveRecord::Base
         return
       end
       group_to_play = current_group
-      # FIXME:
+      # FIXME: Quit receiving messy string result from Group#play().
       player_id_and_info = group_to_play.play(index_option: shot_option && Integer(shot_option))
       if player_id_and_info.nil?
         will_toggle_status = false
@@ -106,7 +106,7 @@ class Round < ActiveRecord::Base
       if number == 1
         players_sorted = tournament.players.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
       else
-        # TODO: Add sort item if total is equal.
+        # TODO: Add sort item in case tournament_stroke is equal.
         players_sorted = tournament.players.sort_by(&:tournament_stroke).reverse
       end
       # FIXME: Can destroy old Grouping's ?

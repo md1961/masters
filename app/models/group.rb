@@ -79,7 +79,7 @@ class Group < ActiveRecord::Base
       was_putting = true if ball.on_green?
       info = player.play(index_option: index_option)
       @message = ball.direct_in? ? 'IN!' : was_putting ? 'miss' : nil
-      # FIXME:
+      # FIXME: Eliminate ridiculous return value from play().
       "player_id=#{player.id}&club_used=#{ball.club_used}&#{info}"
     end
   end
