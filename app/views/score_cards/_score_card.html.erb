@@ -39,7 +39,7 @@
            hole  = score&.hole
            number <= 9 ? total_in += value : total_out += value if score -%>
         <td class="numeric">
-          <%= value %>
+          <%= value || '&nbsp'.html_safe %>
         </td>
         <% if number == 9 -%>
           <td class="numeric"><%= score && total_in %></td>
@@ -54,7 +54,7 @@
          total_value = 0 -%>
       <% 1.upto(scores.size) do |number| -%>
         <td class="numeric">
-          <%= cum_score_display(number, scores) %>
+          <%= cum_score_display(number, scores) || '&nbsp'.html_safe %>
         </td>
         <% if number == 9 -%>
           <td />
