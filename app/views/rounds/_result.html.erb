@@ -1,0 +1,58 @@
+<% group = @round.current_group
+   player = group.try(:next_player) -%>
+<% if @round.ready_to_play? -%>
+  <% if group.all_holed_out? -%>
+    <%= render partial: 'hole_result', locals: {group: group} %>
+  <% else -%>
+    <% ball = player.ball -%>
+    <tr>
+      <td><%= player.shot.hole.full_desc(with_distance: true) %></td>
+    </tr>
+    <tr>
+      <td class="italic"><%= pre_shot_display(player) %></td>
+    </tr>
+    <tr>
+      <td class="italic"><%= ball.next_shot_display %></td>
+    </tr>
+  <% end -%>
+<% elsif @round.needs_input? -%>
+  <tr>
+    <td class="italic"><%= "#{player} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
+  </tr>
+<% elsif @round.play_result -%>
+  <% if @message -%>
+    <div id="message" data-time_to_delay="<%= @time_to_delay %>">
+      <%= @message %>
+    </div>
+  <% end -%>
+  <% if @round.play_result =~ Group::RE_PLAYER_ID_AND_INFO -%>
+    <%# TODO: Refactor this mess. %>
+    <% player = Player.find(Regexp.last_match(1).to_i)
+       club_used = Regexp.last_match(2)
+       info = Regexp.last_match(3)
+       ball = player.ball
+       ball.club_used = player.clubs.find_by(name: club_used.downcase) -%>
+    <tr class="delayed_display" <%= @message && 'hidden' %>>
+      <td><%= player.shot.hole.full_desc %></td>
+    </tr>
+    <tr class="delayed_display" <%= @message && 'hidden' %>>
+      <td><%= ball.result_display %></td>
+    </tr>
+    <tr class="delayed_display" <%= @message && 'hidden' %>>
+      <% next_shot_display = ball.next_shot_display -%>
+      <td class="smaller">
+        <%= ball.holed_out? || next_shot_display.blank? ? nil : "( next will be: #{next_shot_display} )" %>
+      </td>
+    </tr>
+    <tr class="delayed_display italic" <%= @message && 'hidden' %>>
+      <td class="smaller italic"><%= info %></td>
+    </tr>
+  <% else -%>
+    <tr class="delayed_display" <%= @message && 'hidden' %>>
+      <td><%= @round.play_result %></td>
+    </tr>
+  <% end -%>
+<% else -%>
+  <%= "Ready to play #{@round}" %>
+<% end -%>
+
