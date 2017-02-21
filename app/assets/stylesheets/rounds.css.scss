@@ -99,6 +99,56 @@ body {
         text-align: center;
         padding: 2px 4px;
       }
+
+      td.fairway, td.near_green {
+        color: black;
+        background-color: LawnGreen;
+      }
+
+      td.green {
+        color: yellow;
+        background-color: SeaGreen;
+      }
+
+      td.trees {
+        color: white;
+        background-color: DarkGreen;
+      }
+
+      td.fairway_trap, td.sand {
+        color: black;
+        background-color: Wheat;
+      }
+
+      td.water {
+        color: white;
+        background-color: Blue;
+      }
+
+      td.water_near_green {
+        color: white;
+        background-color: DeepSkyBlue;
+      }
+
+      td.shallows_water {
+        color: white;
+        background-color: DodgerBlue;
+      }
+
+      td.rough {
+        color: black;
+        background-color: LimeGreen;
+      }
+
+      td.mounds {
+        color: black;
+        background-color: MediumSeaGreen;
+      }
+
+      td.rocks {
+        color: white;
+        background-color: Brown;
+      }
     }
 
     table#green_map {
@@ -165,56 +215,6 @@ body.pretty {
 
       caption {
         font-size: medium;
-      }
-
-      td.fairway, td.near_green {
-        color: black;
-        background-color: LawnGreen;
-      }
-
-      td.green {
-        color: yellow;
-        background-color: SeaGreen;
-      }
-
-      td.trees {
-        color: white;
-        background-color: DarkGreen;
-      }
-
-      td.fairway_trap, td.sand {
-        color: black;
-        background-color: Wheat;
-      }
-
-      td.water {
-        color: white;
-        background-color: Blue;
-      }
-
-      td.water_near_green {
-        color: white;
-        background-color: DeepSkyBlue;
-      }
-
-      td.shallows_water {
-        color: white;
-        background-color: DodgerBlue;
-      }
-
-      td.rough {
-        color: black;
-        background-color: LimeGreen;
-      }
-
-      td.mounds {
-        color: black;
-        background-color: MediumSeaGreen;
-      }
-
-      td.rocks {
-        color: white;
-        background-color: Brown;
       }
     }
 
