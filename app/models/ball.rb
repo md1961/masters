@@ -151,8 +151,9 @@ class Ball < ActiveRecord::Base
       ''
     else
       from = lands.blank? ? '' : lands == 'Water' ? 'from Water Fringe' : "from #{lands}"
-      "#{(shot_count + 1).ordinalize} #{is_layup ? 'layup ' : ''}shot #{from}" \
-        " with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
+      "#{(shot_count + 1).ordinalize} shot #{from}" \
+        " with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}" \
+        " #{going_for_green_in_two? ? 'for Green in Two' : is_layup ? 'for Layup ' : ''}"
     end
   end
 
