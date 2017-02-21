@@ -38,7 +38,15 @@ module RoundsHelper
   end
 
   def target_display(ball)
-    ball.on_green? ? "putting for #{ball.hole_result(1)}" : ''
+    if ball.on_green?
+      "putting for #{ball.hole_result(1)}"
+    elsif ball.going_for_green_in_two?
+      'going for Green in Two'
+    elsif ball.is_layup
+      'for layup'
+    else
+      ''
+    end
   end
 
   def pre_shot_display(player)

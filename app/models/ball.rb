@@ -56,6 +56,10 @@ class Ball < ActiveRecord::Base
     result =~ /\*\z/
   end
 
+  def going_for_green_in_two?
+    shot&.hole&.par == 5 && shot&.number == 2 && !is_layup
+  end
+
   def next_use_optional?
     next_use =~ / or /
   end
@@ -143,10 +147,11 @@ class Ball < ActiveRecord::Base
     next_adjust_display = "(#{next_adjust > 0 ? '+' : ''}#{next_adjust})"
     if informative
       "next: #{next_use}#{is_layup ? ' Layup' : ''} #{next_adjust_display}, #{shot}"
+    elsif on_green?
+      ''
     else
       from = lands.blank? ? '' : lands == 'Water' ? 'from Water Fringe' : "from #{lands}"
-      distance = on_green? ? " #{result}" : ''
-      "#{(shot_count + 1).ordinalize} #{is_layup ? 'layup ' : ''}shot #{from}#{distance}" \
+      "#{(shot_count + 1).ordinalize} #{is_layup ? 'layup ' : ''}shot #{from}" \
         " with #{next_use} #{next_adjust.zero? ? '' : next_adjust_display}"
     end
   end

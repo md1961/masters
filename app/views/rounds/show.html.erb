@@ -37,7 +37,7 @@
         <td class="italic"><%= pre_shot_display(player) %></td>
       </tr>
       <tr>
-        <td class="italic"><%= ball.on_green? ? nil : ball.next_shot_display %></td>
+        <td class="italic"><%= ball.next_shot_display %></td>
       </tr>
     <% end -%>
   <% elsif @round.needs_input? -%>
@@ -52,19 +52,22 @@
     <% end -%>
     <% if @round.play_result =~ Group::RE_PLAYER_ID_AND_INFO -%>
       <%# TODO: Refactor this mess. %>
-      <% p = Player.find(Regexp.last_match(1).to_i)
+      <% player = Player.find(Regexp.last_match(1).to_i)
          club_used = Regexp.last_match(2)
          info = Regexp.last_match(3)
-         b = p.ball
-         b.club_used = p.clubs.find_by(name: club_used.downcase) -%>
+         ball = player.ball
+         ball.club_used = player.clubs.find_by(name: club_used.downcase) -%>
       <tr class="delayed_display" <%= @message && 'hidden' %>>
-        <td><%= p.shot.hole.full_desc %></td>
+        <td><%= player.shot.hole.full_desc %></td>
       </tr>
       <tr class="delayed_display" <%= @message && 'hidden' %>>
-        <td><%= b.result_display %></td>
+        <td><%= ball.result_display %></td>
       </tr>
       <tr class="delayed_display" <%= @message && 'hidden' %>>
-        <td class="smaller"><%= b.holed_out? ? nil : "( next will be: #{b.next_shot_display} )" %></td>
+        <% next_shot_display = ball.next_shot_display -%>
+        <td class="smaller">
+          <%= ball.holed_out? || next_shot_display.blank? ? nil : "( next will be: #{next_shot_display} )" %>
+        </td>
       </tr>
       <tr class="delayed_display italic" <%= @message && 'hidden' %>>
         <td class="smaller italic"><%= info %></td>
