@@ -17,16 +17,7 @@
      player = group.try(:next_player) -%>
   <% if @round.ready_to_play? -%>
     <% if group.all_holed_out? -%>
-      <%# TODO: Extract all of these to hole_result_display() %>
-      <tr>
-        <td colspan="5"><%= "#{group} holed out on #{player.shot.hole}" %></td>
-      </tr>
-      <%= hole_result_display(group) %>
-      <% if player.shot.hole.number == @round.final_hole_number -%>
-        <tr>
-          <td><%= round_result_display(group) %></td>
-        </tr>
-      <% end -%>
+      <%= render partial: 'hole_result', locals: {group: group} %>
     <% else -%>
       <% ball = player.ball -%>
       <tr>
