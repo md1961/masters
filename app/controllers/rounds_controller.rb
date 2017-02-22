@@ -11,6 +11,7 @@ class RoundsController < ApplicationController
       render :show
     else
       @round.proceed(shot_option: params[:shot_option])
+
       @message = @round.message
       distance = @round.current_group.next_player.ball.result.to_i
       @time_to_delay = distance * 30 + 500

@@ -4,6 +4,10 @@ class Round < ActiveRecord::Base
   has_many :groups, -> { order(:number ) }
   has_many :score_cards
 
+  enum status: {displays_result: 0, ready_to_play: 1, changing_group: 2, needs_input: 3, finished: 99}
+
+  attr_reader :message
+
   # FIXME: Add attribute current_player, or else
 
   # FIXME: Add attribute first_hole_number, or else
@@ -13,10 +17,6 @@ class Round < ActiveRecord::Base
   def final_hole_number
     first_hole_number == 1 ? 18 : first_hole_number - 1
   end
-
-  enum status: {displays_result: 0, ready_to_play: 1, changing_group: 2, needs_input: 3, finished: 99}
-
-  attr_reader :message
 
   after_create :create_areas_for_round_one, if: :first_round?
   after_create :setup_groups_and_score_cards

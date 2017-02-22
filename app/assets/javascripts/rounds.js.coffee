@@ -3,6 +3,9 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  $('#form_to_proceed').on 'ajax:error', (e, xhr, status, error) ->
+    alert xhr.responseText
+
   toggle_text = (elem, text1, text2) ->
     if elem.text() == text1
       elem.text(text2)
