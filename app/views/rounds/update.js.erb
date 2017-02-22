@@ -9,11 +9,16 @@ if ($('tr#message')[0]) {
   }, parseInt($('tr#message').attr('data-time_to_delay')));
 }
 
+var table_players_info = $('div#players_info table:first');
+
 <% group = @round.group_to_display
    selector = "div#players_info table tr.group_info#{group.number}" -%>
 $("<%= selector %>:first").remove();
 $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
                                             locals: {group: group, not_to_display: false} %>"));
+
+var num_groups_in_players_info = 5;
+var offset_from_bottom_of_to_display = 2;
 
 var current_group_number = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (current_group_number !== <%= group.number %>) {
@@ -21,4 +26,13 @@ if (current_group_number !== <%= group.number %>) {
   td_group_number.toggleClass('current');
   var tr_next_group = td_group_number.parent().next().next();
   tr_next_group.children('td:first').toggleClass('current');
+
+  if (current_group_number > num_groups_in_players_info - offset_from_bottom_of_to_display) {
+    for (var i = 0; i < 2; i++) {
+      table_players_info.find('tr:first').toggleClass('not_to_display').remove().appendTo(table_players_info);
+    }
+    for (var i = 0; i < 2; i++) {
+      table_players_info.find('tr.not_to_display').first().toggleClass('not_to_display');
+    }
+  }
 }
