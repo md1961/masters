@@ -21,9 +21,9 @@
   </tr>
 <% elsif @round.play_result -%>
   <% if @message -%>
-    <div id="message" data-time_to_delay="<%= @time_to_delay %>">
-      <%= @message %>
-    </div>
+    <tr id="message" data-time_to_delay="<%= @time_to_delay %>">
+      <td><%= @message %></td>
+    </tr>
   <% end -%>
   <% if @round.play_result =~ Group::RE_PLAYER_ID_AND_INFO -%>
     <%# TODO: Refactor this mess. %>

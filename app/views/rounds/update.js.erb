@@ -1,2 +1,8 @@
 $('table#result tr').remove();
 $('table#result').append($("<%= j render 'result' %>"));
+
+$('input[type="submit"]').prop('disabled', true);
+setTimeout(function() {
+  $('tr.delayed_display').show();
+  $('input[type="submit"]').prop('disabled', false);
+}, parseInt($('tr#message').attr('data-time_to_delay')));

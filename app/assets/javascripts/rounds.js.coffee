@@ -42,8 +42,3 @@ $ ->
     num = $(this).text().replace(/\s|\r?\n/g, '');
     $('table.score_card').hide()
     $("table.score_card.group#{num}").show()
-
-  setTimeout ->
-    $('tr.delayed_display').show()
-    $('input[type="submit"]').prop('disabled', false)
-  , parseInt($('div#message').attr('data-time_to_delay'))
