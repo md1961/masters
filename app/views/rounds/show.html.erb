@@ -19,38 +19,8 @@
 <div id="players_info">
   <table>
     <% groups_for_players_info.each_with_index do |group, index_group| -%>
-      <% group.players.each_with_index do |player, index| -%>
-        <tr class="<%= index_group >= num_groups_in_players_info && 'not_to_display' %>">
-          <% if index.zero? -%>
-            <td rowspan="<%= group.players.size %>"
-                class="<%= group == @round.group_to_display && 'current' %>">
-              <%= group.number %>
-            </td>
-          <% end -%>
-          <% ball = player.ball %>
-          <% if ball.nil? -%>
-            <td><%= player %></td>
-          <% else -%>
-            <% hole = player.shot.try(:hole)
-               is_fin = ball.finished_round? -%>
-            <td><%= player %></td>
-            <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
-            <% if index.zero? -%>
-              <td rowspan="<%= group.players.size %>" class="numeric">
-                <%= hole.try(:full_desc) %>
-              </td>
-            <% end -%>
-            <td class="emphasized"><%= is_fin ? nil : ball.shot_count %></td>
-            <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>
-            <td><%= is_fin ? nil : ball.lands %></td>
-            <% result = ball.result -%>
-            <td class="<%= result && result.end_with?('*') && 'emphasized' %>">
-              <%= is_fin ? 'FIN' : result %>
-            </td>
-            <td><%= ball.next_shot_display(true) %></td>
-          <% end -%>
-        </tr>
-      <% end -%>
+      <% not_to_display = index_group >= num_groups_in_players_info -%>
+      <%= render partial: 'players_info_by_group', locals: {group: group, not_to_display: not_to_display} %>
     <% end -%>
   </table>
   <span id="toggle_players_info_full_display" class="button">[ ... ]</span>
