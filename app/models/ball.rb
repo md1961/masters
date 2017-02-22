@@ -115,6 +115,7 @@ class Ball < ActiveRecord::Base
     elsif m1 = self .result.match(RE_RESULT_LAYUP_NUMBERED) \
        && m2 = other.result.match(RE_RESULT_LAYUP_NUMBERED)
       m2 <=> m1
+    # FIXME: next_adjust priority is lower than distance_factor() in <=>().
     elsif self.next_adjust != other.next_adjust
       self.next_adjust <=> other.next_adjust
     else
