@@ -55,4 +55,8 @@ if (<%= group.number %> !== current_group_number) {
 $('div#hole_map').children('table').remove();
 $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
 
+if (<%= @round.current_group.all_holed_out? %>) {
+  $('table#leaders').replaceWith($("<%= j render 'leaders' %>"));
+}
+
 table_players_info.children('caption').text("current_group #<%= @round.current_group.number %>, group_to_display #<%= @round.group_to_display.number %>");
