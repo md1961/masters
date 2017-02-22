@@ -29,10 +29,13 @@ if (current_group_number !== <%= group.number %>) {
 
   if (current_group_number > num_groups_in_players_info - offset_from_bottom_of_to_display) {
     for (var i = 0; i < 2; i++) {
-      table_players_info.find('tr:first').toggleClass('not_to_display').remove().appendTo(table_players_info);
+      table_players_info.find('tr').first().toggleClass('not_to_display').remove().appendTo(table_players_info);
     }
     for (var i = 0; i < 2; i++) {
       table_players_info.find('tr.not_to_display').first().toggleClass('not_to_display');
     }
   }
 }
+
+$('div#hole_map').children('table').remove();
+$('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
