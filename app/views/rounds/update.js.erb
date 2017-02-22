@@ -6,3 +6,9 @@ setTimeout(function() {
   $('tr.delayed_display').show();
   $('input[type="submit"]').prop('disabled', false);
 }, parseInt($('tr#message').attr('data-time_to_delay')));
+
+<% group = @round.group_to_display
+   selector = "div#players_info table tr.group_info#{group.number}" -%>
+$("<%= selector %>:first").remove();
+$("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
+                                            locals: {group: group, not_to_display: false} %>"));
