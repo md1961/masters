@@ -3,6 +3,8 @@ class Group < ActiveRecord::Base
   has_many :groupings, -> { order(:play_order) }
   has_many :players, through: :groupings
 
+  # TODO: Consider to convert attr_reader :play_finished to method.
+
   attr_reader :play_finished, :message
 
   def players_gone_to_next_area?
@@ -89,6 +91,14 @@ class Group < ActiveRecord::Base
   def ==(other)
     return false if other.nil? || !other.is_a?(Group)
     self.round == other.round && self.number == other.number
+  end
+
+  def eql?(other)
+    self == other
+  end
+
+  def hash
+    [round.hash, number.hash]
   end
 
   def to_s
