@@ -41,7 +41,7 @@
         <% value = score&.value
            hole  = score&.hole
            number <= 9 ? total_in += value : total_out += value if score
-           clazz = value && hole && Ball.result_name(value - hole.par).gsub('-', '_').downcase -%>
+           clazz = class_score_result(value, hole) -%>
         <td class="stroke hole<%= number %> <%= clazz %> numeric">
           <%= value || '&nbsp'.html_safe %>
         </td>
