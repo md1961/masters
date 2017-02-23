@@ -17,8 +17,8 @@ $("<%= selector %>:first").remove();
 $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
                                             locals: {group: group, not_to_display: false} %>"));
 
-var current_group_number = parseInt($('div#players_info table td.current').attr('data-group_number'));
-if (<%= group.number %> !== current_group_number) {
+var current_group_number_in_display = parseInt($('div#players_info table td.current').attr('data-group_number'));
+if (<%= group.number %> !== current_group_number_in_display) {
   var td_group_number = $('div#players_info table td.current');
   td_group_number.toggleClass('current');
   var tr_next_group = td_group_number.parent().next().next();
@@ -82,7 +82,8 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
         break;
       }
     }
-    td_score.text(cum_score + <%= stroke - hole.par %>);
+    cum_score += <%= stroke - hole.par %>;
+    td_score.text(cum_score > 0 ? '+' + cum_score : cum_score == 0 ? 'E' : cum_score);
   <% end -%>
 <% end -%>
 

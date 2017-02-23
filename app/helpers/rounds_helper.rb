@@ -73,6 +73,6 @@ module RoundsHelper
     total_value = scores[0, number].map { |s| s.try(:value) || 0 }.sum
     par = score.hole.par
     total_par = Hole.where('number <= ?', score.hole.number).sum(:par)
-    value && value == par ? nil : format('%+d', total_value - total_par).sub('+0', ' 0')
+    value && value == par ? nil : format('%+d', total_value - total_par).sub('+0', 'E')
   end
 end
