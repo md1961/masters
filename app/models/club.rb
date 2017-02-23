@@ -39,12 +39,18 @@ class Club < ActiveRecord::Base
         raw_result_adjacent = club_results.find_by(dice: dice_adjacent)&.result
         if raw_result_adjacent =~ RE_PURE_DIGITS && (raw_result.to_i - raw_result_adjacent.to_i).abs >= 2
           half_distance = (raw_result_adjacent.to_i + raw_result.to_i) / 2
-          _result = (raw_result.to_i .. half_distance).to_a.sample
+          selection_range = \
+            if raw_result.to_i < half_distance
+              (raw_result.to_i + 1 .. half_distance)
+            else
+              (half_distance .. raw_result.to_i - 1)
+            end
+          _result = selection_range.to_a.sample
           info_add = ", (MAY interpolate to '#{_result}' from '#{raw_result}' and '#{raw_result_adjacent}'" \
-                      " #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
+                      " toward #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
         else
           info_add = ", (Interpolation quit for adjacent is '#{raw_result_adjacent}' of '#{raw_result}'" \
-                      " #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
+                      " toward #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
         end
       end
     end
