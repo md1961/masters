@@ -77,12 +77,25 @@ body {
       font-size: x-small;
       margin-top: 10px;
 
+      caption {
+        text-align: left;
+      }
+
       td {
         width: 16px;
       }
 
-      caption {
-        text-align: left;
+      td.birdie {
+        color: red;
+      }
+
+      td.bogey {
+        color: blue;
+      }
+
+      td.double_bogey {
+        color: blue;
+        font-weight: bold;
       }
     }
   }

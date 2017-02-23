@@ -127,9 +127,13 @@ class Ball < ActiveRecord::Base
     end
   end
 
+  def self.result_name(diff)
+    %w(par bogey double-bogey triple-bogey +4 +5 +6 +7 +8 +9 +10 DOUBLE-EAGLE EAGLE Birdie)[diff]
+  end
+
   def hole_result(offset = 0)
-    i = shot_count - shot.hole.par + offset
-    %w(par bogey double-bogey triple-bogey +4 +5 +6 +7 +8 +9 +10 DOUBLE-EAGLE EAGLE Birdie)[i]
+    diff = shot_count - shot.hole.par + offset
+    Ball.result_name(diff)
   end
 
   def result_display

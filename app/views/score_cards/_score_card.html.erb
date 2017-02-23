@@ -40,8 +40,9 @@
       <% scores.each.with_index(1) do |score, number| -%>
         <% value = score&.value
            hole  = score&.hole
-           number <= 9 ? total_in += value : total_out += value if score -%>
-        <td class="stroke hole<%= number %> numeric">
+           number <= 9 ? total_in += value : total_out += value if score
+           clazz = value && hole && Ball.result_name(value - hole.par).gsub('-', '_').downcase -%>
+        <td class="stroke hole<%= number %> <%= clazz %> numeric">
           <%= value || '&nbsp'.html_safe %>
         </td>
         <% if number == 9 -%>
