@@ -17,9 +17,6 @@ $("<%= selector %>:first").remove();
 $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
                                             locals: {group: group, not_to_display: false} %>"));
 
-var num_groups_in_players_info = 5;
-var offset_from_bottom_of_to_display = 2;
-
 var current_group_number = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (<%= group.number %> !== current_group_number) {
   var td_group_number = $('div#players_info table td.current');
@@ -27,7 +24,7 @@ if (<%= group.number %> !== current_group_number) {
   var tr_next_group = td_group_number.parent().next().next();
   tr_next_group.children('td:first').toggleClass('current');
 
-  if (<%= group.number %> === 1) {
+  <% if group.number == 1 -%>
     var tr_count = 0;
     while (true) {
       var td_group_number = table_players_info.find('td').first();
@@ -42,14 +39,14 @@ if (<%= group.number %> !== current_group_number) {
     for (var i = 0; i < tr_count; i++) {
       table_players_info.find('tr.not_to_display').first().toggleClass('not_to_display');
     }
-  } else if (<%= group.number %> > num_groups_in_players_info - offset_from_bottom_of_to_display) {
+  <% elsif group.number > num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info -%>
     for (var i = 0; i < 2; i++) {
       table_players_info.find('tr').first().toggleClass('not_to_display').remove().appendTo(table_players_info);
     }
     for (var i = 0; i < 2; i++) {
       table_players_info.find('tr.not_to_display').first().toggleClass('not_to_display');
     }
-  }
+  <% end -%>
 
   $("div#score_cards span.toggle_score_card_display.current")                 .toggleClass('current');
   $("div#score_cards span.toggle_score_card_display.group<%= group.number %>").toggleClass('current');
