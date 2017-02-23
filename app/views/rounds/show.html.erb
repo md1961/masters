@@ -46,7 +46,7 @@
     <% end -%>
     <% @round.groups.each do |group| -%>
       <% is_current = group == @round.group_to_display -%>
-      <span class="toggle_score_card_display button <%= is_current && 'current' %>">
+      <span class="toggle_score_card_display button group<%= group.number %> <%= is_current && 'current' %>">
         <%= group.number %>
       </span>
     <% end -%>

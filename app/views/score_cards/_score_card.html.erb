@@ -3,8 +3,11 @@
    player = score_card.player
    hides_at_first = @style.blank? || player.group != player.round.group_to_display -%>
 
- <table class="score_card <%= @style.present? && 'table_base' %>
-               group<%= player.group.number %>" <%= hides_at_first && 'hidden' %>>
+  <table id="score_player<%= player.id %>"
+         class="score_card
+                <%= @style.present? && 'table_base' %>
+                group<%= player.group.number %>"
+         <%= hides_at_first && 'hidden' %>>
   <caption><%= player %></caption>
   <thead>
     <tr>
@@ -38,14 +41,14 @@
         <% value = score&.value
            hole  = score&.hole
            number <= 9 ? total_in += value : total_out += value if score -%>
-        <td class="numeric">
+        <td class="stroke hole<%= number %> numeric">
           <%= value || '&nbsp'.html_safe %>
         </td>
         <% if number == 9 -%>
-          <td class="numeric"><%= score && total_in %></td>
+          <td class="stroke total_in numeric"><%= score && total_in %></td>
         <% elsif number == 18 -%>
-          <td class="numeric"><%= score && total_out %></td>
-          <td class="numeric"><%= score && total_in + total_out %></td>
+          <td class="stroke total_out numeric"><%= score && total_out %></td>
+          <td class="stroke total_round numeric"><%= score && total_in + total_out %></td>
         <% end -%>
       <% end -%>
     </tr>
@@ -53,7 +56,7 @@
       <% total_par   = 0
          total_value = 0 -%>
       <% 1.upto(scores.size) do |number| -%>
-        <td class="numeric">
+        <td class="score hole<%= number %> numeric">
           <%= cum_score_display(number, scores) || '&nbsp'.html_safe %>
         </td>
         <% if number == 9 -%>

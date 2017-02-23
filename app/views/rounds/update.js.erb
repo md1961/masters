@@ -50,13 +50,43 @@ if (<%= group.number %> !== current_group_number) {
       table_players_info.find('tr.not_to_display').first().toggleClass('not_to_display');
     }
   }
+
+  $("div#score_cards span.toggle_score_card_display.current")                 .toggleClass('current');
+  $("div#score_cards span.toggle_score_card_display.group<%= group.number %>").toggleClass('current');
 }
 
 $('div#hole_map').children('table').remove();
 $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
 
-if (<%= @round.current_group.all_holed_out? %>) {
+<% group = @round.current_group -%>
+<% if group.all_holed_out? -%>
   $('table#leaders').replaceWith($("<%= j render 'leaders' %>"));
-}
+
+  <% group.players.each do |player| -%>
+    <% hole = player.shot.hole
+       stroke = player.ball.shot_count -%>
+    var table_score_card = $("table#score_player<%= player.id %>");
+    var td_stroke = table_score_card.find("td.stroke.hole<%= hole.number %>");
+    td_stroke.text(<%= stroke %>);
+
+    <% next if stroke == hole.par -%>
+
+    var td_score = table_score_card.find("td.score.hole<%= hole.number %>");
+    var cum_score = 0;
+    var td = td_score;
+    while (true) {
+      td = td.prev();
+      if (!td) {
+        break;
+      }
+      var n = parseInt(td.text());
+      if (!isNaN(n)) {
+        cum_score = n;
+        break;
+      }
+    }
+    td_score.text(cum_score + <%= stroke - hole.par %>);
+  <% end -%>
+<% end -%>
 
 table_players_info.children('caption').text("current_group #<%= @round.current_group.number %>, group_to_display #<%= @round.group_to_display.number %>");
