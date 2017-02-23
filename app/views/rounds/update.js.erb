@@ -48,8 +48,12 @@ if (<%= group.number %> !== current_group_number_in_display) {
     }
   <% end -%>
 
-  $("div#score_cards span.toggle_score_card_display.current")                 .toggleClass('current');
+  $("div#score_cards span.toggle_score_card_display.current"                 ).toggleClass('current');
   $("div#score_cards span.toggle_score_card_display.group<%= group.number %>").toggleClass('current');
+  $("div#score_cards table.score_card").hide();
+  <% if @style.present? -%>
+    $("div#score_cards table.score_card.group<%= group.number %>").show();
+  <% end -%>
 }
 
 $('div#hole_map').children('table').remove();
