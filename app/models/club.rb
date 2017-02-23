@@ -8,10 +8,13 @@ class Club < ActiveRecord::Base
     name == 'putt'
   end
 
-  MAX_DICE_TO_RANDOMIZE_DIRECTION = 1
+  MAX_DICE_TO_RANDOMIZE_DIRECTION  = 1
+  MAX_DICE_TO_INTERPOLATE_DISTANCE = 6
 
   # TODO: Alter direction of Ch and P randomly.
   # TODO: Interpolate distance randomly.
+
+  RE_PURE_DIGITS = /\A\d+\z/
 
   def swing(dice_adjust = 0)
     raise "Should not reach here: return 'IN'" if player.ball.ok?
@@ -27,6 +30,24 @@ class Club < ActiveRecord::Base
     raw_result = add_random_direction(raw_result) if raw_result == 'Ch'
     result = raw_result
     info_add = nil
+    if raw_result =~ RE_PURE_DIGITS
+      dice_occur = Dice.roll
+      if dice_occur <= MAX_DICE_TO_INTERPOLATE_DISTANCE
+        dice_dir = Dice.roll
+        direction = dice_dir <= 3 ? -1 : 1
+        dice_adjacent = dice_list[dice_list.index(dice) + direction]
+        raw_result_adjacent = club_results.find_by(dice: dice_adjacent)&.result
+        if raw_result_adjacent =~ RE_PURE_DIGITS && (raw_result.to_i - raw_result_adjacent.to_i).abs >= 2
+          half_distance = (raw_result_adjacent.to_i + raw_result.to_i) / 2
+          _result = (raw_result.to_i .. half_distance).to_a.sample
+          info_add = ", (MAY interpolate to '#{_result}' from '#{raw_result}' and '#{raw_result_adjacent}'" \
+                      " #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
+        else
+          info_add = ", (Interpolation quit for adjacent is '#{raw_result_adjacent}' of '#{raw_result}'" \
+                      " #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
+        end
+      end
+    end
     if putt?
       ball_on = player.ball.result.to_i
       if player.ball.third_putt?
