@@ -80,9 +80,10 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
       if (!td) {
         break;
       }
-      var n = parseInt(td.text());
-      if (!isNaN(n)) {
-        cum_score = n;
+      var text = td.text();
+      var n = parseInt(text);
+      if (!isNaN(n) || text.match(/E/)) {
+        cum_score = n || 0;
         break;
       }
     }
