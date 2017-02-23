@@ -57,6 +57,10 @@ class Club < ActiveRecord::Base
     result
   end
 
+  def dice_list
+    @@dices ||= club_results.empty? ? nil : club_results.pluck(:dice).sort
+  end
+
   def to_s
     name =~ /(:?fw|[lms]i)\z/ ? name.upcase : name.capitalize
   end
@@ -64,13 +68,12 @@ class Club < ActiveRecord::Base
   private
 
     def dice_adjusted(dice, adjust)
-      @@dices ||= club_results.pluck(:dice).sort
-      index = @@dices.index(dice)
+      index = dice_list.index(dice)
       raise StandardError, "No dice #{dice} in ClubResult of #{club} of #{player}" unless index
       index += adjust
       index =  0 if index < 0
-      index = -1 if index >= @@dices.size
-      @@dices[index]
+      index = -1 if index >= dice_list.size
+      dice_list[index]
     end
 
     def add_random_direction(raw_result, excludes = [])
