@@ -21,6 +21,7 @@ module HolesHelper
         shot_judge = hole.shots.find_by(number: 2).judge(result)
         players = players_in_landings(result)
         clazz = shot_judge.lands.gsub(' ', '').underscore
+        clazz += ' players' unless players.empty?
         content_tag :td, hole_map_element(shot_judge, players), class: clazz
       end
     end
@@ -37,6 +38,7 @@ module HolesHelper
         lands = eval(lands).values.join(' ') if lands.start_with?('{')
         players = players_in_landings(result)
         clazz = is_green ? 'green' : lands.gsub(' ', '').underscore
+        clazz += ' players' unless players.empty?
         content_tag :td, hole_map_element(is_green ? 'P' : shot_judge, players), class: clazz
       end
     end

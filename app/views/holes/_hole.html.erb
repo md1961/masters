@@ -16,10 +16,11 @@
       <% row.each_with_index do |td, index_td| -%>
         <%= td %>
         <% if hole.par == 5 && index_row == 0 && index_td == 0 -%>
-          <td rowspan="7" class="near_green">
+          <% players = players_in_landings('layup') -%>
+          <td rowspan="7" class="near_green <%= players.empty? || 'players' %>">
             (layup)
             <br>
-            <%= players_in_landings('layup').join(', ') %>
+            <%= players.join(', ') %>
           </td>
         <% end -%>
       <% end -%>

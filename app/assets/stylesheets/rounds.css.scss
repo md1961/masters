@@ -108,6 +108,10 @@ body {
         padding: 2px 4px;
       }
 
+      td.players {
+        border: 3px red solid;
+      }
+
       td.fairway, td.near_green {
         color: black;
         background-color: LawnGreen;
