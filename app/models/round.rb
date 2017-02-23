@@ -8,9 +8,9 @@ class Round < ActiveRecord::Base
 
   attr_reader :message
 
-  # FIXME: Add attribute current_player, or else
+  # TODO: Add attribute current_player, or else
 
-  # FIXME: Add attribute first_hole_number, or else
+  # TODO: Add attribute first_hole_number, or else
   def first_hole_number
     1
   end
@@ -60,7 +60,7 @@ class Round < ActiveRecord::Base
         return
       end
       group_to_play = current_group
-      # FIXME: Quit receiving messy string result from Group#play().
+      # TODO: Quit receiving messy string result from Group#play().
       player_id_and_info = group_to_play.play(index_option: shot_option && Integer(shot_option))
       if player_id_and_info.nil?
         will_toggle_status = false
@@ -78,7 +78,6 @@ class Round < ActiveRecord::Base
     if groups.all?(&:round_finished?)
       finished!
       update!(play_result: "#{self} finished")
-    # FIXME: Move to start of the method.
     elsif will_toggle_status
       ready_to_play? ? displays_result! : ready_to_play!
     end
@@ -106,10 +105,14 @@ class Round < ActiveRecord::Base
       if number == 1
         players_sorted = tournament.players.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
       else
-        # TODO: Add sort item in case tournament_stroke is equal.
-        players_sorted = tournament.players.sort_by(&:tournament_stroke).reverse
+        # TODO: Add sort item in case tournament_stroke is equal (Not tested yet).
+        round_prev = Round.find_by(number: number - 1)
+        players_sorted = tournament.players.sort_by { |player|
+          strokes_last_first = player.score_cards.find_by(round: round_prev).scores.pluck(:value).reverse
+          [player.tournament_stroke, strokes_last_first]
+        }.reverse
       end
-      # FIXME: Can destroy old Grouping's ?
+      # TODO: Can destroy old Grouping's ?
       Grouping.destroy_all
       group_number = 1
       players_sorted.each_slice(Round.num_players_per_group) do |players|
