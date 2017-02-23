@@ -9,6 +9,7 @@
     <td><%= "(#{player.ball.hole_result})" %></td>
     <td>to</td>
     <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
+    <td style="width: 250px" />
   </tr>
 <% end -%>
 <% if player.shot.hole.number == @round.final_hole_number -%>
