@@ -4,7 +4,9 @@
 
 $ ->
   $('#form_to_proceed').on 'ajax:error', (e, xhr, status, error) ->
-    alert xhr.responseText
+    $('div').hide();
+    $('div#debug').text(xhr.responseText);
+    $('div#debug').show();
 
   toggle_text = (elem, text1, text2) ->
     if elem.text() == text1
