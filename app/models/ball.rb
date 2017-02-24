@@ -152,7 +152,9 @@ class Ball < ActiveRecord::Base
     else
       preposition = ['Trees', 'Sand', 'Water', 'Fairway Trap'].include?(lands) ? 'into' : 'onto'
       superlative = result.try(:end_with?, '*') ? ' (superlative)' : ''
-      "#{player} hit #{shot_count.ordinalize} shot #{preposition} #{lands} by '#{result}'#{superlative}"
+      "#{player} hit #{(shot_count - (lands == 'Water' ? 1 : 0)).ordinalize} shot" \
+        " #{preposition} #{lands} by '#{result}'#{superlative}" \
+        "#{lands == 'Water' ? ' , taking 1 penalty' : ''}"
     end
   end
 
