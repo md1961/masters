@@ -40,7 +40,7 @@ if ($('tr#message')[0]) {
       }
       var distance = parseInt(display.text());
       if (distance <= 10) {
-        animate_distance(display, distance, result, 200);
+        animate_distance(display, distance, result, 200, 0, 0);
       } else {
         animate_distance(display, distance, 10, 50, result, 200);
       }
