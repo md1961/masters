@@ -1,12 +1,56 @@
+var animate_distance = function(element, d_start, d1, t_interval1, d_end, t_interval2) {
+  var d = d_start;
+  var timer = setInterval(function() {
+    d--;
+    element.text(d);
+    if (d <= d1) {
+      if (d_end >= 0 && t_interval2 > 0) {
+        animate_distance(element, d1, d_end, t_interval2, 0, 0);
+      } else if (d_end == 0 && t_interval2 == 0) {
+        displayDelayed();
+      }
+      if (element.text() == '0') {
+        element.text('IN');
+      }
+      clearInterval(timer);
+    }
+  }, t_interval1);
+};
+
+var displayDelayed = function() {
+  setTimeout(function() {
+    $('tr.delayed_display').show();
+    $('input[type="submit"]').prop('disabled', false);
+  }, parseInt($('tr#message').attr('data-time_to_delay')));
+};
+
 $('table#result tr').remove();
 $('table#result').append($("<%= j render 'result' %>"));
 
 if ($('tr#message')[0]) {
   $('input[type="submit"]').prop('disabled', true);
-  setTimeout(function() {
-    $('tr.delayed_display').show();
-    $('input[type="submit"]').prop('disabled', false);
-  }, parseInt($('tr#message').attr('data-time_to_delay')));
+  if ($('span#distance_amination')[0]) {
+    $('span#button_start').click(function() {
+      var display = $('span#distance_amination');
+      var distance = parseInt(display.text());
+      <% ball = @round.current_group.next_player.ball
+         str_result = ball.ok? ? rand(1 .. 3).to_s : ball.result -%>
+      var result = <%= str_result.to_i %>;
+      if (distance <= 10) {
+        animate_distance(display, distance, result, 200);
+      } else {
+        animate_distance(display, distance, 10, 50, result, 200);
+      }
+    });
+  } else {
+    displayDelayed();
+    /*
+    setTimeout(function() {
+      $('tr.delayed_display').show();
+      $('input[type="submit"]').prop('disabled', false);
+    }, parseInt($('tr#message').attr('data-time_to_delay')));
+    */
+  }
 }
 
 var table_players_info = $('div#players_info table:first');

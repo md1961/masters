@@ -22,7 +22,16 @@
 <% elsif @round.play_result -%>
   <% if @message -%>
     <tr id="message" data-time_to_delay="<%= @time_to_delay %>">
-      <td><%= @message %></td>
+      <% if @distance > 0 && (
+        true \
+        || @style.present?) -%>
+        <td>
+          <span id="distance_amination"><%= @distance %></span>
+          <span id="button_start" style="margin-left: 30px; cursor: pointer">[start]</span>
+        </td>
+      <% else -%>
+        <td><%= @message %></td>
+      <% end -%>
     </tr>
   <% end -%>
   <% if @round.play_result =~ Group::RE_PLAYER_ID_AND_INFO -%>
