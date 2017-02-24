@@ -1,12 +1,14 @@
-var animate_distance = function(element, d_start, d1, t_interval1, d_end, t_interval2) {
+var animate_distance = function(element, d_start, d_end, t_interval1, t_interval2) {
+  var is_second_stage = t_interval2 === void 0;
+  var d1 = is_second_stage ? d_end : 10;
   var d = d_start;
   var timer = setInterval(function() {
     d--;
     element.text(d);
     if (d <= d1) {
-      if (d_end >= 0 && t_interval2 > 0) {
-        animate_distance(element, d1, d_end, t_interval2, 0, 0);
-      } else if (d_end == 0 && t_interval2 == 0) {
+      if (t_interval2 > 0) {
+        animate_distance(element, d, d_end, t_interval2);
+      } else if (is_second_stage) {
         displayDelayed();
       }
       if (element.text() == '0') {
@@ -19,6 +21,7 @@ var animate_distance = function(element, d_start, d1, t_interval1, d_end, t_inte
 
 var displayDelayed = function() {
   setTimeout(function() {
+    $('tr#message').hide();
     $('tr.delayed_display').show();
     $('input[type="submit"]').prop('disabled', false);
   }, parseInt($('tr#message').attr('data-time_to_delay')));
@@ -39,11 +42,7 @@ if ($('tr#message')[0]) {
         result = parseInt(result) || 0;
       }
       var distance = parseInt(display.text());
-      if (distance <= 10) {
-        animate_distance(display, distance, result, 200, 0, 0);
-      } else {
-        animate_distance(display, distance, 10, 50, result, 200);
-      }
+      animate_distance(display, distance, result, 50, 200);
     });
   } else {
     displayDelayed();
