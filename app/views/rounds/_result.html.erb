@@ -26,7 +26,7 @@
         true \
         || @style.present?) -%>
         <td>
-          <span id="distance_amination"><%= @distance %></span>
+          <span id="distance_amination" data-result="<%= @result %>"><%= @distance %></span>
           <span id="button_start" style="margin-left: 30px; cursor: pointer">[start]</span>
         </td>
       <% else -%>

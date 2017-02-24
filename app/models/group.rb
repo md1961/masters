@@ -82,7 +82,7 @@ class Group < ActiveRecord::Base
       distance = ball.result.to_i
       info = player.play(index_option: index_option)
       @message = ball.direct_in? ? 'IN!' : has_putted ? 'miss' : nil
-      @message += " from #{distance}" if has_putted
+      @message += " from #{distance} to #{ball.result}" if has_putted
       # FIXME: Eliminate ridiculous return value from play().
       "player_id=#{player.id}&club_used=#{ball.club_used}&#{info}"
     end

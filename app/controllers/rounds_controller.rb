@@ -10,21 +10,14 @@ class RoundsController < ApplicationController
     elsif params[:choosing_next_use] && params[:shot_option].nil?
       render :show
     else
-      #@round.proceed(shot_option: params[:shot_option])
-
-
-      from = 27
-      to   = 'OK'
-      @round.instance_variable_set('@message', "debugging... from #{from}")
-      @round.current_group.next_player.ball.update!(result: to) # reset to 'OK'.
-
-
+      @round.proceed(shot_option: params[:shot_option])
       @message = @round.message
       @distance = 0
-      if @message&.sub!(/ from (\d+)/, '')
+      if @message&.sub!(/ from (\d+) to (\S+)/, '')
         @distance = Regexp.last_match(1).to_i
+        @result   = Regexp.last_match(2)
       end
-      @time_to_delay = 1000 #@distance * 50 + 250
+      @time_to_delay = @distance.zero? ? 2000 : @distance * 30 + 500
     end
   end
 
