@@ -1,6 +1,6 @@
 var animate_distance = function(element, d_start, d_end, t_interval1, t_interval2) {
   var is_second_stage = t_interval2 === void 0;
-  var d1 = is_second_stage ? d_end : 4 + rand_1_to(6);
+  var d1 = is_second_stage ? d_end : 4 + random_1_to(6);
   var d = d_start;
   var timer = setInterval(function() {
     d--;
@@ -30,7 +30,7 @@ var displayDelayed = function() {
   }, parseInt($('tr#message').attr('data-time_to_delay')));
 };
 
-var rand_1_to = function(n_max) {
+var random_1_to = function(n_max) {
   return Math.floor(Math.random() * n_max) + 1;
 }
 
@@ -43,11 +43,7 @@ if ($('tr#message')[0]) {
     $('span#button_start').click(function() {
       var display = $('span#distance_amination');
       var result = display.attr('data-result');
-      if (result == 'OK') {
-        result = rand_1_to(2);
-      } else {
-        result = parseInt(result) || 0;
-      }
+      result = result == 'OK' ? random_1_to(2) : parseInt(result) || 0;
       var distance = parseInt(display.text());
       animate_distance(display, distance, result, 50, 200);
     });
