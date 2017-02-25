@@ -26,6 +26,7 @@ var displayDelayed = function() {
     $('tr#message').hide();
     $('tr.delayed_display').show();
     $('input[type="submit"]').prop('disabled', false);
+    updateTables();
   }, parseInt($('tr#message').attr('data-time_to_delay')));
 };
 
@@ -52,14 +53,13 @@ if ($('tr#message')[0]) {
     });
   } else {
     displayDelayed();
-    /*
-    setTimeout(function() {
-      $('tr.delayed_display').show();
-      $('input[type="submit"]').prop('disabled', false);
-    }, parseInt($('tr#message').attr('data-time_to_delay')));
-    */
   }
+} else {
+  updateTables();
 }
+
+
+function updateTables() {
 
 var table_players_info = $('div#players_info table:first');
 
@@ -144,3 +144,5 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
     td_score.text(cum_score > 0 ? '+' + cum_score : cum_score == 0 ? 'E' : cum_score);
   <% end -%>
 <% end -%>
+
+}

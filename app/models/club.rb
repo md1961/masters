@@ -9,7 +9,7 @@ class Club < ActiveRecord::Base
   end
 
   MAX_DICE_TO_RANDOMIZE_DIRECTION  = 1
-  MAX_DICE_TO_INTERPOLATE_DISTANCE = 6
+  MAX_DICE_TO_INTERPOLATE_DISTANCE = 2
 
   # TODO: Alter direction of Ch and P randomly.
   # TODO: Interpolate distance randomly.
