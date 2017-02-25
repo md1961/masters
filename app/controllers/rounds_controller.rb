@@ -17,7 +17,8 @@ class RoundsController < ApplicationController
         @distance = Regexp.last_match(1).to_i
         @result   = Regexp.last_match(2)
       end
-      @time_to_delay = @distance.zero? ? 2000 : @distance * 30 + 500
+      @distance = 0 if @distance <= max_not_to_animate = 2
+      @time_to_delay = 2000
     end
   end
 
