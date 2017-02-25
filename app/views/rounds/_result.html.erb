@@ -26,10 +26,11 @@
         true \
         || @style.present?) -%>
         <td>
-          <span id="distance_amination" data-result="<%= @result %>" data-pre_messages="Ready;Go!">
+          <span id="distance_amination"
+                data-result="<%= @result %>"
+                data-pre_messages="<%= @pre_messages %>">
             <%= @distance %>
           </span>
-          <span id="button_start" style="margin-left: 60px; cursor: pointer">[start]</span>
         </td>
       <% else -%>
         <td><%= @message %></td>

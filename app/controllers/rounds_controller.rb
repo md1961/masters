@@ -16,6 +16,7 @@ class RoundsController < ApplicationController
       if @message&.sub!(/ from (\d+) to (\S+)/, '')
         @distance = Regexp.last_match(1).to_i
         @result   = Regexp.last_match(2)
+        @pre_messages = "#{@distance} from which to putt..."
       end
       @distance = 0 if @distance <= max_not_to_animate = 2
       @time_to_delay = 2000
