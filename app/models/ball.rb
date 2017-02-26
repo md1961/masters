@@ -154,7 +154,7 @@ class Ball < ActiveRecord::Base
       superlative = result.try(:end_with?, '*') ? ' (superlative)' : ''
       "#{player} hit #{(shot_count - (lands == 'Water' ? 1 : 0)).ordinalize} shot" \
         " #{preposition} #{lands} by '#{result}'#{superlative}" \
-        "#{lands == 'Water' ? ' , taking 1 penalty' : ''}"
+        "#{lands == 'Water' ? ' , takes 1 penalty' : ''}"
     end
   end
 

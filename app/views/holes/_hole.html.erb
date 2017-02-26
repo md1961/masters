@@ -14,8 +14,7 @@
   <% green_landings(hole).each_with_index do |row, index_row| -%>
     <tr>
       <% row.each_with_index do |td, index_td| -%>
-        <%= td %>
-        <% if hole.par == 5 && index_row == 0 && index_td == 0 -%>
+        <% if hole.par == 5 && index_row == 0 && index_td == (hole.number >= 13 ? 0 : 1) -%>
           <% players = players_in_landings('layup') -%>
           <td rowspan="7" class="near_green <%= players.empty? || 'players' %>">
             (layup)
@@ -23,6 +22,7 @@
             <%= players.join(', ') %>
           </td>
         <% end -%>
+        <%= td %>
       <% end -%>
     </tr>
   <% end -%>
