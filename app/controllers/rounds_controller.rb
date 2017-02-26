@@ -8,7 +8,7 @@ class RoundsController < ApplicationController
     if @round.finished?
       redirect_to @round.tournament
     elsif params[:choosing_next_use] && params[:shot_option].nil?
-      render :show
+      render :shot_option
     else
     # FIXME: Handle for when @round#needs_input?
       @round.proceed(shot_option: params[:shot_option])

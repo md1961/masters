@@ -34,10 +34,17 @@ var random_1_to = function(n_max) {
   return Math.floor(Math.random() * n_max) + 1;
 }
 
+var radios_for_shot_option = $('div#radio_buttons_for_shot_option');
+if (radios_for_shot_option[0]) {
+  radios_for_shot_option.remove();
+}
+
 $('table#result tr').remove();
 $('table#result').append($("<%= j render 'result' %>"));
 
-if (!$('tr#message')[0]) {
+if (<%= @round.needs_input? %>) {
+  $('form#form_to_proceed').prepend($("<%= j render 'shot_option' %>"));
+} else if (!$('tr#message')[0]) {
   updateTables();
 } else {
   $('input[type="submit"]').prop('disabled', true);
