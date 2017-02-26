@@ -45,6 +45,10 @@ class Round < ActiveRecord::Base
     changing_group? ? current_group.prev_playing : current_group
   end
 
+  def club_name_used
+    play_result =~ Group::RE_PLAYER_ID_AND_INFO && Regexp.last_match(2)
+  end
+
   # TODO: Refactor proceed() by splitting or else.
   def proceed(shot_option: nil)
     if (needs_input? && shot_option.present?)

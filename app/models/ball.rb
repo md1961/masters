@@ -56,6 +56,10 @@ class Ball < ActiveRecord::Base
     result =~ /\*\z/
   end
 
+  def going_for_green?
+    !on_green? && !(shot&.hole&.par >= 4 && shot&.number == 1) && !is_layup
+  end
+
   def going_for_green_in_two?
     shot&.hole&.par == 5 && shot&.number == 2 && !is_layup
   end

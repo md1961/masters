@@ -79,19 +79,22 @@ class Group < ActiveRecord::Base
       player = next_player
       ball = player.ball
       has_putted = ball.on_green?
+      has_gone_for_green = ball.going_for_green?
       distance = ball.result.to_i
       location = distance > 0 ? distance.to_s : ball.lands
       location = 'Tee' if location.blank?
+      location += ' Fringe' if location == 'Water'
       info = player.play(index_option: index_option)
       @message = ball.direct_in? ? 'IN!' : has_putted ? 'miss' : ''
-      @message += " from #{location} to #{ball.result}" if ball.on_green?
+      @message += " from #{location} to #{ball.on_green? ? ball.result : ball.lands}" \
+        if ball.on_green? || has_gone_for_green
       # FIXME: Eliminate ridiculous return value from play().
       "player_id=#{player.id}&club_used=#{ball.club_used}&#{info}"
     end
   end
 
   RE_PLAYER_ID_AND_INFO = /\Aplayer_id=(\d+)&club_used=(\w+)&(.*)\z/
-  RE_ADDITIONAL_MESSAGE = / from (\S.*) to (\S+)\z/
+  RE_ADDITIONAL_MESSAGE = / from (\S.*) to (\S.*)\z/
 
   def ==(other)
     return false if other.nil? || !other.is_a?(Group)
