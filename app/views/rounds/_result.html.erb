@@ -1,5 +1,8 @@
 <% group = @round.current_group
    player = group.try(:next_player) -%>
+
+<tr><td style="font-size: small"><%= @message_orig.inspect %></td></tr>
+
 <% if @round.ready_to_play? -%>
   <% if group.all_holed_out? -%>
     <%= render partial: 'hole_result', locals: {group: group} %>

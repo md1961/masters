@@ -10,6 +10,7 @@ class RoundsController < ApplicationController
     elsif params[:choosing_next_use] && params[:shot_option].nil?
       render :show
     else
+    # FIXME: Handle for when @round#needs_input?
       @round.proceed(shot_option: params[:shot_option])
       prepare_messages
     end
@@ -20,6 +21,8 @@ class RoundsController < ApplicationController
     MININUM_DISTANCE_TO_ANINATE = 3
 
     def prepare_messages
+      @message_orig = @round.message&.dup
+
       @message = @round.message
       @distance = 0
       @pre_messages = []
@@ -43,8 +46,11 @@ class RoundsController < ApplicationController
       else
         @message = nil
       end
-      @distance = 0 if @distance < MININUM_DISTANCE_TO_ANINATE
-      @time_to_delay = 2000
+      if @distance < MININUM_DISTANCE_TO_ANINATE
+        @distance = 0
+        @message = @result
+      end
+      @time_to_delay = 1500
     end
 
     def set_round

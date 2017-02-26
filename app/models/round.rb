@@ -69,7 +69,7 @@ class Round < ActiveRecord::Base
         will_toggle_status = false
       end
       update!(play_result: player_id_and_info)
-      @message = current_group.try(:message)
+      @message = group_to_play&.message
       if areas.first.open? && areas.second.open? && groups.any?(&:not_started_yet?)
         group = groups.detect(&:not_started_yet?)
         group.tee_up_on(first_hole_number)
