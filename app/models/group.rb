@@ -86,7 +86,9 @@ class Group < ActiveRecord::Base
       location += ' Fringe' if location == 'Water'
       info = player.play(index_option: index_option)
       lands = ball.lands
-      lands += '-' + Regexp.last_match(1) if ball.result =~ /\A[SML]([LRC])\*?\z/
+      if ball.result =~ /\A([SML][LRC])\*?\z/
+        lands += '-' + Regexp.last_match(1)
+      end
       @message = ball.direct_in? ? 'IN!' : has_putted ? 'miss' : ''
       @message += " from #{location} to #{ball.on_green? ? ball.result : lands}" unless was_layup
       # FIXME: Eliminate ridiculous return value from play().

@@ -19,6 +19,7 @@ class RoundsController < ApplicationController
   private
 
     MININUM_DISTANCE_TO_ANINATE = 3
+    TIME_TO_DELAY_FOR_MESSAGE = 1200
 
     def prepare_messages
       @message_orig = @round.message&.dup
@@ -37,8 +38,9 @@ class RoundsController < ApplicationController
           @pre_messages = ["from #{location}..."]
           case @round.club_name_used.downcase
           when 'drive'
-            @result.sub!(/-([LRC])\z/, '')
-            direction = Regexp.last_match(1)
+            @result.sub!(/-([SML][LRC])\z/, '')
+            carry, direction = Regexp.last_match(1).split('')
+            @result += " for #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
             @pre_messages << (direction == 'L' ? 'Pulling left...' \
                             : direction == 'R' ? 'Pushing right...' \
                                                : 'Heading center...')
@@ -60,7 +62,7 @@ class RoundsController < ApplicationController
         @distance = 0
         @message = @result
       end
-      @time_to_delay = 1500
+      @time_to_delay = TIME_TO_DELAY_FOR_MESSAGE
     end
 
     def set_round
