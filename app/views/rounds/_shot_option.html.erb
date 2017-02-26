@@ -1,0 +1,9 @@
+<% player = @round.current_group.next_player -%>
+
+<div id="radio_buttons_for_shot_option">
+  <%= hidden_field_tag :choosing_next_use, 1 %>
+  <% player.ball.next_use_options.each_with_index do |option, index| -%>
+    <%= radio_button_tag :shot_option, index %>
+    <%= label_tag "shot_option_#{index}", option %>
+  <% end -%>
+</div>
