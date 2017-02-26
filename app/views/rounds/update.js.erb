@@ -55,6 +55,7 @@ if (!$('tr#message')[0]) {
       if (preMessages.length == 0) {
         if (message.length > 0) {
           display.text(message);
+          displayDelayed();
         } else {
           animate_distance(display, distance, result, 50, 200);
         }
