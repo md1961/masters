@@ -79,15 +79,16 @@ class Group < ActiveRecord::Base
       player = next_player
       ball = player.ball
       has_putted = ball.on_green?
-      has_gone_for_green = ball.going_for_green?
+      was_layup = ball.is_layup
       distance = ball.result.to_i
       location = distance > 0 ? distance.to_s : ball.lands
       location = 'Tee' if location.blank?
       location += ' Fringe' if location == 'Water'
       info = player.play(index_option: index_option)
+      lands = ball.lands
+      lands += '-' + Regexp.last_match(1) if ball.result =~ /\A[SML]([LRC])\*?\z/
       @message = ball.direct_in? ? 'IN!' : has_putted ? 'miss' : ''
-      @message += " from #{location} to #{ball.on_green? ? ball.result : ball.lands}" \
-        if ball.on_green? || has_gone_for_green
+      @message += " from #{location} to #{ball.on_green? ? ball.result : lands}" unless was_layup
       # FIXME: Eliminate ridiculous return value from play().
       "player_id=#{player.id}&club_used=#{ball.club_used}&#{info}"
     end

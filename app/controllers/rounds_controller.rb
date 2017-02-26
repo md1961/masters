@@ -35,8 +35,16 @@ class RoundsController < ApplicationController
           @message = ''
         else
           @pre_messages = ["from #{location}..."]
-          @pre_messages << 'Heading toward green...' \
-            if %w(fw li mi si).include?(@round.club_name_used.downcase)
+          case @round.club_name_used.downcase
+          when 'drive'
+            @result.sub!(/-([LRC])\z/, '')
+            direction = Regexp.last_match(1)
+            @pre_messages << (direction == 'L' ? 'Pulling left...' \
+                            : direction == 'R' ? 'Pushing right...' \
+                                               : 'Heading center...')
+          when 'fw', 'li', 'mi', 'si'
+            @pre_messages << 'Heading toward green...' \
+          end
           if %w(IN OK).include?(@result) || @result.to_i > 0
             @distance = @result.to_i + rand(1 .. 20)
             @pre_messages << "#{@distance} ..."
