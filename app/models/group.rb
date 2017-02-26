@@ -81,6 +81,7 @@ class Group < ActiveRecord::Base
       has_putted = ball.on_green?
       distance = ball.result.to_i
       location = distance > 0 ? distance.to_s : ball.lands
+      location = 'Tee' if location.blank?
       info = player.play(index_option: index_option)
       @message = ball.direct_in? ? 'IN!' : has_putted ? 'miss' : ''
       @message += " from #{location} to #{ball.result}" if ball.on_green?
