@@ -1,6 +1,6 @@
 var animate_distance = function(element, d_start, d_end, t_interval1, t_interval2) {
   var is_second_stage = t_interval2 === void 0;
-  var d1 = is_second_stage ? d_end : 4 + random_1_to(6);
+  var d1 = d_end + (is_second_stage ? 0 : 4 + random_1_to(6));
   var d = d_start;
   var timer = setInterval(function() {
     d--;
@@ -48,11 +48,16 @@ if (!$('tr#message')[0]) {
     var result = display.attr('data-result');
     result = result == 'OK' ? random_1_to(2) : parseInt(result) || 0;
     var distance = parseInt(display.text());
-    var preMessages = display.attr('data-pre_messages')
+    var message = display.attr('data-message');
+    var preMessages = display.attr('data-pre_messages');
     preMessages = preMessages.length == 0 ? [] : preMessages.split(';');
     var displayPreMessages = function(preMessages) {
       if (preMessages.length == 0) {
-        animate_distance(display, distance, result, 50, 200);
+        if (message.length > 0) {
+          display.text(message);
+        } else {
+          animate_distance(display, distance, result, 50, 200);
+        }
         return;
       }
       display.text(preMessages.shift());
