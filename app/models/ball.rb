@@ -210,7 +210,7 @@ class Ball < ActiveRecord::Base
         self.shot_count += 1
         self.is_saved = true
       end
-      if next_use.sub!(/ \(([+-]?\d{1,2})\)\z/, '')
+      if !next_use_optional? && next_use.sub!(/ \(([+-]?\d{1,2})\)\z/, '')
         self.next_adjust += Regexp.last_match(1).to_i
       end
       if next_use =~ /\A([A-Z]{2}) Layup\z/
