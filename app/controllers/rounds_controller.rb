@@ -50,6 +50,7 @@ class RoundsController < ApplicationController
       if @distance < MININUM_DISTANCE_TO_ANINATE
         @distance = 0
         @message = @result
+        @message = 'miss' if @message == 'OK'
       end
       @time_to_delay = TIME_TO_DELAY_FOR_MESSAGE
     end
