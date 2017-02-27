@@ -1,6 +1,6 @@
 var animate_distance = function(element, d_start, d_end, t_interval1, t_interval2) {
   var is_second_stage = t_interval2 === void 0;
-  if (is_second_stage && d_end <= 6) {
+  if (is_second_stage && d_end <= 10 + random_1_to(10)) {
     d_end = -d_end;
   }
   var d1 = d_end + (is_second_stage ? 0 : 4 + random_1_to(6));
