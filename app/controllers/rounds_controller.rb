@@ -35,7 +35,6 @@ class RoundsController < ApplicationController
           @pre_messages = ["#{location} to putt..."]
           @message = ''
         else
-          @pre_messages = ["from #{location}..."]
           add_pre_messages_off_green
           if %w(IN OK).include?(@result) || @result.to_i > 0
             @distance = @result.to_i + rand(1 .. 20)
@@ -55,6 +54,9 @@ class RoundsController < ApplicationController
       @time_to_delay = TIME_TO_DELAY_FOR_MESSAGE
     end
 
+    H_MESSAGES_OFF_GREEN = {SC: 'Looking short...', LC: 'Looking long...',
+                            ML: 'Going left...'   , MR: 'Going right...'}
+
     def add_pre_messages_off_green
       @result.sub!(/-([SML][LRC])\z/, '')
       carry, direction = Regexp.last_match(1)&.split('')
@@ -64,7 +66,14 @@ class RoundsController < ApplicationController
         @pre_messages << {L: 'Pulling left...', R: 'Pushing right...', C: 'Heading center...'}[direction.to_sym]
       when 'fw', 'li', 'mi', 'si'
         if carry.nil?
-          @pre_messages << 'Heading toward green...'
+          @pre_messages << \
+            if @result == 'IN' || @result.to_i <= rand(10 .. 20)
+              'Heading directly to the flag...'
+            elsif @result.to_i <= rand(25 .. 35) || Dice.roll >= 5
+              'Heading toward green...'
+            else
+              H_MESSAGES_OFF_GREEN.values.sample
+            end
         else
           if %w(SL SR LL LR).include?(carry + direction)
             if Dice.roll <= 3
@@ -73,8 +82,7 @@ class RoundsController < ApplicationController
               direction = 'C'
             end
           end
-          @pre_messages << {SC: 'Looking short...', LC: 'Looking long...',
-                            ML: 'Going left...', MR: 'Going right...'}[(carry + direction).to_sym] || 'Off green ???'
+          @pre_messages << H_MESSAGES_OFF_GREEN[(carry + direction).to_sym] || 'Off green ???'
         end
       end
     end
