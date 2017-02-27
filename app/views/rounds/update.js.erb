@@ -1,11 +1,17 @@
 var animate_distance = function(element, d_start, d_end, t_interval1, t_interval2) {
   var is_second_stage = t_interval2 === void 0;
+  if (is_second_stage && d_end <= 6) {
+    d_end = -d_end;
+  }
   var d1 = d_end + (is_second_stage ? 0 : 4 + random_1_to(6));
   var d = d_start;
   var timer = setInterval(function() {
     d--;
+    if (d == 0 && d_end != 0) {
+      d--;
+    }
     if (d >= d_end) {
-      element.text(d);
+      element.text(Math.abs(d));
     }
     if (d <= d1) {
       if (t_interval2 > 0) {
