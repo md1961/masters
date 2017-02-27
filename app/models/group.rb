@@ -86,7 +86,7 @@ class Group < ActiveRecord::Base
       location += ' Fringe' if location == 'Water'
       info = player.play(index_option: index_option)
       lands = ball.lands
-      if ball.result =~ /\A([SML][LRC])\*?\z/
+      if ball.result =~ /\A([SML][LRC])/
         lands += '-' + Regexp.last_match(1)
       end
       @message = ball.direct_in? ? 'IN!' : has_putted ? 'miss' : ''

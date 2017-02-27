@@ -32,21 +32,11 @@ class RoundsController < ApplicationController
         @result  = Regexp.last_match(2)
         if location.to_i > 0
           @distance = location.to_i
-          @pre_messages = ["#{location} from which to putt..."]
+          @pre_messages = ["#{location} to putt..."]
           @message = ''
         else
           @pre_messages = ["from #{location}..."]
-          case @round.club_name_used.downcase
-          when 'drive'
-            @result.sub!(/-([SML][LRC])\z/, '')
-            carry, direction = Regexp.last_match(1).split('')
-            @result += " for #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
-            @pre_messages << (direction == 'L' ? 'Pulling left...' \
-                            : direction == 'R' ? 'Pushing right...' \
-                                               : 'Heading center...')
-          when 'fw', 'li', 'mi', 'si'
-            @pre_messages << 'Heading toward green...' \
-          end
+          add_pre_messages_off_green
           if %w(IN OK).include?(@result) || @result.to_i > 0
             @distance = @result.to_i + rand(1 .. 20)
             @pre_messages << "#{@distance} ..."
@@ -63,6 +53,30 @@ class RoundsController < ApplicationController
         @message = @result
       end
       @time_to_delay = TIME_TO_DELAY_FOR_MESSAGE
+    end
+
+    def add_pre_messages_off_green
+      @result.sub!(/-([SML][LRC])\z/, '')
+      carry, direction = Regexp.last_match(1)&.split('')
+      case @round.club_name_used.downcase
+      when 'drive'
+        @result += " for #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
+        @pre_messages << {L: 'Pulling left...', R: 'Pushing right...', C: 'Heading center...'}[direction.to_sym]
+      when 'fw', 'li', 'mi', 'si'
+        if carry.nil?
+          @pre_messages << 'Heading toward green...'
+        else
+          if %w(SL SR LL LR).include?(carry + direction)
+            if Dice.roll <= 3
+              carry = 'M'
+            else
+              direction = 'C'
+            end
+          end
+          @pre_messages << {SC: 'Looking short...', LC: 'Looking long...',
+                            ML: 'Going left...', MR: 'Going right...'}[(carry + direction).to_sym] || 'Off green ???'
+        end
+      end
     end
 
     def set_round
