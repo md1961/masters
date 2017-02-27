@@ -10,7 +10,6 @@ class RoundsController < ApplicationController
     elsif params[:choosing_next_use] && params[:shot_option].nil?
       render :shot_option
     else
-    # FIXME: Handle for when @round#needs_input?
       @round.proceed(shot_option: params[:shot_option])
       prepare_messages
     end
