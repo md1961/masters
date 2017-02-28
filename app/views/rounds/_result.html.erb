@@ -33,7 +33,7 @@
                 data-result="<%= @result %>"
                 data-pre_messages="<%= @pre_messages.join(';') %>"
                 data-message="<%= @message %>">
-            <%= @distance %>
+            <%= @distance.abs %>
           </span>
         </td>
       <% else -%>

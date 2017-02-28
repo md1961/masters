@@ -26,18 +26,22 @@ class RoundsController < ApplicationController
       @message = @round.message
       @distance = 0
       @pre_messages = []
+      is_putting = false
       if @message&.sub!(Group::RE_ADDITIONAL_MESSAGE, '')
         location = Regexp.last_match(1)
         @result  = Regexp.last_match(2)
         if location.to_i > 0
+          is_putting = true
           @distance = location.to_i
           @pre_messages = ["#{location} to putt..."]
           @message = ''
         else
           add_pre_messages_off_green
-          if %w(IN OK).include?(@result) || @result.to_i > 0
+          if @result == 'IN' || @result.to_i > 0
+            # Max(ClubResult.result) is 56, 35 is 55 - 20.
+            @result = "-#{@result}" if @result.to_i <= 35 && Dice.roll <= 3 # REVIEW
             @distance = @result.to_i + rand(1 .. 20)
-            @pre_messages << "#{@distance} ..."
+            @pre_messages << "#{@distance.abs} ..."
             @message = ''
           else
             @message = @result
@@ -46,7 +50,7 @@ class RoundsController < ApplicationController
       else
         @message = nil
       end
-      if @distance < MININUM_DISTANCE_TO_ANINATE
+      if is_putting && @distance < MININUM_DISTANCE_TO_ANINATE
         @distance = 0
         @message = @result
         @message = 'miss' if @message == 'OK'
