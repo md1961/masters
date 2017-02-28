@@ -1,16 +1,22 @@
 var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
   var isSecondStage = tInterval2 === void 0;
   if (isSecondStage
-      && 0 < dEnd && dEnd <= 10 + randomOf1to(10)
-      && randomOf1to(10) <= 7) {
+      && 0 < dEnd && dEnd <= 10 + randomFrom1To(10)
+      && randomFrom1To(10) <= 7) {
     dEnd = -dEnd;
   }
-  var d1 = dEnd + (isSecondStage ? 0 : 4 + randomOf1to(6));
+  var dPass = null;
+  if (dStart > 1 && dEnd < -1) {
+    dPass = randomFrom1To(Math.min(dStart, -dEnd) - 1);
+  }
+  var d1 = dEnd + (isSecondStage ? 0 : 4 + randomFrom1To(6));
   if (d1 > dStart) { d1 = dStart; }
   var d = dStart;
   var timer = setInterval(function() {
     d--;
-    if (d == 0 && dEnd != 0) {
+    if (dPass && d == dPass) {
+      d = -d;
+    } else if (d == 0 && dEnd != 0) {
       d--;
     }
     if (d >= dEnd) {
@@ -39,7 +45,7 @@ var displayDelayed = function() {
   }, parseInt($('tr#message').attr('data-time_to_delay')));
 };
 
-var randomOf1to = function(nMax) {
+var randomFrom1To = function(nMax) {
   return Math.floor(Math.random() * nMax) + 1;
 }
 
@@ -62,7 +68,7 @@ if (<%= @round.needs_input? %>) {
   } else {
     var display = $('span#distance_amination');
     var result = display.attr('data-result');
-    result = result == 'OK' ? randomOf1to(2) : parseInt(result) || 0;
+    result = result == 'OK' ? randomFrom1To(2) : parseInt(result) || 0;
     var distance = parseInt(display.text());
     var message = display.attr('data-message');
     var preMessages = display.attr('data-pre_messages');
