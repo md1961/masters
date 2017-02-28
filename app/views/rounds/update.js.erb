@@ -95,14 +95,16 @@ var tablePlayersInfo = $('div#players_info table:first');
    selector = "div#players_info table tr.group_info#{group.number}" -%>
 $("<%= selector %>:first").remove();
 $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
-                                            locals: {group: group, not_to_display: false} %>"));
+                                                 locals: {group: group, not_to_display: false} %>"));
 
 var currentGroupNumberInDisplay = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
-  var tdGroupNumber = $('div#players_info table td.current');
-  tdGroupNumber.toggleClass('current');
-  var trNextGroup = tdGroupNumber.parent().next().next();
-  trNextGroup.children('td:first').toggleClass('current');
+  // TODO: Commonize this with the above.
+  <% prev_group = group.prev
+     selector = "div#players_info table tr.group_info#{prev_group.number}" -%>
+  $("<%= selector %>:first").remove();
+  $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
+                                                   locals: {group: prev_group, not_to_display: false} %>"));
 
   <% if group.number == 1 -%>
     var trCount = 0;
