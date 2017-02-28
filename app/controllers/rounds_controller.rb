@@ -66,12 +66,12 @@ class RoundsController < ApplicationController
       carry, direction = Regexp.last_match(1)&.split('')
       case @round.club_name_used.downcase
       when 'drive'
-        @result += " for #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
+        @result += " in #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
         @pre_messages << {L: 'Pulling left...', R: 'Pushing right...', C: 'Heading center...'}[direction.to_sym]
       when 'fw', 'li', 'mi', 'si'
         if carry.nil?
           @pre_messages << \
-            if @result == 'IN' || @result.to_i <= rand(10 .. 20)
+            if @result == 'IN' || @result.to_i <= rand(3 .. 20)
               'Heading directly to the flag...'
             elsif @result.to_i <= rand(25 .. 35) || Dice.roll >= 5
               'Heading toward green...'
