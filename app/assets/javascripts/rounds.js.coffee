@@ -8,13 +8,13 @@ $ ->
     $('div#debug').text(xhr.responseText)
     $('div#debug').show()
 
-  toggle_text = (elem, text1, text2) ->
+  toggleText = (elem, text1, text2) ->
     if elem.text() == text1
       elem.text(text2)
     else
       elem.text(text1)
 
-  toggle_css = (elem, style, value1, value2) ->
+  toggleCss = (elem, style, value1, value2) ->
     if elem.css(style) == value1
       elem.css(style, value2)
     else
@@ -22,26 +22,30 @@ $ ->
 
   $('span#toggle_leader_board_display').click ->
     $('table#leaders').toggle()
-    toggle_text($(this), '[+]', '[-]')
+    toggleText($(this), '[+]', '[-]')
 
   $('span#toggle_hole_map_display').click ->
     $('table.hole_map').toggle()
-    toggle_text($(this), '[+]', '[-]')
+    toggleText($(this), '[+]', '[-]')
 
   $('span#toggle_leader_board_full_display').click ->
     $('table#leaders tr.not_to_display').toggle()
+    $('table#result').toggle()
     $('div#players_info').toggle()
-    toggle_css($('div#leader_board'), 'position', 'fixed', 'static')
-    toggle_text($(this), '[ ... ]', '[ ^ ]')
+    toggleCss($('div#leader_board'), 'position', 'fixed', 'static')
+    toggleText($(this), '[ ... ]', '[ ^ ]')
 
   $('span#toggle_players_info_full_display').click ->
     if $('div#players_info tr.not_to_display')[0]
       $('div#players_info tr.not_to_display').removeClass('not_to_display').addClass('to_be_not_to_display')
     else
       $('div#players_info tr.to_be_not_to_display').removeClass('to_be_not_to_display').addClass('not_to_display')
+    toggleCss($('div#players_info'), 'position', 'fixed', 'static')
+    $('table#result').toggle()
+    $('div#hole_map').toggle()
     $('div#leader_board').toggle()
     $('div#score_cards').toggle()
-    toggle_text($(this), '[ ... ]', '[ ^ ]')
+    toggleText($(this), '[ ... ]', '[ ^ ]')
 
   $('span.hide_score_card_display').click ->
     $('table.score_card').hide()
