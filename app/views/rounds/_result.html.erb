@@ -52,7 +52,8 @@
       <td><%= player.shot.hole.full_desc %></td>
     </tr>
     <tr class="delayed_display" <%= @message && 'hidden' %>>
-      <td><%= ball.result_display %></td>
+      <% score_display = ball.holed_out? ? " to #{score_formatted(player.tournament_score)}" : '' -%>
+      <td><%= ball.result_display + score_display %></td>
     </tr>
     <tr class="delayed_display" <%= @message && 'hidden' %>>
       <% next_shot_display = ball.next_shot_display -%>
