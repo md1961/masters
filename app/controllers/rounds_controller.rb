@@ -67,7 +67,7 @@ class RoundsController < ApplicationController
       case @round.club_name_used.downcase
       when 'drive'
         @result += " in #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
-        @pre_messages << {L: 'Pulling left...', R: 'Pushing right...', C: 'Heading center...'}[direction.to_sym]
+        @pre_messages << {L: 'Pulling left...', R: 'Pushing right...', C: 'Straight in middle...'}[direction.to_sym]
       when 'fw', 'li', 'mi', 'si'
         if carry.nil?
           @pre_messages << \

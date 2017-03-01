@@ -90,6 +90,7 @@ class Player < ActiveRecord::Base
       club = clubs.find_by(name: ball.next_use.downcase)
       ball.club_used = club
       result = club.swing(ball.next_adjust)
+      make_par_3_tee_shot_superlative(ball)
       @info = club.info
       if result == '(1)'
         max_roll_for_in = 3 + (ball.superlative? ? 1 : 0)
@@ -111,6 +112,12 @@ class Player < ActiveRecord::Base
       @info += ", '#{result}' is multiplied by 1.5"
       suffix = result.sub(/\A\d+/, '')
       (result.to_i * 1.5).floor.to_s + suffix
+    end
+
+    def make_par_3_tee_shot_superlative(ball)
+      return unless shot.hole.par == 3 && shot.number == 1
+      drive_result = clubs.find_by(name: 'drive').swing
+      ball.result = '*' if drive_result.end_with?('*')
     end
 
     def write_score
