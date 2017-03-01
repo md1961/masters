@@ -6,10 +6,12 @@ module HolesHelper
     def players_in_landings(result)
       @round.group_to_display.players.find_all do |player|
         player_result = player.ball.result
-        if result == 'MC-Ch'
+        if player.ball.shot.is_layup
+          result == 'layup'
+        elsif result == 'MC-Ch'
           player_result.to_i > 0
         else
-          player_result&.sub(/\*\z/, '')&.sub(/\A(layup)-\d+\z/, '\1') == result
+          player_result&.sub(/\*\z/, '') == result
         end
       end
     end
