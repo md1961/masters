@@ -1,7 +1,8 @@
 <% holes = Hole.order(:number)
    scores = holes.map { |hole| score_card.scores.find_by(hole: hole) }
    player = score_card.player
-   hides_at_first = @style.blank? || player.group != player.round.group_to_display -%>
+   round = player.round
+   hides_at_first = @style.blank? || player.group != round.group_to_display -%>
 
   <table id="score_player<%= player.id %>"
          class="score_card
@@ -11,6 +12,9 @@
   <caption><%= player %></caption>
   <thead>
     <tr>
+      <% unless round.first_round? -%>
+        <th rowspan="2" />
+      <% end -%>
       <% holes.each do |hole| -%>
         <th><%= hole.number %></th>
         <% if hole.number == 9 -%>
@@ -35,6 +39,12 @@
   </thead>
   <tbody>
     <tr>
+      <% score_at_start = player.tournament_score(round_number_upto: round.number - 1) -%>
+      <% unless round.first_round? -%>
+        <td rowspan="2" class="numeric" style="vertical-align: bottom;">
+          <%= score_formatted(score_at_start, short: true) %>
+        </td>
+      <% end -%>
       <% total_in  = 0
          total_out = 0 -%>
       <% scores.each.with_index(1) do |score, number| -%>
@@ -58,7 +68,7 @@
          total_value = 0 -%>
       <% 1.upto(scores.size) do |number| -%>
         <td class="score hole<%= number %> numeric">
-          <%= cum_score_display(number, scores) || '&nbsp'.html_safe %>
+          <%= cum_score_display(number, scores, score_at_start) %>
         </td>
         <% if number == 9 -%>
           <td />

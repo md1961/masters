@@ -24,9 +24,10 @@ module RoundsHelper
     end
   end
 
-  def score_formatted(value)
+  def score_formatted(value, short: false)
     return '-' unless value
-    value.zero? ? 'Even' : format('%+d', value)
+    zero_display = short ? 'E' : 'Even'
+    value.zero? ? zero_display : format('%+d', value)
   end
 
   def area_display(player)
@@ -66,15 +67,5 @@ module RoundsHelper
       score_card = player.score_cards.find_by(round: @round)
       "#{player} #{score_card.total_value} (#{score_formatted(score_card.total_score)})"
     }.join(', ')
-  end
-
-  def cum_score_display(number, scores)
-    score = scores[number - 1]
-    return nil unless score
-    value = score.value
-    total_value = scores[0, number].map { |s| s.try(:value) || 0 }.sum
-    par = score.hole.par
-    total_par = Hole.where('number <= ?', score.hole.number).sum(:par)
-    value && value == par ? nil : format('%+d', total_value - total_par).sub('+0', 'E')
   end
 end
