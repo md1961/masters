@@ -45,12 +45,10 @@ class Club < ActiveRecord::Base
             else
               (half_distance .. raw_result.to_i - 1)
             end
-          _result = selection_range.to_a.sample
-          info_add = ", (MAY interpolate to '#{_result}' from '#{raw_result}' and '#{raw_result_adjacent}'" \
-                      " toward #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
+          result = selection_range.to_a.sample
+          info_add = ", (Interpolated between '#{raw_result}' and '#{raw_result_adjacent}')"
         else
-          info_add = ", (Interpolation quit for adjacent is '#{raw_result_adjacent}' of '#{raw_result}'" \
-                      " toward #{direction} on dice #{dice_dir} occurred on dice #{dice_occur})"
+          info_add = ", (Interpolation quit for adjacent is '#{raw_result_adjacent}' of '#{raw_result}')"
         end
       end
     end
