@@ -102,7 +102,15 @@ class Player < ActiveRecord::Base
         result = 'IN' if result == '0'
         @info += ", '#{result}' from dice #{dice} after superlative"
       end
+      result = adjust_distance_on_green(result, club)
       result
+    end
+
+    def adjust_distance_on_green(result, club)
+      return result if shot.hole.number != 14 || result.to_i.zero?
+      @info += ", '#{result}' is multiplied by 1.5"
+      suffix = result.sub(/\A\d+/, '')
+      (result.to_i * 1.5).floor.to_s + suffix
     end
 
     def write_score
