@@ -21,12 +21,14 @@ class Player < ActiveRecord::Base
   end
 
   def tournament_stroke(round_number_upto: nil)
+    return nil if score_cards.empty?
     round_number_upto = 9999 unless round_number_upto
     rounds = round.tournament.rounds.where('number <= ?', round_number_upto)
     score_cards.where(round: rounds).map(&:total_value).sum
   end
 
   def tournament_score(round_number_upto: nil)
+    return nil if score_cards.empty?
     round_number_upto = 9999 unless round_number_upto
     rounds = round.tournament.rounds.where('number <= ?', round_number_upto)
     total_par = score_cards.where(round: rounds).map(&:total_par).sum
