@@ -46,7 +46,7 @@ class Player < ActiveRecord::Base
       '-'
     else
       number = shot.hole.number - (ball.holed_out? ? 0 : 1)
-      number.zero? ? '-' : number.to_s
+      number >= 18 ? 'F' : number.zero? ? '-' : number.to_s
     end
   end
 
