@@ -25,6 +25,7 @@ module RoundsHelper
   end
 
   def score_formatted(value)
+    return '-' unless value
     value.zero? ? 'Even' : format('%+d', value)
   end
 
@@ -56,7 +57,8 @@ module RoundsHelper
   def pre_shot_display(player)
     ball = player.ball
     distance = ball.on_green? ? " #{ball.result}" : ''
-    "#{player} on #{area_display(player)}#{distance} #{target_display(ball)}"
+    score = score_formatted(player.tournament_score)
+    "#{player} [ #{score} ] on #{area_display(player)}#{distance} #{target_display(ball)}"
   end
 
   def round_result_display(group)
