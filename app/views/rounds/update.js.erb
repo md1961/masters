@@ -141,7 +141,8 @@ if (<%= group.number %> !== currentGroupNumberInDisplay) {
         trCount++;
       }
     }
-    for (var i = 0; i < trCount; i++) {
+    var count = Math.min(trCount, <%= num_groups_in_players_info * 2 %>);
+    for (var i = 0; i < count; i++) {
       tablePlayersInfo.find('tr.not_to_display').first().removeClass('not_to_display');
     }
   <% elsif group.number > num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info -%>
