@@ -97,26 +97,38 @@ function updateTables() {
 
 var tablePlayersInfo = $('div#players_info table:first');
 
-<% group = @round.group_to_display
-   selector = "div#players_info table tr.group_info#{group.number}" -%>
-$("<%= selector %>:first").remove();
-$("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
-                                                 locals: {group: group, not_to_display: false} %>"));
+var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
+  var trGroup = $('div#players_info table tr.group_info' + groupNumber);
+  var wasHidden = trGroup.hasClass('not_to_display');
+  trGroup.first().remove();
+  if (wasHidden) {
+    htmlGroup.addClass('not_to_display');
+  } else {
+    htmlGroup.removeClass('not_to_display');
+  }
+  trGroup.replaceWith(htmlGroup);
+};
+
+<% group = @round.group_to_display -%>
+
+updatePlayersInfoByReplacingGroup(
+  <%= group.number %>,
+  $("<%= j render partial: 'players_info_by_group', locals: {group: group, not_to_display: false} %>")
+);
 
 var currentGroupNumberInDisplay = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
-  // TODO: Commonize this with the above.
-  <% prev_group = group.prev_playing
-     selector = "div#players_info table tr.group_info#{prev_group.number}" -%>
-  $("<%= selector %>:first").remove();
-  $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
-                                                   locals: {group: prev_group, not_to_display: false} %>"));
+  <% prev_group = group.prev_playing -%>
+  updatePlayersInfoByReplacingGroup(
+    <%= prev_group.number %>,
+    $("<%= j render partial: 'players_info_by_group', locals: {group: prev_group, not_to_display: false} %>")
+  );
+  $('<%= "div#players_info table tr.group_info#{prev_group.number} td:first" %>').removeClass('finished_play');
 
   <% if group == @round.first_group_playing -%>
     var trCount = 0;
     while (true) {
       var tdGroupNumber = tablePlayersInfo.find('td').first();
-      // 1 => 1, 2 => 1, 3 => 1, 4 => 2, 5 => 3
       <% group_number_at_top = [
             1,
             group.number - (num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info - 1)
@@ -125,24 +137,24 @@ if (<%= group.number %> !== currentGroupNumberInDisplay) {
         break;
       }
       for (var i = 0; i < 2; i++) {
-        tablePlayersInfo.find('tr').first().toggleClass('not_to_display').remove().appendTo(tablePlayersInfo);
+        tablePlayersInfo.find('tr').first().addClass('not_to_display').remove().appendTo(tablePlayersInfo);
         trCount++;
       }
     }
     for (var i = 0; i < trCount; i++) {
-      tablePlayersInfo.find('tr.not_to_display').first().toggleClass('not_to_display');
+      tablePlayersInfo.find('tr.not_to_display').first().removeClass('not_to_display');
     }
   <% elsif group.number > num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info -%>
     for (var i = 0; i < 2; i++) {
-      tablePlayersInfo.find('tr').first().toggleClass('not_to_display').remove().appendTo(tablePlayersInfo);
+      tablePlayersInfo.find('tr').first().addClass('not_to_display').remove().appendTo(tablePlayersInfo);
     }
     for (var i = 0; i < 2; i++) {
-      tablePlayersInfo.find('tr.not_to_display').first().toggleClass('not_to_display');
+      tablePlayersInfo.find('tr.not_to_display').first().removeClass('not_to_display');
     }
   <% end -%>
 
-  $("div#score_cards span.toggle_score_card_display.current"                 ).toggleClass('current');
-  $("div#score_cards span.toggle_score_card_display.group<%= group.number %>").toggleClass('current');
+  $("div#score_cards span.toggle_score_card_display.current"                 ).removeClass('current');
+  $("div#score_cards span.toggle_score_card_display.group<%= group.number %>").addClass('current');
   $("div#score_cards table.score_card").hide();
   <% if @style.present? -%>
     $("div#score_cards table.score_card.group<%= group.number %>").show();
