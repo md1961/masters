@@ -118,7 +118,7 @@ updatePlayersInfoByReplacingGroup(
 
 var currentGroupNumberInDisplay = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
-  <% prev_group = group.prev_playing -%>
+  <% prev_group = group.prev_just_played -%>
   updatePlayersInfoByReplacingGroup(
     <%= prev_group.number %>,
     $("<%= j render partial: 'players_info_by_group', locals: {group: prev_group, not_to_display: false} %>")

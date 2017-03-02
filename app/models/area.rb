@@ -47,6 +47,10 @@ class Area < ActiveRecord::Base
     round.areas.find_by(seq_num: seq_num + 1)
   end
 
+  def ==(other)
+    self.eql?(other)
+  end
+
   def eql?(other)
     seq_num == other.seq_num
   end

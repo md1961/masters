@@ -50,6 +50,11 @@ class Group < ActiveRecord::Base
     !not_started_yet? && !round_finished?
   end
 
+  def shooting_into_final_area?
+    areas = players_area_uniq
+    areas.size == 1 && areas.first == round.areas[-2]
+  end
+
   def prev
     groups = round.groups
     index = groups.index(self)
@@ -60,6 +65,10 @@ class Group < ActiveRecord::Base
     groups_playing = round.groups.find_all(&:playing?)
     index = groups_playing.index(self)
     groups_playing[index - 1]
+  end
+
+  def prev_just_played
+    shooting_into_final_area? ? prev : prev_playing
   end
 
   def tee_up_on(hole_number)
