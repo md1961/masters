@@ -25,9 +25,9 @@
 <% elsif @round.play_result -%>
   <% if @message -%>
     <tr id="message" data-time_to_delay="<%= @time_to_delay %>">
-      <% if !@pre_messages.empty? && (
-        true \
-        || @style.present?) -%>
+      <% if @pre_messages.empty? -%>
+        <td><%= @message %></td>
+      <% else -%>
         <td>
           <span id="distance_amination"
                 data-result="<%= @result %>"
@@ -36,8 +36,6 @@
             <%= @distance.abs %>
           </span>
         </td>
-      <% else -%>
-        <td><%= @message %></td>
       <% end -%>
     </tr>
   <% end -%>

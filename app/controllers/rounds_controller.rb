@@ -11,7 +11,7 @@ class RoundsController < ApplicationController
       render :shot_option
     else
       @round.proceed(shot_option: params[:shot_option])
-      prepare_messages
+      prepare_messages unless @no_animation
     end
   end
 
