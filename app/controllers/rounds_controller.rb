@@ -41,6 +41,7 @@ class RoundsController < ApplicationController
             # Max(ClubResult.result) is 56, 35 is 55 - 20.
             @result = "-#{@result}" if @result.to_i <= 35 && Dice.roll <= 3 # REVIEW
             @distance = @result.to_i + rand(1 .. 20)
+            @distance = 1 if @distance.zero?
             @pre_messages << "#{@distance.abs} ..."
             @message = ''
           else
