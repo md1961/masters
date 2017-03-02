@@ -20,7 +20,7 @@
   <% end -%>
 <% elsif @round.needs_input? -%>
   <tr>
-    <td class="italic"><%= "#{player} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
+    <td class="italic"><%= "#{with_score(player)} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
   </tr>
 <% elsif @round.play_result -%>
   <% if @message -%>

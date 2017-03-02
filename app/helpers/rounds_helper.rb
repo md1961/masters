@@ -30,6 +30,11 @@ module RoundsHelper
     value.zero? ? zero_display : format('%+d', value)
   end
 
+  def with_score(player)
+    score = score_formatted(player.tournament_score)
+    "#{player} [ #{score} ]"
+  end
+
   def area_display(player)
     area = player.shot.area
     modifier = \
@@ -58,8 +63,7 @@ module RoundsHelper
   def pre_shot_display(player)
     ball = player.ball
     distance = ball.on_green? ? " #{ball.result}" : ''
-    score = score_formatted(player.tournament_score)
-    "#{player} [ #{score} ] on #{area_display(player)}#{distance} #{target_display(ball)}"
+    "#{with_score(player)} on #{area_display(player)}#{distance} #{target_display(ball)} ==>"
   end
 
   def round_result_display(group)
