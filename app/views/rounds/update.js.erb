@@ -106,17 +106,22 @@ $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group
 var currentGroupNumberInDisplay = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
   // TODO: Commonize this with the above.
-  <% prev_group = group.prev
+  <% prev_group = group.prev_playing
      selector = "div#players_info table tr.group_info#{prev_group.number}" -%>
   $("<%= selector %>:first").remove();
   $("<%= selector %>").replaceWith($("<%= j render partial: 'players_info_by_group',
                                                    locals: {group: prev_group, not_to_display: false} %>"));
 
-  <% if group.number == 1 -%>
+  <% if group == @round.first_group_playing -%>
     var trCount = 0;
     while (true) {
       var tdGroupNumber = tablePlayersInfo.find('td').first();
-      if (tdGroupNumber.attr('data-group_number') === '1') {
+      // 1 => 1, 2 => 1, 3 => 1, 4 => 2, 5 => 3
+      <% group_number_at_top = [
+            1,
+            group.number - (num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info - 1)
+          ].max -%>
+      if (tdGroupNumber.attr('data-group_number') === '<%= group_number_at_top %>') {
         break;
       }
       for (var i = 0; i < 2; i++) {

@@ -45,6 +45,10 @@ class Round < ActiveRecord::Base
     changing_group? ? current_group.prev_playing : current_group
   end
 
+  def first_group_playing
+    groups.detect(&:playing?)
+  end
+
   def club_name_used
     play_result =~ Group::RE_PLAYER_ID_AND_INFO && Regexp.last_match(2)
   end
