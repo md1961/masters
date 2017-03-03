@@ -1,0 +1,17 @@
+table#cut_offs {
+  td {
+    height: 18px;
+  }
+
+  tr.even {
+    border-bottom: 2px black solid;
+  }
+
+  tr.well_behind {
+    background-color: darkgray;
+  }
+
+  tr.cut {
+    background-color: gray;
+  }
+}

@@ -1,8 +1,13 @@
 <%= form_tag cut_off_path, method: :patch do %>
   <table id="cut_offs" class="table_base">
-    <% @players.each do |player| -%>
-      <tr class="<%= player.tournament_score > @cut_off_score && 'cut' %> <%= cycle('odd', 'even') %>">
-        <td><%= radio_button_tag :player_cut_off, player.id %></td>
+    <% @players.each_with_index do |player, index| -%>
+      <tr class="<%= player.tournament_score > @cut_off_score && 'well_behind' %> <%= cycle('odd', 'even') %>">
+        <td>
+          <% if index >= @players.size / 2 -%>
+            <%= radio_button_tag :player_cut_off, index %>
+          <% end -%>
+        </td>
+        <td class="numeric"><%= index + 1 %></td>
         <td><%= player.full_name %></td>
         <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
       </tr>

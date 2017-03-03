@@ -18,16 +18,6 @@ body {
     font-size: xx-small;
   }
 
-  table#cut_offs {
-    tr.even {
-      border-bottom: 2px black solid;
-    }
-
-    tr.cut {
-      background-color: lightgray;
-    }
-  }
-
   table#result {
     width: 400px;
 
