@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20170216052710) do
   create_table "invitations", force: :cascade do |t|
     t.integer "tournament_id"
     t.integer "player_id"
+    t.integer "cut_after_round_number_of"
   end
 
   add_index "invitations", ["player_id"], name: "index_invitations_on_player_id"
