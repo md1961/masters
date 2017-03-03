@@ -16,22 +16,22 @@ $ ->
     else
       elem.css(style, value1)
 
-  $('span#toggle_leader_board_display').click ->
+  $('span#toggle_leader_board_display').on 'click', ->
     $('table#leaders').toggle()
     toggleText($(this), '[+]', '[-]')
 
-  $('span#toggle_hole_map_display').click ->
+  $('span#toggle_hole_map_display').on 'click', ->
     $('table.hole_map').toggle()
     toggleText($(this), '[+]', '[-]')
 
-  $('span#toggle_leader_board_full_display').click ->
+  $('span#toggle_leader_board_full_display').on 'click', ->
     $('table#leaders tr.not_to_display').toggle()
     $('table#result').toggle()
     $('div#players_info').toggle()
     toggleCss($('div#leader_board'), 'position', 'fixed', 'static')
     toggleText($(this), '[ ... ]', '[ ^ ]')
 
-  $('span#toggle_players_info_full_display').click ->
+  $('span#toggle_players_info_full_display').on 'click', ->
     if $('div#players_info tr.not_to_display')[0]
       $('div#players_info tr.not_to_display').removeClass('not_to_display').addClass('to_be_not_to_display')
     else
@@ -43,10 +43,10 @@ $ ->
     $('div#score_cards').toggle()
     toggleText($(this), '[ ... ]', '[ ^ ]')
 
-  $('span.hide_score_card_display').click ->
+  $('span.hide_score_card_display').on 'click', ->
     $('table.score_card').hide()
 
-  $('span.toggle_score_card_display').click ->
+  $('span.toggle_score_card_display').on 'click', ->
     num = $(this).text().replace(/\s|\r?\n/g, '')
     $('table.score_card').hide()
     $("table.score_card.group#{num}").show()
