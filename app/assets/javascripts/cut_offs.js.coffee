@@ -1,5 +1,5 @@
 $ ->
-  $('input[name=player_cut_off]').on 'click', ->
+  $('input[name=index_just_made]').on 'click', ->
     in_bottom = parseInt($(this).val())
     if in_bottom % 2 == 0 then in_bottom++
     table = $('table#cut_offs')

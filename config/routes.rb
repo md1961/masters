@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   resources :tournaments, only: [:index, :show, :new, :create]
   resources :rounds     , only: [:index, :show, :update]
 
-  resource :cut_off, only: %i[show update]
+  resource :cut_off, only: %i[show update] do
+    member do
+      get :confirm_update
+    end
+  end
 
   # Example resource route with options:
   #   resources :products do

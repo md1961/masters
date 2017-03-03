@@ -1,12 +1,19 @@
-<%= form_tag cut_off_path, method: :patch do %>
+<h3><%= @is_confirming ? 'OK to cut off shaded players?' : 'Choose player to just make cut-off' %></h3>
+
+<% path, method = @is_confirming ? [cut_off_path, :patch] : [confirm_update_cut_off_path, :get] -%>
+<%= form_tag path, method: method do %>
   <table id="cut_offs" class="table_base">
     <% @players.each_with_index do |player, index| -%>
-      <tr class="<%= player.tournament_score > @cut_off_score && 'well_behind' %> <%= cycle('odd', 'even') %>">
-        <td>
-          <% if index >= @players.size / 2 -%>
-            <%= radio_button_tag :player_cut_off, index %>
-          <% end -%>
-        </td>
+      <tr class="<%= @cut_off_score && player.tournament_score > @cut_off_score && 'well_behind' %>
+                 <%= @is_confirming && index > @index_just_made && 'cut' %>
+                 <%= cycle('odd', 'even') %>">
+        <% unless @is_confirming -%>
+          <td>
+            <% if index >= 2 -%>
+              <%= radio_button_tag :index_just_made, index %>
+            <% end -%>
+          </td>
+        <% end -%>
         <td class="numeric"><%= index + 1 %></td>
         <td><%= player.full_name %></td>
         <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
@@ -14,5 +21,8 @@
     <% end -%>
   </table>
   <br>
-  <%= submit_tag :Cut %>
+  <% if @is_confirming -%>
+    <%= hidden_field_tag :index_just_made, @index_just_made %>
+  <% end -%>
+  <%= submit_tag @is_confirming ? :Cut : 'Confirm Cut...' %>
 <% end -%>
