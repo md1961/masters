@@ -11,8 +11,10 @@ class TournamentsController < ApplicationController
   def show
     @tournament = Tournament.find(params[:id])
     round = @tournament.current_round
-    if round.nil? || (round.finished? && !round.final_round?)
+    if round.nil? || params[:has_cut_off] == 'true'
       redirect_to @tournament.new_round!
+    elsif round.finished? && !round.final_round?
+      redirect_to cut_off_path(tournament_id: @tournament)
     elsif !round.finished?
       redirect_to round
     else

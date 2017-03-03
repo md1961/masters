@@ -10,7 +10,17 @@ class CutOffsController < ApplicationController
   def update
     tournament = Tournament.find(session[:tournament_id_for_cut_offs])
     session[:tournament_id_for_cut_offs] = nil
-    redirect_to tournament_path(index_just_made: params[:index_just_made])
+    index_just_made = params[:index_just_made].to_i
+    ActiveRecord::Base.transaction do
+      begin
+        @players[index_just_made + 1, @players.size].each do |player|
+          tournament.cut_off!(player)
+        end
+      rescue StandardError
+        raise
+      end
+    end
+    redirect_to tournament(has_cut_off: true)
   end
 
   def confirm_update
@@ -28,7 +38,7 @@ class CutOffsController < ApplicationController
 
       tournament = Tournament.find(tournament_id)
       round = tournament.current_round
-      @players = tournament.players.sort_by { |player|
+      @players = tournament.players_to_play.sort_by { |player|
         strokes_last_first = player.score_cards.find_by(round: round).scores.pluck(:value).reverse
         [player.tournament_score, strokes_last_first]
       }

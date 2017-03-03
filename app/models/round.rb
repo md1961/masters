@@ -111,11 +111,11 @@ class Round < ActiveRecord::Base
       update!(club_name_for_12_tee: Ball.look_up_optional_result(h_option_tee_shot_12, dice))
 
       if number == 1
-        players_sorted = tournament.players.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
+        players_sorted = tournament.players_to_play.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
       else
         # TODO: Add sort item in case tournament_stroke is equal (Not tested yet).
         round_prev = Round.find_by(number: number - 1)
-        players_sorted = tournament.players.sort_by { |player|
+        players_sorted = tournament.players_to_play.sort_by { |player|
           strokes_last_first = player.score_cards.find_by(round: round_prev).scores.pluck(:value).reverse
           [player.tournament_stroke, strokes_last_first]
         }.reverse
