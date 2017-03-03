@@ -8,7 +8,7 @@ class RoundsController < ApplicationController
     if @round.finished?
       redirect_to @round.tournament
     elsif params[:choosing_next_use] && params[:shot_option].nil?
-      render :shot_option
+      render :choose_shot_option
     else
       @round.proceed(shot_option: params[:shot_option])
       prepare_messages unless @no_animation
