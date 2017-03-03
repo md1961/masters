@@ -50,3 +50,8 @@ $ ->
     num = $(this).text().replace(/\s|\r?\n/g, '')
     $('table.score_card').hide()
     $("table.score_card.group#{num}").show()
+
+  setInterval ->
+    $('span.blink').fadeOut 400, ->
+      $(this).fadeIn 400
+  , 1000
