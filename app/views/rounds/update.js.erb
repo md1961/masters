@@ -111,11 +111,6 @@ var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
 
 <% group = @round.group_to_display -%>
 
-updatePlayersInfoByReplacingGroup(
-  <%= group.number %>,
-  $("<%= j render partial: 'players_info_by_group', locals: {group: group, not_to_display: false} %>")
-);
-
 var currentGroupNumberInDisplay = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
   <% prev_group = group.prev_just_played -%>
@@ -161,6 +156,11 @@ if (<%= group.number %> !== currentGroupNumberInDisplay) {
     $("div#score_cards table.score_card.group<%= group.number %>").show();
   <% end -%>
 }
+
+updatePlayersInfoByReplacingGroup(
+  <%= group.number %>,
+  $("<%= j render partial: 'players_info_by_group', locals: {group: group, not_to_display: false} %>")
+);
 
 $('div#hole_map').children('table').remove();
 $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
