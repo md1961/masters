@@ -28,7 +28,7 @@
       <td class="<%= result && result.end_with?('*') && 'emphasized' %>">
         <%= is_fin ? 'FIN' : result %>
       </td>
-      <td><%= ball.next_shot_display(true) %></td>
+      <td><%= is_fin ? '' : ball.next_shot_display(true) %></td>
     <% end -%>
   </tr>
 <% end -%>
