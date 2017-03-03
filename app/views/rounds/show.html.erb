@@ -5,6 +5,7 @@
       <br>
     <% end -%>
     <%= submit_tag :Proceed, disabled: @message %>
+    <span class="quiet_notice"><%= @no_animation ? '[x]' : '[@]' %></span>
   <% end -%>
 </div>
 
