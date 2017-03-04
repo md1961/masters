@@ -12,7 +12,7 @@ class Group < ActiveRecord::Base
   end
 
   def players_area_uniq
-    players.map(&:shot).compact.map(&:area).compact.uniq
+    players.map(&:ball).compact.map(&:shot).compact.map(&:area).compact.uniq
   end
 
   def not_started_yet?
