@@ -45,7 +45,7 @@ class Club < ActiveRecord::Base
             else
               (half_distance .. raw_result.to_i - 1)
             end
-          result = selection_range.to_a.sample
+          result = selection_range.to_a.sample.to_s
           info_add = ", interpolated to '#{result}' from '#{raw_result}' and '#{raw_result_adjacent}'"
         else
           info_add = ", not interpolated for adjacent is '#{raw_result_adjacent}' of '#{raw_result}'"
