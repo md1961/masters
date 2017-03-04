@@ -7,7 +7,9 @@ var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
   }
   var dPass = null;
   if (dStart > 1 && dEnd < -1) {
-    dPass = randomFrom1To(Math.min(dStart, -dEnd) - 1);
+    var dSmaller = Math.min(dStart, -dEnd);
+    var dPassMin = Math.max(dSmaller - 10, 1);
+    dPass = dPassMin + randomFrom1To(dSmaller - 1) - 1;
   }
   var d1 = dEnd + (isSecondStage ? 0 : 4 + randomFrom1To(6));
   if (d1 > dStart) { d1 = dStart; }
@@ -184,7 +186,7 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
     var td = tdScore;
     while (true) {
       td = td.prev();
-      if (!td) {
+      if (!td || td.length == 0) {
         break;
       }
       var text = td.text();

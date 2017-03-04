@@ -8,9 +8,9 @@ module ScoreCardsHelper
 
   def cum_score_display(number, scores, score_at_start)
     score = scores[number - 1]
-    return nil unless score
+    return '&nbsp'.html_safe unless score
     value = score.value
-    total_value = scores[0, number].map { |s| s.try(:value) || 0 }.sum
+    total_value = scores[0, number].map { |s| s&.value || 0 }.sum
     par = score.hole.par
     total_par = Hole.where('number <= ?', score.hole.number).sum(:par)
     total_score = total_value - total_par + score_at_start
