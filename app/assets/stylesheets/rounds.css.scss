@@ -10,6 +10,10 @@ body {
     font-size: x-small;
   }
 
+  td.smallest {
+    font-size: xx-small;
+  }
+
   td.italic {
     font-style: italic;
   }
@@ -208,6 +212,10 @@ body.pretty {
 
   td.smaller {
     font-size: medium;
+  }
+
+  td.smallest {
+    font-size: small;
   }
 
   table#result {
