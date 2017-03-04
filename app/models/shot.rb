@@ -24,10 +24,8 @@ class Shot < ActiveRecord::Base
   def <=>(other)
     if self.hole != other.hole
       self.hole <=> other.hole
-    elsif self.number != other.number
-      self.number <=> other.number
     else
-      other.is_layup.to_s <=> self.is_layup.to_s
+      self.number <=> other.number
     end
   end
 
