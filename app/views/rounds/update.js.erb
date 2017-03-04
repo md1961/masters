@@ -95,6 +95,8 @@ if (<%= @round.needs_input? %>) {
 
 function updateTables() {
 
+<% if group = @round.group_to_display -%>
+
 var tablePlayersInfo = $('div#players_info table:first');
 
 var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
@@ -108,8 +110,6 @@ var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
   }
   trGroup.replaceWith(htmlGroup);
 };
-
-<% group = @round.group_to_display -%>
 
 var currentGroupNumberInDisplay = parseInt($('div#players_info table td.current').attr('data-group_number'));
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
@@ -197,6 +197,8 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
     cumScore += <%= stroke - hole.par %>;
     tdScore.text(cumScore > 0 ? '+' + cumScore : cumScore == 0 ? 'E' : cumScore);
   <% end -%>
+<% end -%>
+
 <% end -%>
 
 }
