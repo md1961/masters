@@ -20,7 +20,7 @@ class CutOffsController < ApplicationController
         raise
       end
     end
-    redirect_to tournament(has_cut_off: true)
+    redirect_to tournament_path(tournament, has_cut_off: true)
   end
 
   def confirm_update
