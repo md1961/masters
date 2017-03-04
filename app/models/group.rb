@@ -35,7 +35,7 @@ class Group < ActiveRecord::Base
   end
 
   def all_holed_out?
-    players.all? { |player| player.ball.holed_out? }
+    players.all? { |player| player.ball&.holed_out? }
   end
 
   def needs_to_choose_shot?
