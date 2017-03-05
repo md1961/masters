@@ -61,7 +61,7 @@ class Ball < ActiveRecord::Base
   end
 
   def going_for_green_in_two?
-    shot&.hole&.par == 5 && shot&.number == 2 && !is_layup
+    shot&.hole&.par == 5 && shot&.number == 2 && !is_layup && shot_count == 1
   end
 
   def next_use_optional?
