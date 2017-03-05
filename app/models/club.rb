@@ -16,7 +16,7 @@ class Club < ActiveRecord::Base
 
   RE_PURE_DIGITS = /\A\d+\z/
 
-  def swing(dice_adjust = 0)
+  def swing(dice_adjust = 0, max_distance: nil)
     raise "Should not reach here: return 'IN'" if player.ball.ok?
     raw_dice = Dice.two_rolls
     if dice_adjust.zero?
@@ -52,7 +52,10 @@ class Club < ActiveRecord::Base
         end
       end
     end
-    if putt?
+    if max_distance && result.to_i > max_distance
+      result = add_random_direction('Ch')
+      info_add << ", went off green with max_distance of '#{max_distance}'"
+    elsif putt?
       ball_on = player.ball.result.to_i
       if player.ball.third_putt?
         result = dice == 11 ? 'OK' : 'IN'
