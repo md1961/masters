@@ -116,8 +116,8 @@ class Ball < ActiveRecord::Base
       -1
     elsif other.result.nil?
       1
-    elsif m1 = self .result.match(RE_RESULT_LAYUP_NUMBERED) \
-       && m2 = other.result.match(RE_RESULT_LAYUP_NUMBERED)
+    elsif (m1 = self .result.match(RE_RESULT_LAYUP_NUMBERED)) \
+       && (m2 = other.result.match(RE_RESULT_LAYUP_NUMBERED))
       m2[1].to_i <=> m1[1].to_i
     else
       df_self  = distance_factor(self .result)
