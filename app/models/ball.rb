@@ -151,8 +151,8 @@ class Ball < ActiveRecord::Base
     elsif club_used.putt?
       "#{player} putt as #{shot_count.ordinalize} shot to #{result}"
     elsif is_saved
-      "#{player} hit #{(shot_count - 1).ordinalize} shot into #{lands}" \
-        " and save on #{shot_count.ordinalize} shot by '#{result}'"
+      "#{player} hit #{(shot_count - 1).ordinalize} shot into Deep #{lands} by '#{result}', " \
+        "SAVE on #{shot_count.ordinalize} shot"
     else
       preposition = ['Trees', 'Sand', 'Water', 'Fairway Trap'].include?(lands) ? 'into' : 'onto'
       superlative = result.try(:end_with?, '*') ? ' (superlative)' : ''
