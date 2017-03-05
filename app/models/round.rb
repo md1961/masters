@@ -125,8 +125,8 @@ class Round < ActiveRecord::Base
       group_number = 1
       players_sorted.each_slice(Round.num_players_per_group) do |players|
         group = groups.create!(number: group_number, players: players)
-        group.groupings.find_by(player: players[0]).update!(play_order: 1)
-        group.groupings.find_by(player: players[1]).update!(play_order: 2)
+        group.groupings.find_by(player: players[0]).update!(play_order: 2)
+        group.groupings.find_by(player: players[1]).update!(play_order: 1)
         group_number += 1
       end
       players_sorted.each { |player| player.ball&.destroy }
