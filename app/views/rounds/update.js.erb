@@ -88,7 +88,7 @@ if (<%= @round.needs_input? %>) {
       display.text(preMessages.shift());
       setTimeout(function() {
         displayPreMessages(preMessages);
-      }, 2000);
+      }, parseInt($('tr#message').attr('data-time_to_delay')));
     };
     displayPreMessages(preMessages);
   }
