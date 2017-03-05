@@ -18,7 +18,7 @@ class RoundsController < ApplicationController
   private
 
     MININUM_DISTANCE_TO_ANINATE = 3
-    TIME_TO_DELAY_FOR_MESSAGE = 1200
+    TIME_TO_DELAY_FOR_MESSAGE = 1350
 
     def prepare_messages
       @message_orig = @round.message&.dup
