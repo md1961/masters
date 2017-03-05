@@ -549,3 +549,31 @@ h_clubs = {
   putt:  %w(Miss-A 1-B 2-C 2-D 3-D 3 4 4 5 6 7 8 9 10 11 13 15 19 33 45 IN),
 }
 add_clubs(player, h_clubs)
+
+player = Player.create!(last_name: 'Fiori', first_name: 'Ed', overall: 33)
+h_clubs = {
+  drive: %w(SR SL SR SC SC ML MR ML MR ML MC MC* MC MC MC MC* MC LL LC* LR LC*),
+  fw:    %w(SL-P SC-P SR-P SL-P SR-P LL-Ch SR-Ch MR-Ch LR-Ch SC-Ch 55 43 36 31 29 26 21 17 12 9 6),
+  li:    %w(SC-P SR-P SL-P SC-P LL-Ch ML-Ch SR-Ch SL-Ch LR-Ch 54 42 39 34 30 26 21 18 15 11 8 5),
+  mi:    %w(SL-P LL-Ch MR-Ch SC-Ch SR-Ch ML-Ch LR-Ch SL-Ch 54 44 38 35 31 27 24 20 17 14 11 7 4),
+  si:    %w(LR-Ch SL-Ch SC-Ch ML-Ch MR-Ch LC-Ch SR-Ch 51 38 34 29 26 24 20 18 15 12 9 7 5 2),
+  p:     %w(SL-Ch LR-Ch ML-Ch 42 29 24 21 19 17 15 14 13 11 10 9 7 6 5 3 2 (1)),
+  ch:    %w(51 35 25 18 13 12 11 10 9 8 7 6 5 5 4 4 3 2 2 1 IN),
+  sd:    %w(Sd 36 24 20 17 14 12 10 9 8 7 7 6 6 5 4 4 3 2 1 IN),
+  putt:  %w(Miss-A 1-B 2-C 2-D 3 3 4 4 5 6 7 8 9 10 12 13 16 22 34 49 IN),
+}
+add_clubs(player, h_clubs)
+
+player = Player.create!(last_name: 'Simons', first_name: 'Jim', overall: 33)
+h_clubs = {
+  drive: %w(SL SR SL SC SC SC SC* SC MR ML MR ML MC MC MC MC* MC MC MC* LC LC*),
+  fw:    %w(SL-P SR-P SC-Ch MR-Ch LL-Ch LC-Ch SR-Ch ML-Ch 52 44 38 34 27 25 22 19 15 12 9 5 3),
+  li:    %w(SC-P MR-Ch ML-Ch SR-Ch LL-Ch SC-Ch LR-Ch 47 41 37 34 31 27 22 19 16 14 11 8 4 2),
+  mi:    %w(SR-Ch SC-Ch MR-Ch LL-Ch LR-Ch ML-Ch 56 45 40 37 32 28 24 21 18 16 14 11 8 5 2),
+  si:    %w(SR-Ch ML-Ch LR-Ch SC-Ch MR-Ch 50 36 31 28 26 23 21 19 17 14 12 10 7 5 3 1),
+  p:     %w(SR-Ch SL-Ch LL-Ch MR-Ch 46 30 26 24 20 19 17 15 13 12 10 9 7 6 5 3 (1)),
+  ch:    %w(Ch 50 34 23 18 15 13 12 11 10 9 8 7 6 5 5 4 3 2 1 IN),
+  sd:    %w(Sd 42 29 26 22 18 15 12 11 10 9 8 7 7 6 5 5 4 3 2 (1)),
+  putt:  %w(Miss-A 1-B 2-C 2-D 2-D 3 3 4 4 5 6 7 8 9 11 12 15 19 33 44 IN),
+}
+add_clubs(player, h_clubs)
