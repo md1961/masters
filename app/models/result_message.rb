@@ -77,7 +77,7 @@ class ResultMessage
             else
               H_MESSAGES_OFF_GREEN.values.sample
             end
-        elsif Dice.roll >= 0 #5
+        elsif Dice.roll >= 0 #5 FIXME
           @pre_messages << MESSAGE_TO_GREEN
           @rolls_out_of_green = true
         else

@@ -1,14 +1,13 @@
 var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
+  var isSecondStage = tInterval2 === void 0;
   var textEnd = null;
-  if (typeof dEnd == 'string') {
+  if (!isSecondStage && typeof dEnd == 'string') {
     textEnd = dEnd;
     dStart = -dStart;
     dEnd = dStart - (4 + randomFrom1To(6));
-  }
-  var isSecondStage = tInterval2 === void 0;
-  if (isSecondStage
-      && 0 < dEnd && dEnd <= 10 + randomFrom1To(10)
-      && randomFrom1To(10) <= 7) {
+  } else if (isSecondStage
+             && 0 < dEnd && dEnd <= 10 + randomFrom1To(10)
+             && randomFrom1To(10) <= 7) {
     dEnd = -dEnd;
   }
   var dPass = null;
