@@ -4,7 +4,7 @@
       <%= render 'shot_option' %>
       <br>
     <% end -%>
-    <%= submit_tag :Proceed, disabled: @message %>
+    <%= submit_tag :Proceed, disabled: @result_message&.not_nil? %>
     <span class="quiet_notice"><%= @no_animation ? '[x]' : '[@]' %></span>
   <% end -%>
 </div>
