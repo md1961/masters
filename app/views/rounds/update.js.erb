@@ -2,9 +2,11 @@ var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
   var isSecondStage = tInterval2 === void 0;
   var textEnd = null;
   if (!isSecondStage && typeof dEnd == 'string') {
+    isSecondStage = true;
     textEnd = dEnd;
     dStart = -dStart;
     dEnd = dStart - (4 + randomFrom1To(6));
+    tInterval1 = tInterval2;
   } else if (isSecondStage
              && 0 < dEnd && dEnd <= 10 + randomFrom1To(10)
              && randomFrom1To(10) <= 7) {
@@ -30,9 +32,9 @@ var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
       element.text(Math.abs(d));
     }
     if (d <= d1) {
-      if (tInterval2 > 0) {
+      if (!isSecondStage) {
         animateDistance(element, d, textEnd || dEnd, tInterval2);
-      } else if (isSecondStage) {
+      } else {
         displayDelayed();
         if (element.text() == '0') {
           element.text('IN!');
