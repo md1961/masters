@@ -23,17 +23,17 @@
     <td class="italic"><%= "#{with_score(player)} on #{player.shot.hole} for #{player.shot} to choose shot" %></td>
   </tr>
 <% elsif @round.play_result -%>
-  <% if @message -%>
+  <% if @result_message.not_nil? -%>
     <tr id="message" data-time_to_delay="<%= @time_to_delay %>">
-      <% if @pre_messages.empty? -%>
-        <td><%= @message %></td>
+      <% if @result_message.pre_messages.empty? -%>
+        <td><%= @result_message.message %></td>
       <% else -%>
         <td>
           <span id="distance_amination"
-                data-result="<%= @result %>"
-                data-pre_messages="<%= @pre_messages.join(';') %>"
-                data-message="<%= @message %>">
-            <%= @distance.abs %>
+                data-result="<%= @result_message.result %>"
+                data-pre_messages="<%= @result_message.pre_messages.join(';') %>"
+                data-message="<%= @result_message.message %>">
+            <%= @result_message.distance.abs %>
           </span>
         </td>
       <% end -%>
@@ -46,24 +46,24 @@
        info = Regexp.last_match(3)
        ball = player.ball
        ball.club_used = player.clubs.find_by(name: club_used.downcase) -%>
-    <tr class="delayed_display" <%= @message && 'hidden' %>>
+    <tr class="delayed_display" <%= @result_message.not_nil? && 'hidden' %>>
       <td><%= player.shot.hole.full_desc %></td>
     </tr>
-    <tr class="delayed_display" <%= @message && 'hidden' %>>
+    <tr class="delayed_display" <%= @result_message.not_nil? && 'hidden' %>>
       <% score_display = ball.holed_out? ? " to #{score_formatted(player.tournament_score)}" : '' -%>
       <td><%= ball.result_display + score_display %></td>
     </tr>
-    <tr class="delayed_display" <%= @message && 'hidden' %>>
+    <tr class="delayed_display" <%= @result_message.not_nil? && 'hidden' %>>
       <% next_shot_display = ball.next_shot_display -%>
       <td class="smaller">
         <%= ball.holed_out? || next_shot_display.blank? ? nil : "( next will be: #{next_shot_display} )" %>
       </td>
     </tr>
-    <tr class="delayed_display italic" <%= @message && 'hidden' %>>
+    <tr class="delayed_display italic" <%= @result_message.not_nil? && 'hidden' %>>
       <td class="smallest italic"><%= info %></td>
     </tr>
   <% else -%>
-    <tr class="delayed_display" <%= @message && 'hidden' %>>
+    <tr class="delayed_display" <%= @result_message.not_nil? && 'hidden' %>>
       <td><%= @round.play_result %></td>
     </tr>
   <% end -%>
