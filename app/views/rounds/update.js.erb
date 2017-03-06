@@ -1,4 +1,10 @@
 var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
+  var textEnd = null;
+  if (typeof dEnd == 'string') {
+    textEnd = dEnd;
+    dStart = -dStart;
+    dEnd = dStart - (4 + randomFrom1To(6));
+  }
   var isSecondStage = tInterval2 === void 0;
   if (isSecondStage
       && 0 < dEnd && dEnd <= 10 + randomFrom1To(10)
@@ -26,12 +32,14 @@ var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
     }
     if (d <= d1) {
       if (tInterval2 > 0) {
-        animateDistance(element, d, dEnd, tInterval2);
+        animateDistance(element, d, textEnd || dEnd, tInterval2);
       } else if (isSecondStage) {
         displayDelayed();
-      }
-      if (element.text() == '0') {
-        element.text('IN!');
+        if (element.text() == '0') {
+          element.text('IN!');
+        } else if (textEnd) {
+          element.text(textEnd);
+        }
       }
       clearInterval(timer);
     }
@@ -70,7 +78,7 @@ if (<%= @round.needs_input? %>) {
   } else {
     var display = $('span#distance_amination');
     var result = display.attr('data-result');
-    result = result == 'OK' ? randomFrom1To(2) : parseInt(result) || 0;
+    result = result == 'IN' ? 0 : parseInt(result) || result;
     var distance = parseInt(display.text());
     var message = display.attr('data-message');
     var preMessages = display.attr('data-pre_messages');

@@ -25,15 +25,21 @@ class ResultMessage
         if location.to_i > 0
           is_putting = true
           @distance = location.to_i
+          @result = rand(1 .. 2).to_s if @result == 'OK'
           @pre_messages = ["#{location} to putt..."]
           @message = ''
         else
+          @rolls_out_of_green = false
           add_pre_messages_off_green
-          if @result == 'IN' || @result.to_i > 0
+          if @result == 'IN' || @result.to_i > 0 || @rolls_out_of_green
             # Max(ClubResult.result) is 56, 35 is 55 - 20.
-            @result = "-#{@result}" if @result.to_i <= 35 && Dice.roll <= 3 # REVIEW
-            @distance = @result.to_i + rand(1 .. 20)
-            @distance = 1 if @distance.zero?
+            @result = "-#{@result}" if @result.to_i.between?(1, 35) && Dice.roll <= 3 # REVIEW
+            if @rolls_out_of_green
+              @distance = rand(40 .. 50)
+            else
+              @distance = @result.to_i + rand(1 .. 20)
+              @distance = 1 if @distance.zero?
+            end
             @pre_messages << "#{@distance.abs} ..."
             @message = ''
           else
@@ -52,6 +58,7 @@ class ResultMessage
 
     H_MESSAGES_OFF_GREEN = {SC: 'Looking short...', LC: 'Looking long...',
                             ML: 'Going left...'   , MR: 'Going right...'}
+    MESSAGE_TO_GREEN = 'Heading toward green...'
 
     def add_pre_messages_off_green
       @result.sub!(/-([SML][LRC])\z/, '')
@@ -66,10 +73,13 @@ class ResultMessage
             if @result == 'IN' || @result.to_i <= rand(3 .. 20)
               'Heading directly to the flag...'
             elsif @result.to_i <= rand(25 .. 35) || Dice.roll >= 5
-              'Heading toward green...'
+              MESSAGE_TO_GREEN
             else
               H_MESSAGES_OFF_GREEN.values.sample
             end
+        elsif Dice.roll >= 0 #5
+          @pre_messages << MESSAGE_TO_GREEN
+          @rolls_out_of_green = true
         else
           if %w(SL SR LL LR).include?(carry + direction)
             if Dice.roll <= 3
