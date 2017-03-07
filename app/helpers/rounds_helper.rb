@@ -30,9 +30,11 @@ module RoundsHelper
     value.zero? ? zero_display : format('%+d', value)
   end
 
-  def with_score(player)
+  def with_score(player, score_wrapper: '[ %s ]')
+    score_wrapper = '%s' unless score_wrapper
     score = score_formatted(player.tournament_score)
-    "#{player} [ #{score} ]"
+    score_display = format(score_wrapper, score)
+    "#{player} #{score_display}"
   end
 
   def area_display(player)

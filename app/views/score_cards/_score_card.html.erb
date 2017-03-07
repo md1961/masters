@@ -9,7 +9,7 @@
                 <%= @style.present? && 'table_base' %>
                 group<%= player.group.number %>"
          <%= hides_at_first && 'hidden' %>>
-  <caption><%= player %></caption>
+  <caption><%= with_score(player, score_wrapper: nil) %></caption>
   <thead>
     <tr>
       <% unless round.first_round? -%>
