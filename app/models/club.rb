@@ -27,7 +27,7 @@ class Club < ActiveRecord::Base
     raw_result = club_results.find_by(dice: dice).result unless player.ball.third_putt?
     raw_result = add_random_direction(raw_result) if raw_result == 'Ch'
     result = interpolate_distance(raw_result, dice)
-    if max_distance && result.to_i > max_distance
+    if !putt? && max_distance && result.to_i > max_distance
       result = add_random_direction('Ch')
       @info_add << ", went off green with max_distance of '#{max_distance}'"
     elsif putt?
