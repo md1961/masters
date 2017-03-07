@@ -29,7 +29,7 @@ class Club < ActiveRecord::Base
     raw_result = club_results.find_by(dice: dice).result unless player.ball.third_putt?
     raw_result = add_random_direction(raw_result) if raw_result == 'Ch'
     result = raw_result
-    info_add = nil
+    info_add = ''
     if raw_result =~ RE_PURE_DIGITS
       dice_occur = Dice.roll
       if dice_occur <= MAX_DICE_TO_INTERPOLATE_DISTANCE
@@ -81,7 +81,7 @@ class Club < ActiveRecord::Base
         info_add = ", direction converted on dice #{dice}"
       end
     end
-    @info = "'#{raw_result}' by #{self} on dice #{@info}" + (info_add ? info_add : '')
+    @info = "'#{raw_result}' by #{self} on dice #{@info}" + info_add
     result
   end
 
