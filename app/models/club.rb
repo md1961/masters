@@ -12,12 +12,10 @@ class Club < ActiveRecord::Base
   MAX_DICE_TO_INTERPOLATE_DISTANCE = 2
 
   # TODO: Alter direction of Ch and P randomly.
-  # TODO: Interpolate distance randomly.
-
-  RE_PURE_DIGITS = /\A\d+\z/
 
   def swing(dice_adjust = 0, max_distance: nil)
     raise "Should not reach here: return 'IN'" if player.ball.ok?
+    @info_add = ''
     raw_dice = Dice.two_rolls
     if dice_adjust.zero?
       dice = raw_dice
@@ -28,33 +26,10 @@ class Club < ActiveRecord::Base
     end
     raw_result = club_results.find_by(dice: dice).result unless player.ball.third_putt?
     raw_result = add_random_direction(raw_result) if raw_result == 'Ch'
-    result = raw_result
-    info_add = ''
-    if raw_result =~ RE_PURE_DIGITS
-      dice_occur = Dice.roll
-      if dice_occur <= MAX_DICE_TO_INTERPOLATE_DISTANCE
-        dice_dir = Dice.roll
-        direction = dice_dir <= 3 ? -1 : 1
-        dice_adjacent = dice_list[dice_list.index(dice) + direction]
-        raw_result_adjacent = club_results.find_by(dice: dice_adjacent)&.result
-        if raw_result_adjacent =~ RE_PURE_DIGITS && (raw_result.to_i - raw_result_adjacent.to_i).abs >= 2
-          half_distance = (raw_result_adjacent.to_i + raw_result.to_i) / 2
-          selection_range = \
-            if raw_result.to_i < half_distance
-              (raw_result.to_i + 1 .. half_distance)
-            else
-              (half_distance .. raw_result.to_i - 1)
-            end
-          result = selection_range.to_a.sample.to_s
-          info_add = ", interpolated to '#{result}' from '#{raw_result}' and '#{raw_result_adjacent}'"
-        else
-          info_add = ", not interpolated for adjacent is '#{raw_result_adjacent}' of '#{raw_result}'"
-        end
-      end
-    end
+    result = interpolate_distance(raw_result, dice)
     if max_distance && result.to_i > max_distance
       result = add_random_direction('Ch')
-      info_add << ", went off green with max_distance of '#{max_distance}'"
+      @info_add << ", went off green with max_distance of '#{max_distance}'"
     elsif putt?
       ball_on = player.ball.result.to_i
       if player.ball.third_putt?
@@ -71,17 +46,17 @@ class Club < ActiveRecord::Base
       end
     elsif raw_result == '(1)' && raw_dice != 66
       result = '1'
-      info_add = ", converted to '1' for modified dice 66"
+      @info_add = ", converted to '1' for modified dice 66"
     elsif raw_result =~ /\A([SML][LRC])-(P|Ch)/
       dice = Dice.roll
       if dice <= MAX_DICE_TO_RANDOMIZE_DIRECTION
         direction     = Regexp.last_match(1)
         result_suffix = Regexp.last_match(2)
         result = add_random_direction(result_suffix, [direction])
-        info_add = ", direction converted on dice #{dice}"
+        @info_add = ", direction converted on dice #{dice}"
       end
     end
-    @info = "'#{raw_result}' by #{self} on dice #{@info}" + info_add
+    @info = "'#{raw_result}' by #{self} on dice #{@info}" + @info_add
     result
   end
 
@@ -108,5 +83,31 @@ class Club < ActiveRecord::Base
       excludes += %w(ML MR LL LC LR) if raw_result == 'P'
       directions = %w(SL SC SR ML MR LL LC LR).reject { |dir| excludes.include?(dir) }
       "#{directions.sample}-#{raw_result}"
+    end
+
+    RE_PURE_DIGITS = /\A\d+\z/
+
+    def interpolate_distance(raw_result, dice)
+      return raw_result unless raw_result =~ RE_PURE_DIGITS
+      return raw_result if Dice.roll > MAX_DICE_TO_INTERPOLATE_DISTANCE
+      dice_dir = Dice.roll
+      direction = dice_dir <= 3 ? -1 : 1
+      dice_adjacent = dice_list[dice_list.index(dice) + direction]
+      raw_result_adjacent = club_results.find_by(dice: dice_adjacent)&.result
+      if raw_result_adjacent =~ RE_PURE_DIGITS && (raw_result.to_i - raw_result_adjacent.to_i).abs >= 2
+        half_distance = (raw_result_adjacent.to_i + raw_result.to_i) / 2
+        selection_range = \
+          if raw_result.to_i < half_distance
+            (raw_result.to_i + 1 .. half_distance)
+          else
+            (half_distance .. raw_result.to_i - 1)
+          end
+        result = selection_range.to_a.sample.to_s
+        @info_add = ", interpolated to '#{result}' from '#{raw_result}' and '#{raw_result_adjacent}'"
+      else
+        result = raw_result
+        @info_add = ", not interpolated for adjacent is '#{raw_result_adjacent}' of '#{raw_result}'"
+      end
+      result
     end
 end
