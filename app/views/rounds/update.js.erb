@@ -188,6 +188,17 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
     tdStroke.text(<%= stroke %>);
     tdStroke.addClass("<%= class_score_result(stroke, hole) %>");
 
+    <% score_card = player.score_cards.find_by(round: @round) -%>
+    <% if hole.number == 9 -%>
+      var tdTotalIn = tableScoreCard.find("td.stroke.total_in");
+      tdTotalIn.text(<%= score_card.total_in %>);
+    <% elsif hole.number == 18 -%>
+      var tdTotalOut = tableScoreCard.find("td.stroke.total_out");
+      tdTotalOut.text(<%= score_card.total_out %>);
+      var tdTotalRound = tableScoreCard.find("td.stroke.total_round");
+      tdTotalRound.text(<%= score_card.total_value %>);
+    <% end -%>
+
     <% next if stroke == hole.par -%>
 
     var tdScore = tableScoreCard.find("td.score.hole<%= hole.number %>");
