@@ -17,6 +17,7 @@ class Club < ActiveRecord::Base
     raise "Should not reach here: return 'IN'" if player.ball.ok?
     @info_add = ''
     raw_dice = Dice.two_rolls
+    @index_dice_minus = 0
     if dice_adjust.zero?
       dice = raw_dice
       @info = "#{dice}"
@@ -49,11 +50,13 @@ class Club < ActiveRecord::Base
       @info_add = ", converted to '1' for modified dice 66"
     elsif raw_result =~ /\A([SML][LRC])-(P|Ch)/
       dice = Dice.roll
-      if dice <= MAX_DICE_TO_RANDOMIZE_DIRECTION
+      if @index_dice_minus < 0 || dice <= MAX_DICE_TO_RANDOMIZE_DIRECTION
         direction     = Regexp.last_match(1)
         result_suffix = Regexp.last_match(2)
-        result = add_random_direction(result_suffix, [direction])
-        @info_add = ", direction converted on dice #{dice}"
+        excludes = @index_dice_minus < 0 ? [] : [direction]
+        result = add_random_direction(result_suffix, excludes)
+        @info_add = ', direction converted ' \
+          + (@index_dice_minus < 0 ? "for dice adjust exceeds by #{@index_dice_minus}" : "on dice #{dice}")
       end
     end
     @info = "'#{raw_result}' by #{self} on dice #{@info}" + @info_add
@@ -74,8 +77,12 @@ class Club < ActiveRecord::Base
       index = dice_list.index(dice)
       raise StandardError, "No dice #{dice} in ClubResult of #{club} of #{player}" unless index
       index += adjust
-      index =  0 if index < 0
-      index = -1 if index >= dice_list.size
+      if index < 0
+        @index_dice_minus = index
+        index =  0
+      elsif index >= dice_list.size
+        index = -1
+      end
       dice_list[index]
     end
 
