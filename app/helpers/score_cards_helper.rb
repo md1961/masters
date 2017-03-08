@@ -16,4 +16,8 @@ module ScoreCardsHelper
     total_score = total_value - total_par + score_at_start
     value && value == par ? '&nbsp'.html_safe : score_formatted(total_score, short: true)
   end
+
+  def name_with_score(player)
+    with_score(player, score_wrapper: nil, delimiter: ('&nbsp;' * 8).html_safe)
+  end
 end
