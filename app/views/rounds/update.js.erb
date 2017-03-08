@@ -53,7 +53,7 @@ var displayDelayed = function() {
     $('tr.delayed_display').show();
     $('input[type="submit"]').prop('disabled', false);
     updateTables();
-  }, parseInt($('tr#message').data('time_to_delay')));
+  }, $('tr#message').data('time_to_delay'));
 };
 
 var randomFrom1To = function(nMax) {
@@ -78,11 +78,11 @@ if (<%= @round.needs_input? %>) {
     displayDelayed();
   } else {
     var display = $('span#distance_amination');
-    var result = display.data('result');
+    var result = display.attr('data-result');
     result = result == 'IN' ? 0 : parseInt(result) || result;
     var distance = parseInt(display.text());
-    var message = display.data('message');
-    var preMessages = display.data('pre_messages');
+    var message = display.attr('data-message');
+    var preMessages = display.attr('data-pre_messages');
     preMessages = preMessages.length == 0 ? [] : preMessages.split(';');
     var displayPreMessages = function(preMessages) {
       if (preMessages.length == 0) {
@@ -97,7 +97,7 @@ if (<%= @round.needs_input? %>) {
       display.text(preMessages.shift());
       setTimeout(function() {
         displayPreMessages(preMessages);
-      }, parseInt($('tr#message').data('time_to_delay')));
+      }, $('tr#message').data('time_to_delay'));
     };
     displayPreMessages(preMessages);
   }
@@ -122,7 +122,7 @@ var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
   trGroup.replaceWith(htmlGroup);
 };
 
-var currentGroupNumberInDisplay = parseInt($('div#players_info table td.current').data('group_number'));
+var currentGroupNumberInDisplay = $('div#players_info table td.current').data('group_number');
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
   <% prev_group = group.prev_just_played -%>
   updatePlayersInfoByReplacingGroup(
@@ -139,7 +139,7 @@ if (<%= group.number %> !== currentGroupNumberInDisplay) {
             1,
             group.number - (num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info - 1)
           ].max -%>
-      if (tdGroupNumber.data('group_number') === '<%= group_number_at_top %>') {
+      if (tdGroupNumber.data('group_number') === <%= group_number_at_top %>) {
         break;
       }
       for (var i = 0; i < 2; i++) {
