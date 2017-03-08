@@ -14,6 +14,7 @@ class ResultMessage
   end
 
   MININUM_DISTANCE_TO_ANINATE = 3
+  MAXIMUM_DISTANCE = 60
 
   private
 
@@ -32,12 +33,11 @@ class ResultMessage
           @rolls_out_of_green = false
           add_pre_messages_off_green
           if @result == 'IN' || @result.to_i > 0 || @rolls_out_of_green
-            # Max(ClubResult.result) is 56, 35 is 55 - 20.
-            @result = "-#{@result}" if @result.to_i.between?(1, 35) && Dice.roll <= 3 # REVIEW
+            @result = "-#{@result}" if @result.to_i > 0 && Dice.roll <= 3 # REVIEW
             if @rolls_out_of_green
               @distance = rand(40 .. 50)
             else
-              @distance = @result.to_i + rand(1 .. 20)
+              @distance = [@result.to_i + rand(1 .. 20), MAXIMUM_DISTANCE].min
               @distance = 1 if @distance.zero?
             end
             @pre_messages << "#{@distance.abs} ..."
