@@ -14,9 +14,15 @@ class SecondPuttResult
     %w(31-35        9s   6s   4s   2s),
     %w(36-40       11s   8s   5s   3s),
     %w(41-45       13s   9s   5s   3s),
-    %w(46-50       14s  10s   6s   3s),
-    %w(51-55       16s  12s   8s   5s),
-    %w( 56+        18s  14s  10s   5s),
+    %w(46-50       14s  10s   6s   4s),
+    %w(51-55       16s  12s   8s   4s),
+    %w(56-60       18s  14s  10s   5s),
+    %w(61-65       20s  16s  12s   5s),
+    %w(66-70       22s  18s  14s   6s),
+    %w(71-75       24s  20s  16s   7s),
+    %w(76-80       26s  22s  18s   8s),
+    %w(81-85       28s  24s  20s   9s),
+    %w( 86+        30s  26s  22s  10s),
   ]
   # Third putt is missed only if rolls 11.
   # Fourth putt is automatically sunk.
