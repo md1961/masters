@@ -1,4 +1,6 @@
 var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
+  console.log('animateDistance() called w/ dStart: ' + dStart + ', dEnd: ' + dEnd
+      + ', tInterval1: ' + tInterval1+ ', tInterval2: ' + tInterval2);
   var isSecondStage = tInterval2 === void 0;
   var textEnd = null;
   if (!isSecondStage && typeof dEnd == 'string') {
@@ -17,6 +19,7 @@ var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
     var dSmaller = Math.min(dStart, -dEnd);
     var dPassMin = Math.max(dSmaller - 10, 1);
     dPass = dPassMin + randomFrom1To(dSmaller - 1) - 1;
+    console.log('animateDistance(): dPass = ' + dPass);
   }
   var d1 = dEnd + (isSecondStage ? 0 : 4 + randomFrom1To(6));
   if (d1 > dStart) { d1 = dStart; }
@@ -107,6 +110,7 @@ if (<%= @round.needs_input? %>) {
 function updateTables() {
 
 <% if group = @round.group_to_display -%>
+console.log('group_to_display = ' + "<%= group %>");
 
 var tablePlayersInfo = $('div#players_info table:first');
 
@@ -123,6 +127,7 @@ var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
 };
 
 var currentGroupNumberInDisplay = $('div#players_info table td.current').data('group_number');
+console.log('currentGroupNumberInDisplay = ' + currentGroupNumberInDisplay);
 if (<%= group.number %> !== currentGroupNumberInDisplay) {
   <% prev_group = group.prev_just_played -%>
   updatePlayersInfoByReplacingGroup(
@@ -177,6 +182,7 @@ $('div#hole_map').children('table').remove();
 $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
 
 <% current_group = @round.current_group -%>
+console.log('current_group = ' + "<%= current_group %>");
 <% if current_group.all_holed_out? -%>
   $('table#leaders').replaceWith($("<%= j render 'leaders' %>"));
 
