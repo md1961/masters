@@ -51,6 +51,27 @@ $ ->
     $('table.score_card').hide()
     $("table.score_card.group#{num}").show()
 
+  $(window).on 'keydown', (e) ->
+    key = String.fromCharCode(e.which)
+    isShifted = e.shiftKey
+    switch key
+      when 'P'
+        $('#form_to_proceed').submit() if isShifted
+      when 'H'
+        $('span#toggle_hole_map_display').click()
+      when 'I'
+        $('span#toggle_players_info_full_display').click()
+      when 'L'
+        if isShifted
+          $('span#toggle_players_info_full_display').click()
+        else
+          $('span#toggle_leader_board_display').click()
+      when 'S'
+        if $('table.score_card').is(':visible')
+          $('table.score_card').hide()
+        else
+          $('span.toggle_score_card_display.current').click()
+
   setInterval ->
     $('span.blink').fadeOut 400, ->
       $(this).fadeIn 400
