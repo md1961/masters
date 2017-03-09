@@ -16,18 +16,22 @@ $ ->
     else
       elem.css(style, value1)
 
-  $('span#toggle_leader_board_display').on 'click', ->
-    $('table#leaders').toggle()
-    toggleText($(this), '[+]', '[-]')
-
   $('span#toggle_hole_map_display').on 'click', ->
     $('table.hole_map').toggle()
+    toggleText($(this), '[+]', '[-]')
+
+  $('span#toggle_leader_board_display').on 'click', ->
+    $('table#leaders').toggle()
     toggleText($(this), '[+]', '[-]')
 
   $('span#toggle_leader_board_full_display').on 'click', ->
     $('table#leaders tr.not_to_display').toggle()
     $('table#result').toggle()
     $('div#players_info').toggle()
+    is_displayed = $('span#toggle_leader_board_display').text() == '[-]'
+    is_full = $(this).text() == '[ ^ ]'
+    if (is_displayed && is_full) || (!is_displayed && !is_full)
+      $('span#toggle_leader_board_display').click()
     toggleCss($('div#leader_board'), 'position', 'fixed', 'static')
     toggleText($(this), '[ ... ]', '[ ^ ]')
 
