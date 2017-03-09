@@ -63,7 +63,7 @@ $ ->
         $('span#toggle_players_info_full_display').click()
       when 'L'
         if isShifted
-          $('span#toggle_players_info_full_display').click()
+          $('span#toggle_leader_board_full_display').click()
         else
           $('span#toggle_leader_board_display').click()
       when 'S'
