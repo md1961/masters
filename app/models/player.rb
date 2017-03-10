@@ -2,7 +2,7 @@ class Player < ActiveRecord::Base
   has_many :clubs
   has_many :invitations
   has_many :tournaments, through: :invitations
-  has_many :score_cards
+  has_many :score_cards, -> { order(:round_id) }
   has_one :grouping
   has_one :group, through: :grouping
   has_one :round, through: :group
@@ -20,18 +20,23 @@ class Player < ActiveRecord::Base
     grouping.play_order
   end
 
-  def tournament_stroke(round_number_upto: nil)
-    return nil if score_cards.empty?
-    round_number_upto = 9999 unless round_number_upto
-    rounds = round.tournament.rounds.where('number <= ?', round_number_upto)
-    score_cards.where(round: rounds).map(&:total_value).sum
+  def tournament_rounds(round_number_upto: 999999)
+    round.tournament.rounds.where('number <= ?', round_number_upto).order(:number)
   end
 
-  def tournament_score(round_number_upto: nil)
+  def tournament_score_cards(round_number_upto: 999999)
+    score_cards.where(round: tournament_rounds(round_number_upto: round_number_upto))
+  end
+
+  def tournament_stroke(round_number_upto: 999999)
     return nil if score_cards.empty?
-    round_number_upto = 9999 unless round_number_upto
-    rounds = round.tournament.rounds.where('number <= ?', round_number_upto)
-    total_par = score_cards.where(round: rounds).map(&:total_par).sum
+    tournament_score_cards(round_number_upto: round_number_upto).map(&:total_value).sum
+  end
+
+  def tournament_score(round_number_upto: 999999)
+    return nil if score_cards.empty?
+    rounds = tournament_rounds(round_number_upto: round_number_upto)
+    total_par = tournament_score_cards(round_number_upto: round_number_upto).map(&:total_par).sum
     tournament_stroke(round_number_upto: round_number_upto) - total_par
   end
 

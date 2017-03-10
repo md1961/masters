@@ -73,8 +73,9 @@ module RoundsHelper
 
   def round_result_display(group)
     group.players.map { |player|
-      score_card = player.score_cards.find_by(round: @round)
-      "#{player} #{score_card.total_value} (#{score_formatted(score_card.total_score)})"
+      score_cards = player.tournament_score_cards(round_number_upto: @round.number)
+      round_strokes = score_cards.map(&:total_value).join('-')
+      "#{player} #{round_strokes} (#{score_formatted(player.tournament_score)})"
     }.join(', ')
   end
 end
