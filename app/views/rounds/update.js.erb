@@ -7,21 +7,21 @@ var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
     isSecondStage = true;
     textEnd = dEnd;
     dStart = -dStart;
-    dEnd = dStart - (4 + randomFrom1To(6));
+    dEnd = dStart - randomBetween(5, 10);
     tInterval1 = tInterval2;
   } else if (isSecondStage
-             && 0 < dEnd && dEnd <= 10 + randomFrom1To(10)
-             && randomFrom1To(10) <= 7) {
+             && 0 < dEnd && dEnd <= randomBetween(11, 20)
+             && randomBetween(1, 10) <= 7) {
     dEnd = -dEnd;
   }
   var dPass = null;
   if (dStart > 1 && dEnd < -1) {
-    var dSmaller = Math.min(dStart, -dEnd);
-    var dPassMin = Math.max(dSmaller - 10, 1);
-    dPass = dPassMin + randomFrom1To(dSmaller - 1) - 1;
-    console.log('animateDistance(): dPass = ' + dPass);
+    var dAbsSmaller = Math.min(dStart, -dEnd);
+    var dPassMin = Math.max(dAbsSmaller - 10, 1);
+    dPass = randomBetween(dPassMin, dAbsSmaller - 1);
+    console.log('animateDistance(): dPass = ' + dPass + ', Start: ' + dStart + ', dEnd: ' + dEnd);
   }
-  var d1 = dEnd + (isSecondStage ? 0 : 4 + randomFrom1To(6));
+  var d1 = dEnd + (isSecondStage ? 0 : randomBetween(5, 10));
   if (d1 > dStart) { d1 = dStart; }
   var d = dStart;
   var timer = setInterval(function() {
@@ -59,8 +59,8 @@ var displayDelayed = function() {
   }, $('tr#message').data('time_to_delay'));
 };
 
-var randomFrom1To = function(nMax) {
-  return Math.floor(Math.random() * nMax) + 1;
+var randomBetween = function(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 var radiosForShotOption = $('div#radio_buttons_for_shot_option');
