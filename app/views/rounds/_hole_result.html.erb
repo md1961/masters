@@ -2,16 +2,17 @@
 <tr>
   <td colspan="5"><%= "#{group} holed out on #{player.shot.hole}" %></td>
 </tr>
-<% group.players.each do |player| -%>
-  <tr>
-    <td><%= player %></td>
-    <td class="numeric"><%= player.ball.shot_count %></td>
-    <td><%= "(#{player.ball.hole_result})" %></td>
-    <td>to</td>
-    <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
-    <td class="spacer" />
-  </tr>
-<% end -%>
+<tr><td><table>
+  <% group.players.each do |player| -%>
+    <tr>
+      <td><%= player %></td>
+      <td class="numeric"><%= player.ball.shot_count %></td>
+      <td><%= "(#{player.ball.hole_result})" %></td>
+      <td>to</td>
+      <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
+    </tr>
+  <% end -%>
+</table></td></tr>
 <% if player.shot.hole.number == @round.final_hole_number -%>
   <tr>
     <td><%= round_result_display(group) %></td>
