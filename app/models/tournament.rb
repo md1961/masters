@@ -1,4 +1,6 @@
 class Tournament < ActiveRecord::Base
+  include Comparable
+
   has_many :rounds
   has_many :invitations
   has_many :players, through: :invitations
@@ -25,5 +27,10 @@ class Tournament < ActiveRecord::Base
 
   def finish
     raise "End of Tournament (not implemented yet)"
+  end
+
+  def <=>(other)
+    return nil if other.nil? || !other.is_a?(Tournament)
+    created_at <=> other.created_at
   end
 end
