@@ -31,13 +31,15 @@ class ResultMessage
           @message = ''
         else
           @rolls_out_of_green = false
+          @appears_off_green = false
           add_pre_messages_off_green
           if @result == 'IN' || @result.to_i > 0 || @rolls_out_of_green
             @result = "-#{@result}" if @result.to_i > 0 && Dice.roll <= 3 # REVIEW
             if @rolls_out_of_green
               @distance = rand(40 .. 50)
             else
-              @distance = [@result.to_i + rand(1 .. 20), MAXIMUM_DISTANCE].min
+              max_run = @appears_off_green ? 10 : 20
+              @distance = [@result.to_i + rand(1 .. max_run), MAXIMUM_DISTANCE].min
               @distance = 1 if @distance.zero?
               if @distance < @result.to_i
                 @distance = -@distance
@@ -79,6 +81,7 @@ class ResultMessage
             elsif @result.to_i <= rand(25 .. 35) || Dice.roll >= 5
               MESSAGE_TO_GREEN
             else
+              @appears_off_green = true
               H_MESSAGES_OFF_GREEN.values.sample
             end
         elsif Dice.roll <= 2
