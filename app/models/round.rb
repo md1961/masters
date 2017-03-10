@@ -1,4 +1,6 @@
 class Round < ActiveRecord::Base
+  include Comparable
+
   belongs_to :tournament
   has_many :areas , -> { order(:seq_num) }
   has_many :groups, -> { order(:number ) }
@@ -91,9 +93,13 @@ class Round < ActiveRecord::Base
     end
   end
 
-  def ==(other)
-    return false if other.nil? || !other.is_a?(Round)
-    self.tournament == other.tournament && self.number == other.number
+  def <=>(other)
+    return nil if other.nil? || !other.is_a?(Round)
+    if tournament != other.tournament
+      tournament <=> other.tournament
+    else
+      number <=> other.number
+    end
   end
 
   def to_s
