@@ -39,6 +39,10 @@ class ResultMessage
             else
               @distance = [@result.to_i + rand(1 .. 20), MAXIMUM_DISTANCE].min
               @distance = 1 if @distance.zero?
+              if @distance < @result.to_i
+                @distance = -@distance
+                @result = (-@result.to_i).to_s
+              end
             end
             @pre_messages << "#{@distance.abs} ..."
             @message = ''
