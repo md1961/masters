@@ -113,11 +113,20 @@ class Player < ActiveRecord::Base
       result
     end
 
+    MAX_DICE_TO_CH_TO_GREEN_ON_14 = 3
+
     def adjust_distance_on_green(result, club)
-      return result if shot.hole.number != 14 || result.to_i.zero?
-      @info += ", '#{result}' is multiplied by 1.5"
-      suffix = result.sub(/\A\d+/, '')
-      (result.to_i * 1.5).floor.to_s + suffix
+      return result if shot.hole.number != 14
+      if result.to_i > 0
+        @info += ", '#{result}' is multiplied by 1.5"
+        suffix = result.sub(/\A\d+/, '')
+        (result.to_i * 1.5).floor.to_s + suffix
+      elsif result.end_with?('Ch') && Dice.roll <= MAX_DICE_TO_CH_TO_GREEN_ON_14
+        @info += ", '#{result}' is changed onto green"
+        rand(50 .. 80).to_s
+      else
+        result
+      end
     end
 
     def make_par_3_tee_shot_superlative(ball)
