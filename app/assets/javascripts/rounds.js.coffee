@@ -67,7 +67,7 @@ $ ->
       when 'I'
         $('span#toggle_players_info_full_display').click()
       when 'L'
-        if isShifted
+        if isShifted || !$('span#toggle_leader_board_display')[0]
           $('span#toggle_leader_board_full_display').click()
         else
           $('span#toggle_leader_board_display').click()
@@ -76,6 +76,18 @@ $ ->
           $('table.score_card').hide()
         else
           $('span.toggle_score_card_display.current').click()
+      when 'J'
+        card = $('table.score_card:visible').first()
+        if card.prev().hasClass('score_card')
+          $('table.score_card').hide()
+          card.prev().show()
+          card.prev().prev().show()
+      when 'K'
+        card = $('table.score_card:visible').first()
+        if card.next().next().hasClass('score_card')
+          $('table.score_card').hide()
+          card.next().next().show()
+          card.next().next().next().show()
 
   setInterval ->
     $('span.blink').fadeOut 400, ->
