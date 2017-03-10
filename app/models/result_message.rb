@@ -72,7 +72,12 @@ class ResultMessage
       case @club_name_used
       when 'drive'
         @result += " in #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
-        @pre_messages << {L: 'Pulling left...', R: 'Pushing right...', C: 'Straight in middle...'}[direction.to_sym]
+        hard = carry == 'L' || (carry == 'M' && Dice.roll >= 4) ? ' Hard' : ''
+        @pre_messages << {
+          L: "Pulling#{hard} left...",
+          R: "Pushing#{hard} right...",
+          C: "Straight#{hard} in middle...",
+        }[direction.to_sym]
       when 'fw', 'li', 'mi', 'si'
         if carry.nil?
           @pre_messages << \
@@ -97,6 +102,10 @@ class ResultMessage
           end
           @pre_messages << H_MESSAGES_OFF_GREEN[(carry + direction).to_sym] || 'Off green ???'
         end
+      when 'p'
+        @pre_messages << 'High in the air...'
+      else
+        @pre_messages << 'In the air...'
       end
     end
 end
