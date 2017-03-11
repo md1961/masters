@@ -71,11 +71,25 @@ module RoundsHelper
     ])
   end
 
+  def hole_result_preposition(player)
+    case player.ball.shot_count <=> player.shot.hole.par
+    when -1
+      'up to'
+    when 1
+      'down to'
+    else
+      'to keep'
+    end
+  end
+
+  def round_strokes_display(player)
+    score_cards = player.tournament_score_cards(round_number_upto: @round.number)
+    score_cards.map(&:total_value).join('-')
+  end
+
   def round_result_display(group)
     group.players.map { |player|
-      score_cards = player.tournament_score_cards(round_number_upto: @round.number)
-      round_strokes = score_cards.map(&:total_value).join('-')
-      "#{player} #{round_strokes} (#{score_formatted(player.tournament_score)})"
+      "#{player} #{round_strokes_display(player)} (#{score_formatted(player.tournament_score)})"
     }.join(', ')
   end
 end

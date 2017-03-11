@@ -30,6 +30,12 @@ body {
     }
   }
 
+  table#hole_result {
+    td {
+      padding-right: 6px;
+    }
+  }
+
   div#button_to_proceed {
     margin-left: 320px;
   }

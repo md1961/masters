@@ -2,13 +2,13 @@
 <tr>
   <td colspan="5"><%= "#{group} holed out on #{player.shot.hole}" %></td>
 </tr>
-<tr><td><table>
+<tr><td><table id="hole_result">
   <% group.players.each do |player| -%>
     <tr>
       <td><%= player %></td>
       <td class="numeric"><%= player.ball.shot_count %></td>
       <td><%= "(#{player.ball.hole_result})" %></td>
-      <td>to</td>
+      <td><%= hole_result_preposition(player) %></td>
       <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
     </tr>
   <% end -%>
