@@ -8,7 +8,7 @@
       <td><%= player %></td>
       <td class="numeric"><%= player.ball.shot_count %></td>
       <td><%= "(#{player.ball.hole_result})" %></td>
-      <td><%= hole_result_preposition(player) %></td>
+      <td class="smaller"><%= hole_result_preposition(player) %></td>
       <td class="numeric"><%= score_formatted(player.tournament_score) %></td>
     </tr>
   <% end -%>

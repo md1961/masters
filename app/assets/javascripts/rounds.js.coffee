@@ -77,17 +77,25 @@ $ ->
         else
           $('span.toggle_score_card_display.current').click()
       when 'J'
+        button = $('div#score_cards span.toggle_score_card_display.current')
+        if button.prev().hasClass('toggle_score_card_display')
+          button.removeClass('current').prev().addClass('current')
         card = $('table.score_card:visible').first()
-        if card.prev().hasClass('score_card')
+        prev_card = card.prev().prev()
+        if prev_card.hasClass('score_card')
           $('table.score_card').hide()
-          card.prev().show()
-          card.prev().prev().show()
+          prev_card.show()
+          prev_card.next().show()
       when 'K'
+        button = $('div#score_cards span.toggle_score_card_display.current')
+        if button.next().hasClass('toggle_score_card_display')
+          button.removeClass('current').next().addClass('current')
         card = $('table.score_card:visible').first()
-        if card.next().next().hasClass('score_card')
+        next_card = card.next().next()
+        if next_card.hasClass('score_card')
           $('table.score_card').hide()
-          card.next().next().show()
-          card.next().next().next().show()
+          next_card.show()
+          next_card.next().show()
 
   setInterval ->
     $('span.blink').fadeOut 400, ->
