@@ -181,11 +181,11 @@ updatePlayersInfoByReplacingGroup(
 $('div#hole_map').children('table').remove();
 $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
 
+$('table#leaders').replaceWith($("<%= j render 'leaders' %>"));
+
 <% current_group = @round.current_group -%>
 console.log('current_group = ' + "<%= current_group %>");
 <% if current_group.all_holed_out? -%>
-  $('table#leaders').replaceWith($("<%= j render 'leaders' %>"));
-
   <% current_group.players.each do |player| -%>
     <% hole = player.shot.hole
        stroke = player.ball.shot_count -%>
