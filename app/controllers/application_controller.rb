@@ -9,10 +9,10 @@ class ApplicationController < ActionController::Base
     session[:style] = params[:style] if params[:style]
     @style = session[:style]
 
-    unless params[:no_info].nil?
-      session[:no_info] = params[:no_info] == 'true'
+    unless params[:shows_info].nil?
+      session[:shows_info] = params[:shows_info] == 'true'
     end
-    @no_info = session[:no_info]
+    @shows_info = session[:shows_info]
 
     unless params[:no_animation].nil?
       session[:no_animation] = params[:no_animation] == 'true'

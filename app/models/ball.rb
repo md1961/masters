@@ -141,7 +141,7 @@ class Ball < ActiveRecord::Base
   end
 
   def result_w_info
-    if !@no_info
+    if @shows_info
       result
     elsif result.to_i > 0
       result.to_i.to_s
@@ -165,7 +165,7 @@ class Ball < ActiveRecord::Base
         "SAVE on #{shot_count.ordinalize} shot"
     else
       preposition = ['Trees', 'Sand', 'Water', 'Fairway Trap'].include?(lands) ? 'into' : 'onto'
-      superlative = result&.end_with?('*') && !@no_info? ' (superlative)' : ''
+      superlative = result&.end_with?('*') && @shows_info ? ' (superlative)' : ''
       "#{player} hit #{(shot_count - (lands == 'Water' ? 1 : 0)).ordinalize} shot" \
         " #{preposition} #{lands} by '#{result_w_info}'#{superlative}" \
         "#{lands == 'Water' ? ' , takes 1 penalty' : ''}"
