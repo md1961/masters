@@ -96,6 +96,8 @@ $ ->
           $('table.score_card').hide()
           next_card.show()
           next_card.next().show()
+      when 'D'
+        $('tr#info').toggle()
 
   setInterval ->
     $('span.blink').fadeOut 400, ->
