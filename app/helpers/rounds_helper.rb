@@ -14,7 +14,7 @@ module RoundsHelper
 
   def groups_for_players_info
     groups = @round.groups
-    number_to_display = @round.group_to_display.number
+    number_to_display = @round.group_to_display&.number.to_i
     n_scroll_out = number_to_display \
                     - (num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info)
     if n_scroll_out <= 0
