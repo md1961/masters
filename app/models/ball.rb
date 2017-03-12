@@ -146,7 +146,7 @@ class Ball < ActiveRecord::Base
     elsif result.to_i > 0
       result.to_i.to_s
     else
-      result.sub(/\*\z/, '')
+      result&.sub(/\*\z/, '')
     end
   end
 
