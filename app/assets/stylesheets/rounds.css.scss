@@ -18,6 +18,10 @@ body {
     font-style: italic;
   }
 
+  table caption {
+    text-align: left;
+  }
+
   span.quiet_notice {
     font-size: xx-small;
   }
@@ -95,10 +99,6 @@ body {
       font-size: x-small;
       margin-top: 10px;
 
-      caption {
-        text-align: left;
-      }
-
       td {
         width: 16px;
       }
@@ -146,10 +146,6 @@ body {
 
     table {
       float: left;
-
-      caption {
-        text-align: left;
-      }
 
       td {
         text-align: center;

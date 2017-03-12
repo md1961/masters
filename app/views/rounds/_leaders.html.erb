@@ -1,4 +1,5 @@
 <table id="leaders" class="<%= @style.present? && 'table_base' %>" <%= @style.blank? && 'hidden' %>>
+  <caption><%= @round %></caption>
   <% @round.tournament.players_to_play.sort_by(&:leader_sorter).each_with_index do |player, index| -%>
     <tr class="<%= index >= num_players_in_leader_board && 'not_to_display' %>">
       <td><%= player %></td>
