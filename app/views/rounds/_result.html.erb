@@ -59,7 +59,7 @@
         <%= ball.holed_out? || next_shot_display.blank? ? nil : "( next will be: #{next_shot_display} )" %>
       </td>
     </tr>
-    <tr class="delayed_display italic" <%= @result_message&.not_nil? && 'hidden' %>>
+    <tr id="info" class="<%= !@no_info && 'delayed_display' %>" <%= (@result_message&.not_nil? || @no_info) && 'hidden' %>>
       <td class="smallest italic"><%= info %></td>
     </tr>
   <% else -%>

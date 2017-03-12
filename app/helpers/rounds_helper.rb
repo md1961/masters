@@ -40,7 +40,7 @@ module RoundsHelper
   def area_display(player)
     area = player.shot.area
     modifier = \
-      if player.ball.superlative?
+      if player.ball.superlative? && !@no_info
         'with excellent lie'
       elsif area.green? && player.ball.result.to_i == 0
         'vicinity'
