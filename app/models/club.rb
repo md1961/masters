@@ -14,7 +14,6 @@ class Club < ActiveRecord::Base
   # TODO: Alter direction of Ch and P randomly.
 
   def swing(dice_adjust = 0, max_distance: nil)
-    raise "Should not reach here: return 'IN'" if player.ball.ok?
     @info_add = ''
     raw_dice = Dice.two_rolls
     @index_dice_minus = 0
@@ -33,8 +32,10 @@ class Club < ActiveRecord::Base
       @info_add << ", went off green with max_distance of '#{max_distance}'"
     elsif putt?
       ball_on = player.ball.result.to_i
-      if player.ball.third_putt?
-        result = dice == 11 ? 'OK' : 'IN'
+      if player.ball.ok?
+        result = 'IN'
+      elsif player.ball.third_putt?
+        result = dice == 11 ? '1OK' : 'IN'
       elsif raw_result == 'IN' || raw_result.to_i >= ball_on
         result = 'IN'
       elsif player.ball.second_putt?
@@ -42,8 +43,9 @@ class Club < ActiveRecord::Base
       elsif raw_result =~ /[A-D]\z/
         suffix = Regexp.last_match(0)
         result = SecondPuttResult.get(ball_on, suffix)
+        result = '1OK' if result == 'OK'
       else
-        result = 'OK'
+        result = rand(1 .. 2).to_s + 'OK'
       end
     elsif raw_result == '(1)' && raw_dice != 66
       result = '1'
