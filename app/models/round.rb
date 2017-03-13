@@ -20,6 +20,13 @@ class Round < ActiveRecord::Base
     first_hole_number == 1 ? 18 : first_hole_number - 1
   end
 
+  def next_hole_number(hole_number)
+    hole_number += 1
+    hole_number = 1 if hole_number > 18
+    return nil if hole_number == first_hole_number
+    hole_number
+  end
+
   after_create :create_areas_for_round_one, if: :first_round?
   after_create :setup_groups_and_score_cards
 

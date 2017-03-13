@@ -86,12 +86,11 @@ class Group < ActiveRecord::Base
     if all_holed_out?
       update_play_order
       hole_number = players.first.shot.hole.number
-      hole_number += 1
-      hole_number = 1 if hole_number == 19
-      if hole_number == round.first_hole_number
+      next_hole_number = round.next_hole_number(hole_number)
+      if next_hole_number.nil?
         finish_round
       else
-        tee_up_on(hole_number)
+        tee_up_on(next_hole_number)
       end
       nil
     else
