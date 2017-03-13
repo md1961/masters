@@ -116,12 +116,14 @@ class Ball < ActiveRecord::Base
       -1
     elsif other.result.nil?
       1
+    elsif self.next_use_distance_factor != other.next_use_distance_factor
+      other.next_use_distance_factor <=> self.next_use_distance_factor
     elsif (m1 = self .result.match(RE_RESULT_LAYUP_NUMBERED)) \
        && (m2 = other.result.match(RE_RESULT_LAYUP_NUMBERED))
       m2[1].to_i <=> m1[1].to_i
     else
-      df_self  = distance_factor(self .result)
-      df_other = distance_factor(other.result)
+      df_self  = result_distance_factor(self .result)
+      df_other = result_distance_factor(other.result)
       if df_self != df_other
         df_self <=> df_other
       # TODO: Order randomly if equal, but needs to remember the ordering.
@@ -186,6 +188,21 @@ class Ball < ActiveRecord::Base
     end
   end
 
+  H_NEXT_USE_DISTANCE_FACTOR = {
+    "Drive" => 100,
+    "FW"    =>  90,
+    "LI"    =>  80,
+    "MI"    =>  70,
+    "SI"    =>  60,
+    "P"     =>  50,
+    "Sd"    =>  40,
+    "Ch"    =>  40,
+  }
+
+  def next_use_distance_factor
+    H_NEXT_USE_DISTANCE_FACTOR[next_use]
+  end
+
   def self.look_up_optional_result(hash, num)
     hash.find { |k, _v| num.between?(*(k.split('-').map(&:to_i))) }[1]
   end
@@ -239,7 +256,7 @@ class Ball < ActiveRecord::Base
       save!
     end
 
-    def distance_factor(result)
+    def result_distance_factor(result)
       if finished_round?
         H_DISTANCE_FACTOR['IN'] + 100
       elsif result.to_i > 0
