@@ -85,12 +85,16 @@ class Round < ActiveRecord::Base
         group.tee_up_on(first_hole_number)
       end
     end
-    if groups.all?(&:round_finished?)
+    if to_be_finished?
       finished!
       update!(play_result: "#{self} finished")
     elsif will_toggle_status
       ready_to_play? ? displays_result! : ready_to_play!
     end
+  end
+
+  def to_be_finished?
+    groups.all?(&:round_finished?)
   end
 
   def <=>(other)
