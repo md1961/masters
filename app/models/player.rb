@@ -73,6 +73,7 @@ class Player < ActiveRecord::Base
       _shot = Shot.first_tee(hole_number)
       create_ball!(shot: _shot)
     end
+    @info = '(none)'
     club_result = swing_club
     self.shot = shot.next(ball)
     ball.accept(club_result)
@@ -100,6 +101,7 @@ class Player < ActiveRecord::Base
     def swing_club
       club = clubs.find_by(name: ball.next_use.downcase)
       ball.club_used = club
+      return 'IN' if ball.ok?
       result = club.swing(ball.next_adjust, max_distance: shot.hole.max_distance_of_green)
       make_par_3_tee_shot_superlative(ball)
       @info = club.info
