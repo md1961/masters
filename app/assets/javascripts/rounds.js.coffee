@@ -56,7 +56,7 @@ $ ->
     $("table.score_card.group#{num}").show()
 
   $(window).on 'keydown', (e) ->
-    return if e.ctrlKey
+    return if e.ctrlKey || e.metaKey
     key = String.fromCharCode(e.which)
     isShifted = e.shiftKey
     switch key
