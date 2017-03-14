@@ -15,8 +15,8 @@ class Tournament < ActiveRecord::Base
 
   def leaders
     players = players_to_play
-    min_stroke = players.map(&:tournament_stroke).min
-    players.find_all { |player| player.tournament_stroke == min_stroke }
+    min_score = players.map(&:tournament_score).min
+    players.find_all { |player| player.tournament_score == min_score }
   end
 
   def new_round!
