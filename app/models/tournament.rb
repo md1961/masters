@@ -26,11 +26,16 @@ class Tournament < ActiveRecord::Base
     rounds.create!(number: new_round_number, is_current: true)
   end
 
+  # FIXME: Implement Tournament#playoff()
+  def playoff
+  end
+
   def cut_off!(player)
     invitation = invitations.find_by(player: player)
     invitation.update!(cut_after_round_number_of: current_round.number)
   end
 
+  # FIXME: Implement Tournament#finish().
   def finish
     raise "End of Tournament (not implemented yet)"
   end
