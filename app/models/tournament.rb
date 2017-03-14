@@ -13,6 +13,12 @@ class Tournament < ActiveRecord::Base
     players.joins(:invitations).where(invitations: {cut_after_round_number_of: [nil]})
   end
 
+  def leaders
+    players = players_to_play
+    min_stroke = players.map(&:tournament_stroke).min
+    players.find_all { |player| player.tournament_stroke == min_stroke }
+  end
+
   def new_round!
     current_round_number = current_round&.number
     current_round&.update!(is_current: false)
