@@ -73,7 +73,7 @@ class ResultMessage
       case @club_name_used
       when 'drive'
         @result += " in #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
-        hard = carry == 'L' || (carry == 'M' && Dice.roll >= 4) ? ' Hard' : ''
+        hard = carry == 'L' || (carry == 'M' && Dice.roll >= 4) ? ' Strongly' : ''
         @pre_messages << {
           L: "Pulling#{hard} left...",
           R: "Pushing#{hard} right...",
