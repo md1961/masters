@@ -27,7 +27,7 @@ class ResultMessage
           is_putting = true
           @distance = location.to_i
           @result = rand(1 .. 2).to_s if @result == 'OK'
-          @pre_messages = ["#{location} to putt..."]
+          @pre_messages = ["#{location} to putt...@1000"]
           @message = ''
         else
           @rolls_out_of_green = false
@@ -47,7 +47,7 @@ class ResultMessage
                 @result = (-@result.to_i).to_s
               end
             end
-            @pre_messages << "#{@distance.abs} ..."
+            @pre_messages << "#{@distance.abs} ...@1000"
             @message = ''
           else
             @message = @result
@@ -77,8 +77,8 @@ class ResultMessage
         @pre_messages << {
           L: "Pulling#{hard} left...",
           R: "Pushing#{hard} right...",
-          C: "Straight#{hard} in middle...",
-        }[direction.to_sym]
+          C: "Straight#{hard} in Center...",
+        }[direction.to_sym] + '@2000'
       when 'fw', 'li', 'mi', 'si'
         if carry.nil?
           @pre_messages << \
@@ -106,7 +106,7 @@ class ResultMessage
       when 'p'
         @pre_messages << 'High in the air...'
       else
-        @pre_messages << 'In the air...'
+        @pre_messages << 'In the air...@1000'
       end
     end
 end

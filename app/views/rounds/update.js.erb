@@ -97,10 +97,13 @@ if (<%= @round.needs_input? %>) {
         }
         return;
       }
-      display.text(preMessages.shift());
+      var preMessageAndTimeout = preMessages.shift().split('@');
+      var preMessage = preMessageAndTimeout[0];
+      var timeOut = parseInt(preMessageAndTimeout[1]) || $('tr#message').data('time_to_delay');
+      display.text(preMessage);
       setTimeout(function() {
         displayPreMessages(preMessages);
-      }, $('tr#message').data('time_to_delay'));
+      }, timeOut);
     };
     displayPreMessages(preMessages);
   }
