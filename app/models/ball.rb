@@ -200,7 +200,7 @@ class Ball < ActiveRecord::Base
   }
 
   def next_use_distance_factor
-    H_NEXT_USE_DISTANCE_FACTOR[next_use]
+    H_NEXT_USE_DISTANCE_FACTOR[next_use].to_i + (is_layup ? 1000 : 0)
   end
 
   def self.look_up_optional_result(hash, num)
