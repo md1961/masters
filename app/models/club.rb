@@ -45,7 +45,8 @@ class Club < ActiveRecord::Base
         result = SecondPuttResult.get(ball_on, suffix)
         result = '1OK' if result == 'OK'
       else
-        result = rand(1 .. 2).to_s + 'OK'
+        prefix = Dice.roll >= 4 ? '' : rand(1 .. 2).to_s
+        result = prefix + 'OK'
       end
     elsif raw_result == '(1)' && raw_dice != 66
       result = '1'

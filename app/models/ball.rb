@@ -156,7 +156,7 @@ class Ball < ActiveRecord::Base
   def result_display
     if shot_count == 0
       ''
-    elsif ok? && @shows_info
+    elsif (ok? && @shows_info) || result == 'OK'
       "#{player} putt to OK to hole out on #{shot_count}. #{hole_result}"
     elsif holed_out?
       verb = club_used.putt? ? 'sunk' : 'shot DIRECTLY'
