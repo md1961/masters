@@ -10,6 +10,7 @@ class Ball < ActiveRecord::Base
   after_create :set_next_use_if_nil
 
   # FIXME: Add COLUMN club_id(club_used_id), shot_judge_id.
+  # TODO: Add COLUMN arbitrary_distance_factor.
 
   # TODO: Use enum instead of KEYWORD_FOR_FINISH_ROUND and finish_round!().
   KEYWORD_FOR_FINISH_ROUND = 'FINISHED'.freeze

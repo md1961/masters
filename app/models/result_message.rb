@@ -41,7 +41,7 @@ class ResultMessage
             else
               max_run = @appears_off_green ? 10 : 20
               @distance = [@result.to_i + rand(1 .. max_run), MAXIMUM_DISTANCE].min
-              @distance = 1 if @distance.zero?
+              @distance += 2 if @distance >= 0
               if @distance < @result.to_i
                 @distance = -@distance
                 @result = (-@result.to_i).to_s
@@ -73,7 +73,7 @@ class ResultMessage
       case @club_name_used
       when 'drive'
         @result += " in #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
-        hard = carry == 'L' || (carry == 'M' && Dice.roll >= 4) ? ' Strongly' : ''
+        hard = carry == 'L' || (carry == 'M' && Dice.roll >= 5) ? ' Strongly' : ''
         @pre_messages << {
           L: "Pulling#{hard} left...",
           R: "Pushing#{hard} right...",
