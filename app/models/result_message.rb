@@ -26,7 +26,7 @@ class ResultMessage
         if location.to_i > 0
           is_putting = true
           @distance = location.to_i
-          @result = rand(1 .. 2).to_s if @result == 'OK'
+          @result = '1' if @result == 'OK'
           @pre_messages = ["#{location} to putt...@1000"]
           @message = ''
         else
