@@ -1,7 +1,7 @@
 class Tournament < ActiveRecord::Base
   include Comparable
 
-  has_many :rounds
+  has_many :rounds, -> { order(:number) }
   has_many :invitations
   has_many :players, through: :invitations
 
@@ -26,8 +26,9 @@ class Tournament < ActiveRecord::Base
     rounds.create!(number: new_round_number, is_current: true)
   end
 
-  # FIXME: Implement Tournament#playoff()
   def playoff
+    current_round.update!(is_current: false)
+    Playoff.create!(tournament: self, is_current: true)
   end
 
   def cut_off!(player)
