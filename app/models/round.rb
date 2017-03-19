@@ -38,6 +38,10 @@ class Round < ActiveRecord::Base
     1  # for {'1-3' => 'MI', '4-6' => 'SI'}
   end
 
+  def playoff?
+    false
+  end
+
   def first_round?
     number == 1
   end
