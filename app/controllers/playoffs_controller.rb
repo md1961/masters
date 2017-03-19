@@ -1,0 +1,2 @@
+class PlayoffsController < RoundsController
+end
