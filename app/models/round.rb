@@ -51,6 +51,7 @@ class Round < ActiveRecord::Base
   end
 
   def current_group
+    return groups.first if groups.size == 1
     groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
   end
 
