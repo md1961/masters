@@ -84,6 +84,13 @@ class Group < ActiveRecord::Base
     @play_finished = !all_on_or_near_green?
     @message = nil
     if all_holed_out?
+      if round.playoff?
+        min_stroke = players.map(&:ball).map(&:shot_count).min
+        players.each do |player|
+          player.grouping.destroy if player.ball.shot_count > min_stroke
+        end
+        reload
+      end
       update_play_order
       hole_number = players.first.shot.hole.number
       next_hole_number = round.next_hole_number(hole_number)

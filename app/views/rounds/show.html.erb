@@ -25,15 +25,17 @@
 
 <% label_for_toggle_button = @style == 'pretty' ? '[-]' : '[+]' -%>
 
-<div id="leader_board">
-  <% if @style.blank? -%>
-    <span id="toggle_leader_board_display" class="button"><%= label_for_toggle_button %></span>
-  <% end -%>
-  <%= render 'leaders' %>
-  <span id="toggle_leader_board_full_display" class="button">[ ... ]</span>
-</div>
+<% unless @round.playoff? -%>
+  <div id="leader_board">
+    <% if @style.blank? -%>
+      <span id="toggle_leader_board_display" class="button"><%= label_for_toggle_button %></span>
+    <% end -%>
+    <%= render 'leaders' %>
+    <span id="toggle_leader_board_full_display" class="button">[ ... ]</span>
+  </div>
+<% end -%>
 
-<% unless @round.groups.empty? -%>
+<% unless @round.groups.empty? || @round.playoff? -%>
   <div id="score_cards">
     <% if @style.blank? -%>
       <span class="hide_score_card_display button">[-]</span>

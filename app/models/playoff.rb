@@ -1,6 +1,14 @@
 class Playoff < Round
   before_create :set_number_to_current_plus_one
 
+  def playoff?
+    true
+  end
+
+  def final_round?
+    true
+  end
+
   HOLE_NUMBERS = [18, 10]
 
   def first_hole_number
@@ -17,12 +25,16 @@ class Playoff < Round
   end
 
   def to_be_finished?
-    raise 'Number of groups must be one' unless groups.size == 1
+    raise "Number of groups must be one (#{groups.size} given)" unless groups.size == 1
     group = groups.first
     return false unless group.all_holed_out?
     strokes = group.players.map(&:ball).map(&:shot_count)
     min_stroke = strokes.min
     strokes.find_all { |stroke| stroke == min_stroke }.size == 1
+  end
+
+  def to_s
+    'Playoff'
   end
 
   private

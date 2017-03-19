@@ -17,7 +17,7 @@ class TournamentsController < ApplicationController
       redirect_to cut_off_path(tournament_id: @tournament)
     elsif !round.finished?
       redirect_to round
-    elsif @tournament.leaders.size >= 2
+    elsif !round.playoff? && @tournament.leaders.size >= 2
       redirect_to @tournament.playoff
     else
       @tournament.finish

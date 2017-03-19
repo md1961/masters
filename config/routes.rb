@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   #   resources :products
   resources :tournaments, only: [:index, :show, :new, :create]
   resources :rounds     , only: [:index, :show, :update]
+  resources :playoffs   , only: [:show, :update]
 
   resource :cut_off, only: %i[show update] do
     member do
