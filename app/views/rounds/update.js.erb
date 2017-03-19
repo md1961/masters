@@ -129,52 +129,54 @@ var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
   trGroup.replaceWith(htmlGroup);
 };
 
-var currentGroupNumberInDisplay = $('div#players_info table td.current').data('group_number');
-console.log('currentGroupNumberInDisplay = ' + currentGroupNumberInDisplay);
-if (<%= group.number %> !== currentGroupNumberInDisplay) {
-  <% prev_group = group.prev_just_played -%>
-  updatePlayersInfoByReplacingGroup(
-    <%= prev_group.number %>,
-    $("<%= j render partial: 'players_info_by_group', locals: {group: prev_group, not_to_display: false} %>")
-  );
-  $('<%= "div#players_info table tr.group_info#{prev_group.number} td:first" %>').removeClass('finished_play');
+<% unless @round.playoff? -%>
+  var currentGroupNumberInDisplay = $('div#players_info table td.current').data('group_number');
+  console.log('currentGroupNumberInDisplay = ' + currentGroupNumberInDisplay);
+  if (<%= group.number %> !== currentGroupNumberInDisplay) {
+    <% prev_group = group.prev_just_played -%>
+    updatePlayersInfoByReplacingGroup(
+      <%= prev_group.number %>,
+      $("<%= j render partial: 'players_info_by_group', locals: {group: prev_group, not_to_display: false} %>")
+    );
+    $('<%= "div#players_info table tr.group_info#{prev_group.number} td:first" %>').removeClass('finished_play');
 
-  <% if group == @round.first_group_playing -%>
-    var trCount = 0;
-    while (true) {
-      var tdGroupNumber = tablePlayersInfo.find('td').first();
-      <% group_number_at_top = [
-            1,
-            group.number - (num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info - 1)
-          ].max -%>
-      if (tdGroupNumber.data('group_number') === <%= group_number_at_top %>) {
-        break;
+    <% if group == @round.first_group_playing -%>
+      var trCount = 0;
+      while (true) {
+        var tdGroupNumber = tablePlayersInfo.find('td').first();
+        <% group_number_at_top = [
+              1,
+              group.number - (num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info - 1)
+            ].max -%>
+        if (tdGroupNumber.data('group_number') === <%= group_number_at_top %>) {
+          break;
+        }
+        for (var i = 0; i < 2; i++) {
+          tablePlayersInfo.find('tr').first().addClass('not_to_display').remove().appendTo(tablePlayersInfo);
+          trCount++;
+        }
       }
+      var count = Math.min(trCount, <%= num_groups_in_players_info * 2 %>);
+      for (var i = 0; i < count; i++) {
+        tablePlayersInfo.find('tr.not_to_display').first().removeClass('not_to_display');
+      }
+    <% elsif group.number > num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info -%>
       for (var i = 0; i < 2; i++) {
         tablePlayersInfo.find('tr').first().addClass('not_to_display').remove().appendTo(tablePlayersInfo);
-        trCount++;
       }
-    }
-    var count = Math.min(trCount, <%= num_groups_in_players_info * 2 %>);
-    for (var i = 0; i < count; i++) {
-      tablePlayersInfo.find('tr.not_to_display').first().removeClass('not_to_display');
-    }
-  <% elsif group.number > num_groups_in_players_info - offset_from_bottom_of_to_display_in_players_info -%>
-    for (var i = 0; i < 2; i++) {
-      tablePlayersInfo.find('tr').first().addClass('not_to_display').remove().appendTo(tablePlayersInfo);
-    }
-    for (var i = 0; i < 2; i++) {
-      tablePlayersInfo.find('tr.not_to_display').first().removeClass('not_to_display');
-    }
-  <% end -%>
+      for (var i = 0; i < 2; i++) {
+        tablePlayersInfo.find('tr.not_to_display').first().removeClass('not_to_display');
+      }
+    <% end -%>
 
-  $("div#score_cards span.toggle_score_card_display.current"                 ).removeClass('current');
-  $("div#score_cards span.toggle_score_card_display.group<%= group.number %>").addClass('current');
-  $("div#score_cards table.score_card").hide();
-  <% if @style.present? -%>
-    $("div#score_cards table.score_card.group<%= group.number %>").show();
-  <% end -%>
-}
+    $("div#score_cards span.toggle_score_card_display.current"                 ).removeClass('current');
+    $("div#score_cards span.toggle_score_card_display.group<%= group.number %>").addClass('current');
+    $("div#score_cards table.score_card").hide();
+    <% if @style.present? -%>
+      $("div#score_cards table.score_card.group<%= group.number %>").show();
+    <% end -%>
+  }
+<% end -%>
 
 updatePlayersInfoByReplacingGroup(
   <%= group.number %>,
