@@ -120,7 +120,7 @@ var tablePlayersInfo = $('div#players_info table:first');
 var updatePlayersInfoByReplacingGroup = function(groupNumber, htmlGroup) {
   var trGroup = $('div#players_info table tr.group_info' + groupNumber);
   var wasHidden = trGroup.hasClass('not_to_display');
-  trGroup.first().remove();
+  trGroup.first().nextAll().remove();
   if (wasHidden) {
     htmlGroup.addClass('not_to_display');
   } else {
