@@ -35,7 +35,7 @@
   </div>
 <% end -%>
 
-<% unless @round.groups.empty? -%>
+<% unless @round.groups.empty? || @round.playoff? -%>
   <div id="score_cards">
     <% if @style.blank? -%>
       <span class="hide_score_card_display button">[-]</span>

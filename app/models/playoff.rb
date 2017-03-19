@@ -33,6 +33,10 @@ class Playoff < Round
     strokes.find_all { |stroke| stroke == min_stroke }.size == 1
   end
 
+  def to_s
+    'Playoff'
+  end
+
   private
 
     def set_number_to_current_plus_one
