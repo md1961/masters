@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170216052710) do
+ActiveRecord::Schema.define(version: 20170319051527) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "round_id"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20170216052710) do
     t.integer "status",               default: 0,     null: false
     t.string  "play_result"
     t.string  "club_name_for_12_tee"
+    t.string  "type"
   end
 
   add_index "rounds", ["tournament_id", "number"], name: "index_rounds_on_tournament_id_and_number", unique: true
