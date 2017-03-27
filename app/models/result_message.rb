@@ -45,6 +45,8 @@ class ResultMessage
               if @distance < @result.to_i
                 @distance = -@distance
                 @result = (-@result.to_i).to_s
+              elsif @result.to_i <= -40 && @distance > 0
+                @distance = -@distance
               end
             end
             @pre_messages << "#{@distance.abs} ...@1000"

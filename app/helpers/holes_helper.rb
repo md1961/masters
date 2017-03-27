@@ -47,7 +47,7 @@ module HolesHelper
   end
 
   def hole_map_element(shot_judge, players)
-    players = players.empty? ? '&nbsp'.html_safe : players.join(',')
+    players = players.empty? ? '&nbsp'.html_safe : players.join(', ')
     safe_join([shot_judge, players], '<br>'.html_safe)
   end
 end
