@@ -39,8 +39,7 @@ class ResultMessage
             if @rolls_out_of_green
               @distance = rand(40 .. 50)
             else
-              max_run = @appears_off_green ? 10 : 20
-              @distance = [@result.to_i + rand(1 .. max_run), MAXIMUM_DISTANCE].min
+              @distance = [@result.to_i + running_distance, MAXIMUM_DISTANCE].min
               @distance += 2 if @distance >= 0
               if @distance < @result.to_i
                 @distance = -@distance
@@ -63,6 +62,19 @@ class ResultMessage
         @message = @result
         @message = 'miss' unless @message == 'IN'
       end
+    end
+
+    MAX_RUN_BY_CLUB = {
+      fw: 30, li: 28, mi: 26, si: 24, ch: 20, p: 15, sd: 20
+    }
+    MIN_RUN_BY_CLUB = {
+      fw: 15, li: 12, mi: 10, si:  8, ch:  5, p:  1, sd:  5
+    }
+
+    def running_distance
+      max_run = MAX_RUN_BY_CLUB[@club_name_used.to_sym] - (@appears_off_green ? 10 : 0)
+      min_run = MIN_RUN_BY_CLUB[@club_name_used.to_sym]
+      rand(min_run .. max_run)
     end
 
     H_MESSAGES_OFF_GREEN = {SC: 'Looking short...', LC: 'Looking long...',
