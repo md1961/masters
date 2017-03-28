@@ -1,0 +1,27 @@
+<table class="table_base">
+  <thead>
+    <tr>
+      <th />
+      <% @score_indexes.each do |score_index| -%>
+        <th><%= format('%+d', score_index).sub('+0', 'p') %></th>
+      <% end -%>
+      <th>Plays</th>
+      <th>Avg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @hole_stats.each do |hole_stat| -%>
+      <tr>
+        <th><%= hole_stat.hole_number %></th>
+        <% @score_indexes.each do |score_index| -%>
+          <td class="numeric" style="width: 14px;">
+            <% count = hole_stat.count(score_index) -%>
+            <%= count.zero? ? nil : count %>
+          </td>
+        <% end -%>
+        <td class="numeric"><%= hole_stat.total_count %></td>
+        <td class="numeric"><%= format('%+4.2f', hole_stat.average) %></td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
