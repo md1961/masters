@@ -12,7 +12,6 @@ class Round < ActiveRecord::Base
 
   # TODO: Add attribute current_player, or else
 
-  # TODO: Add attribute first_hole_number, or else
   def first_hole_number
     1
   end
@@ -29,14 +28,6 @@ class Round < ActiveRecord::Base
 
   after_create :create_areas_for_round_one, if: :first_round?
   after_create :setup_groups_and_score_cards
-
-  def self.num_players_per_group
-    2
-  end
-
-  def dice_roll_for_club_on_12_tee
-    1  # for {'1-3' => 'MI', '4-6' => 'SI'}
-  end
 
   def playoff?
     false
@@ -124,6 +115,14 @@ class Round < ActiveRecord::Base
 
   private
 
+    def num_players_per_group
+      2
+    end
+
+    def create_areas_for_round_one
+      Area.create_all_for(self)
+    end
+
     def setup_groups_and_score_cards
       Area.all.each { |area| area.update!(round: self) } if number >= 2
 
@@ -135,7 +134,6 @@ class Round < ActiveRecord::Base
       if number == 1
         players_sorted = tournament.players_to_play.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
       else
-        # TODO: Add sort item in case tournament_stroke is equal (Not tested yet).
         round_prev = Round.find_by(number: number - 1)
         players_sorted = tournament.players_to_play.sort_by { |player|
           strokes_last_first = player.score_cards.find_by(round: round_prev).scores.pluck(:value).reverse
@@ -145,7 +143,7 @@ class Round < ActiveRecord::Base
       # TODO: Can destroy old Grouping's ?
       Grouping.destroy_all
       group_number = 1
-      players_sorted.each_slice(Round.num_players_per_group) do |players|
+      players_sorted.each_slice(num_players_per_group) do |players|
         group = groups.create!(number: group_number, players: players)
         group.groupings.find_by(player: players[0]).update!(play_order: 2)
         group.groupings.find_by(player: players[1]).update!(play_order: 1)
@@ -161,9 +159,5 @@ class Round < ActiveRecord::Base
       groups.flat_map(&:players).each do |player|
         player.score_cards.create!(round: self)
       end
-    end
-
-    def create_areas_for_round_one
-      Area.create_all_for(self)
     end
 end

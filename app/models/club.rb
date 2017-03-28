@@ -11,8 +11,6 @@ class Club < ActiveRecord::Base
   MAX_DICE_TO_RANDOMIZE_DIRECTION  = 1
   MAX_DICE_TO_INTERPOLATE_DISTANCE = 2
 
-  # TODO: Alter direction of Ch and P randomly.
-
   def swing(dice_adjust = 0, max_distance: nil)
     @info_add = ''
     raw_dice = Dice.two_rolls
