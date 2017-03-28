@@ -1,8 +1,9 @@
 <% holes = Hole.order(:number)
    scores = holes.map { |hole| score_card.scores.find_by(hole: hole) }
    player = score_card.player
-   hides_at_first = @style.blank? || player.group != round.group_to_display -%>
    round  = score_card.round
+   shows = defined?(shows) && shows
+   hides_at_first = !shows && (@style.blank? || player.group != round.group_to_display) -%>
 
 <table id="score_player<%= player.id %>"
        class="score_card
