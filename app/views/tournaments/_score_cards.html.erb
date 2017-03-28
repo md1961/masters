@@ -1,0 +1,7 @@
+<table>
+  <% @tournament.rounds.each do |round| -%>
+    <tr><td>
+      <%= render partial: 'score_cards/score_card', locals: {score_card: player.score_cards.find_by(round: round), shows: true} %>
+    </td></tr>
+  <% end -%>
+</table>

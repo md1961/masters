@@ -36,11 +36,6 @@ class Tournament < ActiveRecord::Base
     invitation.update!(cut_after_round_number_of: current_round.number)
   end
 
-  # FIXME: Implement Tournament#finish().
-  def finish
-    raise "End of Tournament (not implemented yet)"
-  end
-
   def <=>(other)
     return nil if other.nil? || !other.is_a?(Tournament)
     created_at <=> other.created_at

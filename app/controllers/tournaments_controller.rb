@@ -20,8 +20,7 @@ class TournamentsController < ApplicationController
     elsif !round.playoff? && @tournament.leaders.size >= 2
       redirect_to @tournament.playoff
     else
-      @tournament.finish
-      render text: "#{@tournament} finished"
+      @players = @tournament.players_to_play.sort_by(&:leader_sorter)
     end
   end
 

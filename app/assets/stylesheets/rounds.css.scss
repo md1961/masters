@@ -94,44 +94,44 @@ body {
       color: white;
       background-color: black;
     }
+  }
 
-    table {
-      font-size: x-small;
-      margin-top: 10px;
+  table.score_card {
+    font-size: x-small;
+    margin-top: 10px;
 
-      td {
-        width: 16px;
-      }
+    td {
+      width: 16px;
+    }
 
-      td.birdie {
-        color: red;
-      }
+    td.birdie {
+      color: red;
+    }
 
-      td.eagle {
-        color: red;
-        font-weight: bold;
-      }
+    td.eagle {
+      color: red;
+      font-weight: bold;
+    }
 
-      td.dougle_eagle {
-        color: white;
-        background-color: red;
-        font-weight: bold;
-      }
+    td.dougle_eagle {
+      color: white;
+      background-color: red;
+      font-weight: bold;
+    }
 
-      td.bogey {
-        color: blue;
-      }
+    td.bogey {
+      color: blue;
+    }
 
-      td.double_bogey {
-        color: blue;
-        font-weight: bold;
-      }
+    td.double_bogey {
+      color: blue;
+      font-weight: bold;
+    }
 
-      td.triple_bogey {
-        color: white;
-        background-color: blue;
-        font-weight: bold;
-      }
+    td.triple_bogey {
+      color: white;
+      background-color: blue;
+      font-weight: bold;
     }
   }
 
@@ -248,13 +248,13 @@ body.pretty {
   div#score_cards {
     top: 400px;
     left: 300px;
+  }
 
-    table {
-      font-size: medium;
+  table.score_card {
+    font-size: medium;
 
-      td {
-        width: 24px;
-      }
+    td {
+      width: 24px;
     }
   }
 
