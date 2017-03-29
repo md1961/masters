@@ -2,6 +2,7 @@
   <tr class="group_info<%= group.number %> <%= not_to_display && 'not_to_display' %>">
     <% if index.zero? -%>
       <td rowspan="<%= group.players.size %>"
+          style="text-align: center;"
           class="<%= group == @round.group_to_display && 'current' %>
                  <%= (group.all_holed_out? || @round.changing_group?) && 'finished_play' %>"
           data-group_number="<%= group.number %>">
