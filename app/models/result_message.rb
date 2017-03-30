@@ -34,7 +34,7 @@ class ResultMessage
           @appears_off_green = false
           add_pre_messages_off_green
           if @result == 'IN' || @result.to_i > 0 || @rolls_out_of_green
-            max_dice_to_roll_away = @result.to_i >= 50 ? 5 : @result.to_i >= 45 ? 4 : 3
+            max_dice_to_roll_away = @result.to_i >= 50 ? 6 : @result.to_i >= 45 ? 5 : 4
             @result = "-#{@result}" if @result.to_i > 0 && Dice.roll <= max_dice_to_roll_away
             if @rolls_out_of_green
               @distance = rand(40 .. 50)
