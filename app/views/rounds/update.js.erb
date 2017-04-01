@@ -197,7 +197,7 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
          stroke = player.ball.shot_count -%>
       var tableScoreCard = $("table#score_player<%= player.id %>");
 
-      tableScoreCard.children('caption').html("<%= name_with_score(player) %>");
+      tableScoreCard.children('caption').html("<%= full_name_with_score(player) %>");
       var tdStroke = tableScoreCard.find("td.stroke.hole<%= hole.number %>");
       tdStroke.text(<%= stroke %>);
       tdStroke.addClass("<%= class_score_result(stroke, hole) %>");
