@@ -205,7 +205,7 @@ class Ball < ActiveRecord::Base
   end
 
   def self.look_up_optional_result(hash, num)
-    hash.find { |k, _v| num.between?(*(k.split('-').map(&:to_i))) }[1]
+    hash.find { |k, _v| num == k.to_i || num.between?(*(k.split('-').map(&:to_i))) }[1]
   end
 
   private
