@@ -1,13 +1,15 @@
-<table id="fairway_map" class="hole_map" <%= @style.blank? && 'hidden' %>>
-  <caption><%= hole.par == 3 ? '&nbsp;'.html_safe : hole.full_desc(with_distance: true) %></caption>
-  <% fairway_landings(hole).each do |row| -%>
-    <tr>
-      <% row.each do |td| -%>
-        <%= td %>
-      <% end -%>
-    </tr>
-  <% end -%>
-</table>
+<% if hole.par > 3 -%>
+  <table id="fairway_map" class="hole_map" <%= @style.blank? && 'hidden' %>>
+    <caption><%= hole.full_desc(with_distance: true) %></caption>
+    <% fairway_landings(hole).each do |row| -%>
+      <tr>
+        <% row.each do |td| -%>
+          <%= td %>
+        <% end -%>
+      </tr>
+    <% end -%>
+  </table>
+<% end -%>
 
 <table id="green_map" class="hole_map" <%= @style.blank? && 'hidden' %>>
   <caption><%= hole.par >= 4 ? '&nbsp;'.html_safe : hole.full_desc(with_distance: true) %></caption>
