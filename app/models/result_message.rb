@@ -82,8 +82,9 @@ class ResultMessage
     MESSAGE_TO_GREEN = 'Heading toward green...'
 
     def add_pre_messages_off_green
-      @result.sub!(/-([SML][LRC])\z/, '')
+      @result.sub!(/-([SML][LRC])(.*)\z/, '')
       carry, direction = Regexp.last_match(1)&.split('')
+      supplement       = Regexp.last_match(2)
       case @club_name_used
       when 'drive'
         @result += " in #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
