@@ -88,7 +88,7 @@ class ResultMessage
       case @club_name_used
       when 'drive'
         @result += " in #{{S: :Short, M: :Medium, L: :Long}[carry.to_sym]}"
-        hard = carry == 'L' || (carry == 'M' && Dice.roll >= 5) ? ' Strongly' : ''
+        hard = carry == 'L' || (carry == 'M' && (supplement == '*' || Dice.roll >= 5)) ? ' Strongly' : ''
         @pre_messages << {
           L: "Pulling#{hard} left...",
           R: "Pushing#{hard} right...",
@@ -105,6 +105,8 @@ class ResultMessage
               @appears_off_green = true
               H_MESSAGES_OFF_GREEN.values.sample
             end
+        elsif supplement == '-P'
+          @pre_messages << 'Looking WAY short...'
         elsif Dice.roll <= 2
           @pre_messages << MESSAGE_TO_GREEN
           @rolls_out_of_green = true
