@@ -7,6 +7,10 @@ class Group < ActiveRecord::Base
 
   attr_reader :play_finished, :message
 
+  def final_group?
+    self == round.groups.last
+  end
+
   def players_gone_to_next_area?
     players.none? { |player| player.shot.area == area }
   end
