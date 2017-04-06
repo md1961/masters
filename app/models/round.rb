@@ -5,6 +5,7 @@ class Round < ActiveRecord::Base
   has_many :areas , -> { order(:seq_num) }
   has_many :groups, -> { order(:number ) }
   has_many :score_cards
+  has_many :leaders_snapshots
 
   enum status: {displays_result: 0, ready_to_play: 1, changing_group: 2, needs_input: 3, finished: 99}
 
@@ -62,6 +63,10 @@ class Round < ActiveRecord::Base
     tournament.players_to_play.sort_by(&:leader_sorter)
   end
 
+  def to_be_finished?
+    groups.all?(&:round_finished?)
+  end
+
   # TODO: Refactor proceed() by splitting or else.
   def proceed(shot_option: nil)
     if (needs_input? && shot_option.present?)
@@ -100,8 +105,13 @@ class Round < ActiveRecord::Base
     end
   end
 
-  def to_be_finished?
-    groups.all?(&:round_finished?)
+  def take_leaders_snapshot
+    max_seq_num = leaders_snapshots.maximum(:seq_num) || 0
+    leaders_snapshots.build(seq_num: max_seq_num + 1).tap { |lss|
+      leaders.each do |player|
+        lss.leaders.build(player: player, score: player.tournament_score, hole_finished: player.hole_finished)
+      end
+    }.save!
   end
 
   def <=>(other)
