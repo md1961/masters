@@ -83,7 +83,7 @@ if (<%= @round.needs_input? %>) {
     var display = $('span#distance_amination');
     var result = display.attr('data-result');
     result = result == 'IN' ? 0 : parseInt(result) || result;
-    var distance = parseInt(display.text());
+    var distance = display.data('distance');
     var message = display.attr('data-message');
     var preMessages = display.attr('data-pre_messages');
     preMessages = preMessages.length == 0 ? [] : preMessages.split(';');

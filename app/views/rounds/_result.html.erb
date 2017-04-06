@@ -31,6 +31,7 @@
         <td>
           <span id="distance_amination"
                 data-result="<%= @result_message.result %>"
+                data-distance="<%= @result_message.distance %>"
                 data-pre_messages="<%= @result_message.pre_messages.join(';') %>"
                 data-message="<%= @result_message.message %>">
             <%= @result_message.distance.abs %>
