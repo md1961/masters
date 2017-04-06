@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  leaders_snapshot_id: 
+  player_id: 
+  score: 1
+  hole_id: 
+
+two:
+  leaders_snapshot_id: 
+  player_id: 
+  score: 1
+  hole_id: 
