@@ -22,6 +22,8 @@ class RoundsController < ApplicationController
     def prepare_messages
       @message_orig = @round.message&.dup
 
+      logger.info("ResultMessage#init(): @message = '#{@round.message}'") if @round.message.present?
+
       @result_message = ResultMessage.new(@round)
       @time_to_delay = TIME_TO_DELAY_FOR_MESSAGE
     end
