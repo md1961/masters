@@ -58,6 +58,10 @@ class Round < ActiveRecord::Base
     play_result =~ Group::RE_PLAYER_ID_AND_INFO && Regexp.last_match(2)
   end
 
+  def leaders
+    tournament.players_to_play.sort_by(&:leader_sorter)
+  end
+
   # TODO: Refactor proceed() by splitting or else.
   def proceed(shot_option: nil)
     if (needs_input? && shot_option.present?)

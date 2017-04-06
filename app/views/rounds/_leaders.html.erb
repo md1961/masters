@@ -2,7 +2,7 @@
   <caption><%= @round %></caption>
   <% prev_score = nil
      count_same_as_above = 0 -%>
-  <% @round.tournament.players_to_play.sort_by(&:leader_sorter).each_with_index do |player, index| -%>
+  <% @round.leaders.each_with_index do |player, index| -%>
     <% score = player.tournament_score
        if score == prev_score
          count_same_as_above += 1
