@@ -73,6 +73,7 @@ class Round < ActiveRecord::Base
       self.status = :ready_to_play
     elsif changing_group?
       self.status = :displays_result
+      take_leaders_snapshot if group_to_display.final_group?
     end
     will_toggle_status = true
     @message = nil
@@ -100,6 +101,7 @@ class Round < ActiveRecord::Base
     if to_be_finished?
       finished!
       update!(play_result: "#{self} finished")
+      take_leaders_snapshot
     elsif will_toggle_status
       ready_to_play? ? displays_result! : ready_to_play!
     end
