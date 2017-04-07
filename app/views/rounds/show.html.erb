@@ -30,7 +30,7 @@
     <% if @style.blank? -%>
       <span id="toggle_leader_board_display" class="button"><%= label_for_toggle_button %></span>
     <% end -%>
-    <%= render 'leaders' %>
+    <%= render partial: 'leaders', locals: {players: @round.leaders} %>
     <span id="toggle_leader_board_full_display" class="button">[ ... ]</span>
   </div>
 <% end -%>

@@ -1,8 +1,10 @@
-<table id="leaders" class="<%= @style.present? && 'table_base' %>" <%= @style.blank? && 'hidden' %>>
+<% shows = defined?(shows) && shows -%>
+
+<table id="leaders" class="<%= @style.present? && 'table_base' %>" <%= @style.blank? && !shows && 'hidden' %>>
   <caption><%= @round %></caption>
   <% prev_score = nil
      count_same_as_above = 0 -%>
-  <% @round.leaders.each_with_index do |player, index| -%>
+  <% players.each_with_index do |player, index| -%>
     <% score = player.tournament_score
        if score == prev_score
          count_same_as_above += 1
