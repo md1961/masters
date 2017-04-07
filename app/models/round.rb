@@ -108,8 +108,15 @@ class Round < ActiveRecord::Base
   def take_leaders_snapshot
     max_seq_num = leaders_snapshots.maximum(:seq_num) || 0
     leaders_snapshots.build(seq_num: max_seq_num + 1).tap { |lss|
+      rank = 1
       leaders.each do |player|
-        lss.leaders.build(player: player, score: player.tournament_score, hole_finished: player.hole_finished)
+        lss.leaders.build(
+          player:        player,
+          rank:          rank,
+          score:         player.tournament_score,
+          hole_finished: player.hole_finished
+        )
+        rank += 1
       end
     }.save!
   end
