@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20170406232547) do
   create_table "leaders", force: :cascade do |t|
     t.integer "leaders_snapshot_id"
     t.integer "player_id"
+    t.integer "rank"
     t.integer "score"
     t.string  "hole_finished"
   end
