@@ -84,7 +84,8 @@ class Round < ActiveRecord::Base
       group_to_play = current_group
       # TODO: Quit receiving messy string result from Group#play().
       player_id_and_info = group_to_play.play(index_option: shot_option && Integer(shot_option))
-      take_leaders_snapshot if group_to_play.final_group? && group_to_play.all_holed_out?
+      take_leaders_snapshot if group_to_play.final_group? \
+        && ((group_to_play.play_finished && !group_to_play.players_split?) || group_to_play.all_holed_out?)
       if player_id_and_info.nil?
         will_toggle_status = false
       elsif groups.none?(&:players_split?) && group_to_play.play_finished
