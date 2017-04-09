@@ -134,7 +134,7 @@ class Round < ActiveRecord::Base
   end
 
   def to_s
-    "Round #{number}"
+    "#{final_round? ? 'Final' : number.ordinalize} Round"
   end
 
   private

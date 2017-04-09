@@ -82,6 +82,12 @@ module RoundsHelper
     end
   end
 
+  def half_result_display(group)
+    group.players.map {
+      |player| "#{player} #{player.score_cards.find_by(round: @round).total_value}"
+    }.join(', ')
+  end
+
   def round_strokes_display(player)
     score_cards = player.tournament_score_cards(round_number_upto: @round.number)
     score_cards.map(&:total_value).join('-')

@@ -13,7 +13,11 @@
     </tr>
   <% end -%>
 </table></td></tr>
-<% if player.shot.hole.number == @round.final_hole_number -%>
+<% if player.shot.hole.number == 9 -%>
+  <tr>
+    <td><%= half_result_display(group) %> </td>
+  </tr>
+<% elsif player.shot.hole.number == @round.final_hole_number -%>
   <tr>
     <td><%= round_result_display(group) %></td>
   </tr>
