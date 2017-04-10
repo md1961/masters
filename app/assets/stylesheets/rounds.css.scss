@@ -10,7 +10,7 @@ body {
     font-size: x-small;
   }
 
-  td.smallest {
+  td.smallest, span.smallest {
     font-size: xx-small;
   }
 
@@ -216,7 +216,7 @@ body.pretty {
     font-size: medium;
   }
 
-  td.smallest {
+  td.smallest, span.smallest {
     font-size: small;
   }
 

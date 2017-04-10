@@ -2,17 +2,24 @@
 
 <table id="leaders" class="<%= @style.present? && 'table_base' %>" <%= @style.blank? && !shows && 'hidden' %>>
   <caption><%= @round %></caption>
-  <% prev_score = nil
+  <% scores = players.map(&:tournament_score)
+     h_score_counts = scores.inject(Hash.new(0)) { |h, score| h[score] += 1; h }
+     tied_scores = scores.find_all { |score| h_score_counts[score] > 1 }
+     prev_score = nil
      count_same_as_above = 0 -%>
   <% players.each_with_index do |player, index| -%>
-    <% score = player.tournament_score
+    <% score = scores[index]
        if score == prev_score
          count_same_as_above += 1
        else
          count_same_as_above = 0
        end -%>
     <tr class="<%= index >= num_players_in_leader_board && 'not_to_display' %>">
-      <td class="numeric smallest"><%= index + 1 - count_same_as_above %></td>
+      <td class="numeric smaller">
+        <% rank = index + 1 - count_same_as_above
+           suffix = tied_scores.include?(score) ? 'T' : '' -%>
+        <%= rank %><span class="smallest"><%= suffix %></span>
+      </td>
       <td><%= player %></td>
       <td class="numeric"><%= score_formatted(score) %></td>
       <td class="numeric"><%= player.hole_finished %></td>
