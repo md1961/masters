@@ -1,1 +1,11 @@
+<%= "#{@leaders_snapshot.round}: ##{@leaders_snapshot.seq_num}" %>
+
 <%= render partial: 'rounds/leaders', locals: {players: @leaders_snapshot.leaders, shows: true} %>
+
+<% if @prev -%>
+  <%= link_to '<', leaders_snapshot_path(@prev), id: :prev_snapshot %>
+<% end -%>
+&nbsp;&nbsp;
+<% if @next -%>
+  <%= link_to '>', leaders_snapshot_path(@next), id: :next_snapshot %>
+<% end -%>
