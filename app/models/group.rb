@@ -108,7 +108,7 @@ class Group < ActiveRecord::Base
       player = next_player
       ball = player.ball
       has_putted = ball.on_green?
-      was_layup = ball.is_layup
+      was_layup = ball.is_layup || index_option&.zero?
       distance = ball.result.to_i
       location = distance > 0 ? distance.to_s : ball.lands
       location = 'Tee' if location.blank?
