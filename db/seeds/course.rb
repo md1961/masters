@@ -303,7 +303,7 @@ hole11 = Hole.create!(number:11, par: 4, distance: 455)
 STDERR.print '12 '
 hole12 = Hole.create!(number:12, par: 3, distance: 155)
   shot12_1 = hole12.shots.create!(number: 1, is_layup: false)
-    shot12_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: "{'1-3' => 'MI', '4-6' => 'SI'}")
+    shot12_1.shot_judges.create!(prev_result: nil, lands: nil, next_use: "{'1-2' => 'LI', '3-6' => 'MI'}")
   shot12_2 = hole12.shots.create!(number: 2, is_layup: false)
     shot12_2.shot_judges.create!(prev_result: 'SL-P', lands: 'Water', next_use: 'P')
     shot12_2.shot_judges.create!(prev_result: 'SC-P', lands: 'Water', next_use: 'P')
