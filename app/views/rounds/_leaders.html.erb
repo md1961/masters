@@ -14,11 +14,12 @@
        else
          count_same_as_above = 0
        end -%>
-    <tr class="<%= index >= num_players_in_leader_board && 'not_to_display' %>">
+    <% rank = index + 1 - count_same_as_above
+       rank_suffix = tied_scores.include?(score) ? 'T' : ''
+       is_to_hide = index >= num_players_in_leader_board && rank > num_players_in_leader_board -%>
+    <tr class="<%= is_to_hide && 'not_to_display' %>">
       <td class="numeric smaller">
-        <% rank = index + 1 - count_same_as_above
-           suffix = tied_scores.include?(score) ? 'T' : '' -%>
-        <%= rank %><span class="smallest"><%= suffix %></span>
+        <%= rank %><span class="smallest"><%= rank_suffix %></span>
       </td>
       <td><%= player %></td>
       <td class="numeric"><%= score_formatted(score) %></td>
