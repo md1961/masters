@@ -1,4 +1,5 @@
 $ ->
+  return unless $('#next_snapshot')[0]
   $(window).on 'keydown', (e) ->
     return if e.ctrlKey || e.metaKey
     key = String.fromCharCode(e.which)
