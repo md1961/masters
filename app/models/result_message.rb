@@ -37,7 +37,7 @@ class ResultMessage
             max_dice_to_roll_away = @result.to_i >= 50 ? 6 : @result.to_i >= 45 ? 5 : 4
             @result = "-#{@result}" if @result.to_i > 0 && Dice.roll <= max_dice_to_roll_away
             if @rolls_out_of_green
-              @distance = rand(40 .. 50)
+              @distance = rand(30 .. 50)
             else
               @distance = [@result.to_i + running_distance, MAXIMUM_DISTANCE].min
               @distance += 2 if @distance >= 0
