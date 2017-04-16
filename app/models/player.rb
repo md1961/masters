@@ -138,8 +138,9 @@ class Player < ActiveRecord::Base
 
     def make_par_3_tee_shot_superlative(ball)
       return unless shot.hole.par == 3 && shot.number == 1
+      is_hole_16 = shot.hole.number == 16
       drive_result = clubs.find_by(name: 'drive').swing
-      ball.result = '*' if drive_result.end_with?('*')
+      ball.result = '*' if drive_result.end_with?('*') || (is_hole_16 && Dice.roll == 6)
     end
 
     def write_score
