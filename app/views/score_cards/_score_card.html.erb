@@ -19,9 +19,9 @@
       <% holes.each do |hole| -%>
         <th><%= hole.number %></th>
         <% if hole.number == 9 -%>
-          <th>In</th>
-        <% elsif hole.number == 18 -%>
           <th>Out</th>
+        <% elsif hole.number == 18 -%>
+          <th>In</th>
           <th>T</th>
         <% end -%>
       <% end -%>
