@@ -1,5 +1,11 @@
 class LeadersSnapshotsController < ApplicationController
 
+  def index
+    tournament = Tournament.order(:created_at).last
+    round = tournament.current_round
+    redirect_to leaders_snapshot_path(LeadersSnapshot.where(round: round).order(:seq_num).first)
+  end
+
   def show
     @leaders_snapshot = LeadersSnapshot.find(params[:id])
     set_prev_and_next
