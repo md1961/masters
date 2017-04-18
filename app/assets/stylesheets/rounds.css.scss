@@ -229,6 +229,12 @@ body.pretty {
     font-size: small;
   }
 
+  span#proceed_signal {
+    font-size: small;
+    display: inline-block;
+    width: 15px;
+  }
+
   table#result {
     width: 480px;
 
