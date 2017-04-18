@@ -1,3 +1,5 @@
+<span id="proceed_signal" class="ready">&nbsp;&nbsp;</span>
+
 <div id="button_to_proceed">
   <%= form_tag round_path, method: :patch, remote: true, id: 'form_to_proceed' do %>
     <% if @round.needs_input? -%>

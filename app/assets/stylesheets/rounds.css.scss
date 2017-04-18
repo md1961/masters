@@ -22,6 +22,15 @@ body {
     text-align: left;
   }
 
+  span#proceed_signal {
+    float: left;
+    background-color: Red;
+  }
+
+  span#proceed_signal.ready {
+    background-color: Green;
+  }
+
   span.quiet_notice {
     font-size: xx-small;
   }

@@ -61,7 +61,9 @@ $ ->
     isShifted = e.shiftKey
     switch key
       when 'P'
-        $('#form_to_proceed').submit() if isShifted
+        if isShifted
+          $('span#proceed_signal').removeClass('ready')
+          $('#form_to_proceed').submit()
       when 'H'
         $('span#toggle_hole_map_display').click()
       when 'I'

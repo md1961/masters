@@ -61,7 +61,11 @@ var displayDelayed = function() {
 
 var randomBetween = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
+
+var setReadyToProceedForNext = function() {
+  $('span#proceed_signal').addClass('ready');
+};
 
 var radiosForShotOption = $('div#radio_buttons_for_shot_option');
 if (radiosForShotOption[0]) {
@@ -73,6 +77,7 @@ $('table#result').append($("<%= j render 'result' %>"));
 
 if (<%= @round.needs_input? %>) {
   $('form#form_to_proceed').prepend($("<%= j render 'shot_option' %>"));
+  setReadyToProceedForNext();
 } else if (!$('tr#message')[0]) {
   updateTables();
 } else {
@@ -237,5 +242,7 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
 <% end -%>
 
 <% end -%>
+
+setReadyToProceedForNext();
 
 }
