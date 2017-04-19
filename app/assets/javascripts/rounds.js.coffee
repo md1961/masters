@@ -79,25 +79,31 @@ $ ->
         else
           $('span.toggle_score_card_display.current').click()
       when 'J'
-        button = $('div#score_cards span.toggle_score_card_display.current')
-        if button.prev().hasClass('toggle_score_card_display')
-          button.removeClass('current').prev().addClass('current')
-        card = $('table.score_card:visible').first()
-        prev_card = card.prev().prev()
-        if prev_card.hasClass('score_card')
-          $('table.score_card').hide()
-          prev_card.show()
-          prev_card.next().show()
+        if $('#prev_snapshot')[0]
+          $('#prev_snapshot')[0].click()
+        else
+          button = $('div#score_cards span.toggle_score_card_display.current')
+          if button.prev().hasClass('toggle_score_card_display')
+            button.removeClass('current').prev().addClass('current')
+          card = $('table.score_card:visible').first()
+          prev_card = card.prev().prev()
+          if prev_card.hasClass('score_card')
+            $('table.score_card').hide()
+            prev_card.show()
+            prev_card.next().show()
       when 'K'
-        button = $('div#score_cards span.toggle_score_card_display.current')
-        if button.next().hasClass('toggle_score_card_display')
-          button.removeClass('current').next().addClass('current')
-        card = $('table.score_card:visible').first()
-        next_card = card.next().next()
-        if next_card.hasClass('score_card')
-          $('table.score_card').hide()
-          next_card.show()
-          next_card.next().show()
+        if $('#next_snapshot')[0]
+          $('#next_snapshot')[0].click()
+        else
+          button = $('div#score_cards span.toggle_score_card_display.current')
+          if button.next().hasClass('toggle_score_card_display')
+            button.removeClass('current').next().addClass('current')
+          card = $('table.score_card:visible').first()
+          next_card = card.next().next()
+          if next_card.hasClass('score_card')
+            $('table.score_card').hide()
+            next_card.show()
+            next_card.next().show()
       when 'D'
         $('tr#info').toggle()
 
