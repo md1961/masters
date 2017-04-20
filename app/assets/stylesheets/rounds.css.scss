@@ -23,12 +23,17 @@ body {
   }
 
   span#proceed_signal {
-    float: left;
     background-color: Red;
+    float: left;
+    margin-right: 20px;
   }
 
   span#proceed_signal.ready {
     background-color: Green;
+  }
+
+  a#to_leader_snapshot {
+    float: left;
   }
 
   span.quiet_notice {
