@@ -2,8 +2,7 @@ class LeadersSnapshotsController < ApplicationController
 
   def index
     tournament = Tournament.find_by(id: params[:tournament_id]) || Tournament.order(:created_at).last
-    round = tournament.current_round
-    redirect_to leaders_snapshot_path(LeadersSnapshot.where(round: round).order(:seq_num).last)
+    redirect_to leaders_snapshot_path(tournament.last_leaders_snapshot)
   end
 
   def show

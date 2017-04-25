@@ -21,7 +21,7 @@ var animateDistance = function(element, dStart, dEnd, tInterval1, tInterval2) {
     dPass = randomBetween(dPassMin, dAbsSmaller - 1);
     console.log('animateDistance(): dPass = ' + dPass + ', Start: ' + dStart + ', dEnd: ' + dEnd);
   }
-  var d1 = dEnd + (isSecondStage ? 0 : randomBetween((dEnd == 0 ? 0 : 5), 10));
+  var d1 = dEnd + (isSecondStage ? 0 : randomBetween((dEnd == 0 ? 1 : 5), 10));
   if (d1 > dStart) { d1 = dStart; }
   var d = dStart;
   var timer = setInterval(function() {

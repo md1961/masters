@@ -19,6 +19,12 @@ class Tournament < ActiveRecord::Base
     players.find_all { |player| player.tournament_score == min_score }
   end
 
+  def last_leaders_snapshot
+    round = current_round
+    round = rounds.where(round.number - 1) unless LeadersSnapshot.where(round: round).exists?
+    LeadersSnapshot.where(round: round).order(:seq_num).last
+  end
+
   def new_round!
     current_round_number = current_round&.number
     current_round&.update!(is_current: false)
