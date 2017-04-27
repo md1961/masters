@@ -264,7 +264,7 @@ class Ball < ActiveRecord::Base
       elsif result.to_i > 0
         1000 - result.to_i
       elsif result =~ RE_RESULT_LAYUP_NUMBERED
-        -50 - Regexp.last_match(1).to_i
+        -800 - Regexp.last_match(1).to_i
       else
         raise "Cannot find key of '#{result}' in H_DISTANCE_FACTOR" unless H_DISTANCE_FACTOR.key?(result)
         H_DISTANCE_FACTOR[result]
@@ -272,31 +272,33 @@ class Ball < ActiveRecord::Base
     end
 
     H_DISTANCE_FACTOR = {
-      "IN"    => 100000,
-      "OK"    => 10000,
-      "Sd"    => -10,
-      "LC-Ch" => -100,
-      "LL-Ch" => -200,
-      "LR-Ch" => -300,
-      "ML-Ch" => -400,
-      "MR-Ch" => -500,
-      "SC-Ch" => -600,
-      "SL-Ch" => -700,
-      "SR-Ch" => -800,
-      "SC-P"  => -1000,
-      "SL-P"  => -2000,
-      "SR-P"  => -3000,
-      "LC*"   => -10100,
-      "LC"    => -10200,
-      "LL"    => -10300,
-      "LR"    => -10400,
-      "MC*"   => -10500,
-      "MC"    => -10600,
-      "ML"    => -10700,
-      "MR"    => -10800,
-      "SC*"   => -10900,
-      "SC"    => -11000,
-      "SL"    => -11100,
-      "SR"    => -11200,
+      "IN"       => 100000,
+      "OK"       => 10000,
+      "Sd"       => -10,
+      "LC-Ch"    => -100,
+      "LL-Ch"    => -200,
+      "LR-Ch"    => -300,
+      "ML-Ch"    => -400,
+      "MR-Ch"    => -500,
+      "SC-Ch"    => -600,
+      "SL-Ch"    => -700,
+      "SR-Ch"    => -800,
+      "SC-P"     => -1000,
+      "SL-P"     => -2000,
+      "SR-P"     => -3000,
+      "layup-Ch" => -4000,
+      "layup-P"  => -5000,
+      "LC*"      => -10100,
+      "LC"       => -10200,
+      "LL"       => -10300,
+      "LR"       => -10400,
+      "MC*"      => -10500,
+      "MC"       => -10600,
+      "ML"       => -10700,
+      "MR"       => -10800,
+      "SC*"      => -10900,
+      "SC"       => -11000,
+      "SL"       => -11100,
+      "SR"       => -11200,
     }
 end
