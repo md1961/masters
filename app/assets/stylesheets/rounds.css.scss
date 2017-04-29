@@ -6,7 +6,7 @@ body {
   font-family: "arial",sans-serif;
   font-size: x-small;
 
-  td.smaller {
+  td.smaller, span.smaller {
     font-size: x-small;
   }
 
@@ -22,18 +22,26 @@ body {
     text-align: left;
   }
 
+  span#top_bar {
+    float: left;
+  }
+
   span#proceed_signal {
     background-color: Red;
-    float: left;
-    margin-right: 20px;
   }
 
   span#proceed_signal.ready {
     background-color: Green;
   }
 
+  span#title {
+    font-style: italic;
+    text-decoration: underline;
+    margin-left: 5px;
+  }
+
   a#to_leader_snapshot {
-    float: left;
+    margin-left: 20px;
   }
 
   span.quiet_notice {
@@ -226,7 +234,7 @@ body {
 body.pretty {
   font-size: large;
 
-  td.smaller {
+  td.smaller, span.smaller {
     font-size: medium;
   }
 

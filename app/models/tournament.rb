@@ -46,4 +46,8 @@ class Tournament < ActiveRecord::Base
     return nil if other.nil? || !other.is_a?(Tournament)
     created_at <=> other.created_at
   end
+
+  def to_s
+    "#{year} #{name}"
+  end
 end

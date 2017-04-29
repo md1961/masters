@@ -1,6 +1,9 @@
-<span id="proceed_signal" class="ready">&nbsp;&nbsp;</span>
-<%= link_to 'LSS', leaders_snapshots_path(tournament_id: @round.tournament),
-                   id: 'to_leader_snapshot', target: '_blank' %>
+<span id="top_bar" class="smaller">
+  <span id="proceed_signal" class="ready">&nbsp;&nbsp;</span>
+  <span id="title"><%= @round.tournament %></span>
+  <%= link_to 'LII', leaders_snapshots_path(tournament_id: @round.tournament),
+                     id: 'to_leader_snapshot', target: '_blank' %>
+</span>
 
 <div id="button_to_proceed">
   <%= form_tag round_path, method: :patch, remote: true, id: 'form_to_proceed' do %>
