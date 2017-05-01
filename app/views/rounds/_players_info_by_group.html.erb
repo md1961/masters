@@ -26,8 +26,7 @@
         <%= is_fin ? nil : ball.shot_count.zero? ? '-' : ball.shot_count %>
       </td>
       <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>
-      <% result = ball.result -%>
-      <td class="<%= result && result.end_with?('*') && @shows_info && 'emphasized' %>">
+      <td class="<%= result_html_class(ball.result) %>">
         <%= is_fin ? 'FIN' : ball.result_w_info %>
       </td>
       <td><%= is_fin ? nil : ball.lands %></td>

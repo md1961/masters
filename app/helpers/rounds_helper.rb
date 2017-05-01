@@ -110,4 +110,11 @@ module RoundsHelper
       'holed_out'
     end
   end
+
+  def result_html_class(result)
+    classes = []
+    classes << 'right_align' if result.to_i > 0 || %w(IN OK).include?(result)
+    classes << 'emphasized'  if result&.end_with?('*') && @shows_info
+    classes.join(' ')
+  end
 end
