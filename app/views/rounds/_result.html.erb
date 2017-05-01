@@ -48,7 +48,7 @@
        ball = player.ball
        ball.club_used = player.clubs.find_by(name: club_used.downcase) -%>
     <tr class="delayed_display" <%= @result_message&.not_nil? && 'hidden' %>>
-      <td><%= player.shot.hole.full_desc %></td>
+      <td><%= player.shot.hole.full_desc(with_distance: true) %></td>
     </tr>
     <tr class="delayed_display" <%= @result_message&.not_nil? && 'hidden' %>>
       <% score_display = ball.holed_out? \
