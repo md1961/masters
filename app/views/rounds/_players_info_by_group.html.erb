@@ -26,11 +26,11 @@
         <%= is_fin ? nil : ball.shot_count.zero? ? '-' : ball.shot_count %>
       </td>
       <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>
-      <td><%= is_fin ? nil : ball.lands %></td>
       <% result = ball.result -%>
       <td class="<%= result && result.end_with?('*') && @shows_info && 'emphasized' %>">
         <%= is_fin ? 'FIN' : ball.result_w_info %>
       </td>
+      <td><%= is_fin ? nil : ball.lands %></td>
       <td><%= is_fin ? round_strokes_display(player) : ball.next_shot_display(true) %></td>
     <% end -%>
   </tr>
