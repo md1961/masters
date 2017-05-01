@@ -98,4 +98,16 @@ module RoundsHelper
       "#{player} #{round_strokes_display(player)} (#{score_formatted(player.tournament_score)})"
     }.join(', ')
   end
+
+  def hole_out_html_class(ball)
+    return '' unless ball.holed_out?
+    case ball.shot_count <=> ball.hole.par
+    when -1
+      'holed_out_under'
+    when 1
+      'holed_out_over'
+    else
+      'holed_out'
+    end
+  end
 end

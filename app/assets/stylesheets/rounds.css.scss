@@ -79,6 +79,21 @@ body {
       td {
         padding: 0px 3px;
       }
+
+      td.holed_out {
+        color: white;
+        background-color: gray;
+      }
+
+      td.holed_out_under {
+        color: white;
+        background-color: red;
+      }
+
+      td.holed_out_over {
+        color: white;
+        background-color: blue;
+      }
     }
   }
 

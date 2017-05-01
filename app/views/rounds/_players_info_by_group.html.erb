@@ -22,7 +22,9 @@
           <%= hole.try(:full_desc) %>
         </td>
       <% end -%>
-      <td class="emphasized"><%= is_fin ? nil : ball.shot_count %></td>
+      <td class="emphasized <%= hole_out_html_class(ball) %>">
+        <%= is_fin ? nil : ball.shot_count.zero? ? '-' : ball.shot_count %>
+      </td>
       <td><%= is_fin || player != group.next_player ? nil : 'n' %></td>
       <td><%= is_fin ? nil : ball.lands %></td>
       <% result = ball.result -%>
