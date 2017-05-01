@@ -177,9 +177,9 @@ class Ball < ActiveRecord::Base
   end
 
   def next_shot_display(informative = false)
-    next_adjust_display = "(#{next_adjust > 0 ? '+' : ''}#{next_adjust})"
+    next_adjust_display = next_adjust.zero? ? '' : "(#{next_adjust > 0 ? '+' : ''}#{next_adjust})"
     if informative
-      "next: #{next_use}#{is_layup ? ' Layup' : ''} #{next_adjust_display}, #{shot}"
+      "#{next_use}#{is_layup ? ' Layup' : ''} #{next_adjust_display}"
     elsif on_green?
       ''
     else
