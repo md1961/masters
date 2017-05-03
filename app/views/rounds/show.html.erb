@@ -2,7 +2,7 @@
   <span id="proceed_signal" class="ready">&nbsp;&nbsp;</span>
   <span id="title"><%= @round.tournament %></span>
   <%= link_to 'LII', leaders_snapshots_path(tournament_id: @round.tournament),
-                     id: 'to_leader_snapshot', target: '_blank' %>
+                     id: 'to_leader_snapshot', class: 'smallest', target: '_blank' %>
 </span>
 
 <div id="button_to_proceed">
