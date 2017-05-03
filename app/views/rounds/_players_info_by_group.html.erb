@@ -29,8 +29,9 @@
       <td class="<%= result_html_class(ball.result) %>">
         <%= is_fin ? 'FIN' : ball.result_w_info %>
       </td>
-      <td><%= is_fin ? nil : ball.lands %></td>
-      <td><%= is_fin ? round_strokes_display(player) : ball.next_shot_display(true) %></td>
+      <td><%= ball.holed_out? || is_fin ? nil : ball.lands %></td>
+      <td><%= ball.holed_out? ? nil : is_fin ? round_strokes_display(player)
+                                             : ball.next_shot_display(true) %></td>
     <% end -%>
   </tr>
 <% end -%>
