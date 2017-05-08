@@ -8,10 +8,10 @@ class Hole < ActiveRecord::Base
   end
 
   H_MAX_DISTANCE_OF_GREEN = {
-     3 => 40,
+     3 => 35,
      4 => 45,
      5 => 45,
-     7 => 40,
+     7 => 35,
     12 => 40,
   }
 
