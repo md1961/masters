@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :db_backups, only: [:index]
+
   # Example resource route with options:
   #   resources :products do
   #     member do

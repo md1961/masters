@@ -106,6 +106,9 @@ $ ->
             next_card.next().show()
       when 'D'
         $('tr#info').toggle()
+      when 'B'
+        $.get('/db_backups')
+        $('div#db_backups').toggle()
 
   setInterval ->
     $('span.blink').fadeOut 400, ->
