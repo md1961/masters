@@ -247,6 +247,11 @@ body {
       }
     }
   }
+
+  div#db_backups table {
+    color: lawngreen;
+    background-color: black;
+  }
 }
 
 body.pretty {
