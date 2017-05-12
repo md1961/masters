@@ -33,7 +33,7 @@ class Club < ActiveRecord::Base
       if player.ball.ok?
         result = 'IN'
       elsif player.ball.third_putt?
-        result = dice == 11 ? '1OK' : 'IN'
+        result = dice == 11 ? 'OK' : 'IN'
       elsif raw_result == 'IN' || raw_result.to_i >= ball_on
         result = 'IN'
       elsif player.ball.second_putt?
@@ -43,7 +43,7 @@ class Club < ActiveRecord::Base
         result = SecondPuttResult.get(ball_on, suffix)
         result = '1OK' if result == 'OK'
       else
-        prefix = Dice.roll >= 4 ? '' : rand(1 .. 2).to_s
+        prefix = Dice.roll >= 3 ? '' : rand(1 .. 2).to_s
         result = prefix + 'OK'
       end
     elsif raw_result == '(1)' && raw_dice != 66
