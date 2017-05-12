@@ -63,10 +63,12 @@ module RoundsHelper
   end
 
   def pre_shot_display(player)
+    leaders = @round.tournament.leaders
+    leader_denote = leaders.include?(player) ? "(#{leaders.size >= 2 ? 'co-' : ''}leader) " : ""
     ball = player.ball
     distance = ball.on_green? ? " #{ball.result_w_info}" : ''
     safe_join([
-      "#{with_score(player)} on #{area_display(player)}#{distance} #{target_display(ball)}",
+      "#{leader_denote}#{with_score(player)} on #{area_display(player)}#{distance} #{target_display(ball)}",
       content_tag(:span, ' ==>', class: 'blink')
     ])
   end
