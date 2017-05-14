@@ -3,6 +3,8 @@
   <span id="title"><%= @round.tournament %></span>
   <%= link_to 'LII', leaders_snapshots_path(tournament_id: @round.tournament),
                      id: 'to_leader_snapshot', class: 'smallest', target: '_blank' %>
+  <%= link_to 'sts', hole_stats_path(tournament_id: @round.tournament),
+                     id: 'to_hole_stats', class: 'smallest', target: '_blank' %>
 </span>
 
 <div id="button_to_proceed">
