@@ -1,8 +1,8 @@
 <table>
   <% @files.each do |file| -%>
     <tr>
-      <td><%= File.mtime(file) %></td>
-      <td><%= file %></td>
+      <td><%= File.mtime(file).strftime('%Y-%m-%d %H:%M:%S') %></td>
+      <td style="padding-left: 5px"><%= file %></td>
     </tr>
   <% end -%>
 </table>
