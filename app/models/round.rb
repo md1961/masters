@@ -124,6 +124,12 @@ class Round < ActiveRecord::Base
     }.save!
   end
 
+  def current_point_identifier
+    player = current_group.players.first
+    format('T%02dR%d-G%02dH%02d%s', tournament.id, id, current_group.number,
+           player.ball.shot.hole.number, player.ball.shot.area.name.first.downcase)
+  end
+
   def <=>(other)
     return nil if other.nil? || !other.is_a?(Round)
     if tournament != other.tournament
