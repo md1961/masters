@@ -111,6 +111,7 @@ $ ->
           $.post('/db_backups')
         else if !isShifted
           $.get('/db_backups')
+          $('div#players_info').toggle()
           $('div#db_backups').toggle()
 
   setInterval ->
