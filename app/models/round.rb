@@ -42,6 +42,14 @@ class Round < ActiveRecord::Base
     number == tournament.num_rounds
   end
 
+  def prev
+    tournament.rounds.find_by(number: number - 1)
+  end
+
+  def next
+    tournament.rounds.find_by(number: number + 1)
+  end
+
   def current_group
     return groups.first if groups.size == 1
     groups.detect(&:players_split?) || groups.reverse.detect(&:next_area_open?)
@@ -164,9 +172,8 @@ class Round < ActiveRecord::Base
       if number == 1
         players_sorted = tournament.players_to_play.map { |p| [p, rand] }.sort_by(&:last).map(&:first)
       else
-        round_prev = Round.find_by(number: number - 1)
         players_sorted = tournament.players_to_play.sort_by { |player|
-          strokes_last_first = player.score_cards.find_by(round: round_prev).scores.pluck(:value).reverse
+          strokes_last_first = player.score_cards.find_by(round: prev).scores.pluck(:value).reverse
           [player.tournament_stroke, strokes_last_first]
         }.reverse
       end
