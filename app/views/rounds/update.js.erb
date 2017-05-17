@@ -243,6 +243,8 @@ $('div#hole_map').append($("<%= j render group.players.first.shot.hole %>"));
 
 <% end -%>
 
+$('span#stamp').text("<%= @round.current_stamp %>");
+
 setReadyToProceedForNext();
 
 }

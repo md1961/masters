@@ -113,6 +113,7 @@ $ ->
           $.get('/db_backups')
           $('div#players_info').toggle()
           $('div#db_backups').toggle()
+          $('span#stamp').toggle()
 
   setInterval ->
     $('span.blink').fadeOut 400, ->

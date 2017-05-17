@@ -5,6 +5,7 @@
                      id: 'to_leader_snapshot', class: 'smallest', target: '_blank' %>
   <%= link_to 'sts', hole_stats_path(tournament_id: @round.tournament),
                      id: 'to_hole_stats', class: 'smallest', target: '_blank' %>
+  <span id="stamp" class="smallest" hidden><%= @round.current_stamp %></span>
 </span>
 
 <div id="button_to_proceed">
