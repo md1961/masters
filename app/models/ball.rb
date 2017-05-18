@@ -85,9 +85,8 @@ class Ball < ActiveRecord::Base
       self.shot = shot.next(self)
     else
       shot_judge = shot.judge(club_result)
-      result_prefix = is_layup ? 'layup-' : ''
-      club_result.sub!(/\A[SML][LCR]-/, '') if is_layup
-      self.result      = result_prefix + club_result
+      club_result.sub!(/\A[SML][LCR]/, 'layup') if is_layup && shot_judge.lands != 'Water'
+      self.result      = club_result
       self.lands       = shot_judge.lands
       self.next_use    = shot_judge.next_use
       self.next_adjust = shot_judge.next_adjust

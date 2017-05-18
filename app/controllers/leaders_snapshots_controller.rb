@@ -12,6 +12,7 @@ class LeadersSnapshotsController < ApplicationController
 
   private
 
+  # TODO: Move set_prev_and_next() to model LeadersSnapshot.
     def set_prev_and_next
       round = @leaders_snapshot.round
       @prev = LeadersSnapshot.where(round: round).
