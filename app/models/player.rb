@@ -129,13 +129,24 @@ class Player < ActiveRecord::Base
       if result.to_i > 0
         @info += ", '#{result}' is multiplied by 1.5"
         suffix = result.sub(/\A\d+/, '')
-        (result.to_i * 1.5).floor.to_s + suffix
+        "#{multiply_by_1_5(result)}#{suffix}"
       elsif result.end_with?('Ch') && Dice.roll <= MAX_DICE_TO_CH_TO_GREEN_ON_14
         @info += ", '#{result}' is changed onto green"
         rand(50 .. 80).to_s
       else
         result
       end
+    end
+
+    # Simply (n * 1.5).floor converts [1, 2, 3, 4] to [1, 3, 4, 6].
+    # This is to fill the gaps such as 2 and 5 missing in the above result.
+    def multiply_by_1_5(n)
+      n = n.to_i
+      is_one_third = rand(3) == 0
+      result = (n * 1.5).floor
+      result += 1 if is_one_third && n.odd?
+      result -= 1 if is_one_third && n.even?
+      result
     end
 
     def make_par_3_tee_shot_superlative(ball)
