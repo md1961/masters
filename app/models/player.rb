@@ -10,6 +10,8 @@ class Player < ActiveRecord::Base
   has_one :shot, through: :ball
   #has_one :area, through: :shot
 
+  default_scope -> { order(:last_name, :first_name) }
+
   attr_accessor :info
 
   def finished_round?
