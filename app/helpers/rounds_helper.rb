@@ -63,9 +63,15 @@ module RoundsHelper
   end
 
   def leader_denote(player)
+    return '' if @round.number == 1
     leaders = @round.tournament.leaders
-    is_leader = @round.number > 1 && leaders.include?(player)
-    is_leader ? "[#{leaders.size >= 2 ? 'co-' : ''}leader] " : ""
+    if leaders.include?(player)
+      "[#{leaders.size >= 2 ? 'co-' : ''}leader] "
+    else
+      leading_score = leaders.first.tournament_score
+      score_behind = player.tournament_score - leading_score
+      score_behind <= 5 ? "[#{score_behind} behind] " : ''
+    end
   end
 
   def pre_shot_display(player)
