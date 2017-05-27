@@ -33,11 +33,11 @@ class Club < ActiveRecord::Base
       if player.ball.ok?
         result = 'IN'
       elsif player.ball.third_putt?
-        result = dice == 11 ? 'OK' : 'IN'
+        result = dice <= 16 ? 'OK' : 'IN'
       elsif raw_result == 'IN' || raw_result.to_i >= ball_on
         result = 'IN'
       elsif player.ball.second_putt?
-        result = '1t'
+        result = dice <= 16 ? '1t' : 'OK'
       elsif raw_result =~ /[A-D]\z/
         suffix = Regexp.last_match(0)
         result = SecondPuttResult.get(ball_on, suffix)
