@@ -1,0 +1,3 @@
+#! /usr/bin/env /Users/naoyuki/rails/masters/bin/rails runner
+
+puts Tournament.last.rounds.find_by(is_current: true).current_stamp
