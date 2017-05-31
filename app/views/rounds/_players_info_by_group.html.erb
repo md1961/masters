@@ -1,5 +1,6 @@
 <% group.players.each_with_index do |player, index| -%>
-  <tr class="group_info<%= group.number %> <%= not_to_display && 'not_to_display' %>">
+  <tr class="group_info<%= group.number %> <%= not_to_display && 'not_to_display' %>"
+      style="border-bottom: 1px #B0B0B0 solid;">
     <% if index.zero? -%>
       <td rowspan="<%= group.players.size %>"
           style="text-align: center;"

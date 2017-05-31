@@ -24,7 +24,7 @@
 </table>
 
 <div id="players_info">
-  <table>
+  <table style="border-collapse: collapse;">
     <% groups_for_players_info.each_with_index do |group, index_group| -%>
       <% not_to_display = index_group >= num_groups_in_players_info -%>
       <%= render partial: 'players_info_by_group', locals: {group: group, not_to_display: not_to_display} %>
