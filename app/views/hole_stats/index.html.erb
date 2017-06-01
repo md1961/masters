@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th />
+      <th />
       <% @score_indexes.each do |score_index| -%>
         <th><%= format('%+d', score_index).sub('+0', 'p') %></th>
       <% end -%>
@@ -12,7 +13,9 @@
   <tbody>
     <% @hole_stats.each do |hole_stat| -%>
       <tr>
-        <th><%= hole_stat.hole_number %></th>
+        <% hole = Hole.find_by(number: hole_stat.hole_number) -%>
+        <th><%= hole.number %></th>
+        <th><%= hole.par %></th>
         <% @score_indexes.each do |score_index| -%>
           <td class="numeric" style="width: 14px;">
             <% count = hole_stat.count(score_index) -%>
