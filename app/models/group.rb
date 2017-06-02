@@ -88,6 +88,7 @@ class Group < ActiveRecord::Base
     @play_finished = !all_on_or_near_green?
     @message = nil
     if all_holed_out?
+      return nil unless next_area_open?
       if round.playoff?
         min_stroke = players.map(&:ball).map(&:shot_count).min
         players.each do |player|
