@@ -114,13 +114,15 @@ module RoundsHelper
 
   def hole_out_html_class(ball)
     return '' unless ball.holed_out?
-    case ball.shot_count <=> ball.hole.par
+    case diff = ball.shot_count - ball.hole.par
     when -1
-      'holed_out_under'
+      'birdie'
     when 1
-      'holed_out_over'
+      'bogey'
+    when 0
+      'par'
     else
-      'holed_out'
+      diff.negative? ? 'eagle' : 'double_bogey'
     end
   end
 

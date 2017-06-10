@@ -93,18 +93,28 @@ body {
         padding: 0px 3px;
       }
 
-      td.holed_out {
+      td.par {
         color: white;
         background-color: gray;
       }
 
-      td.holed_out_under {
+      td.birdie {
         color: white;
         background-color: red;
       }
 
-      td.holed_out_over {
+      td.bogey {
         color: white;
+        background-color: blue;
+      }
+
+      td.eagle {
+        color: cyan;
+        background-color: red;
+      }
+
+      td.double_bogey {
+        color: yellow;
         background-color: blue;
       }
     }
@@ -162,7 +172,7 @@ body {
       font-weight: bold;
     }
 
-    td.dougle_eagle {
+    td.double_eagle {
       color: white;
       background-color: red;
       font-weight: bold;
