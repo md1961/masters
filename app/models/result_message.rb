@@ -60,7 +60,7 @@ class ResultMessage
       if is_putting && @distance < MININUM_DISTANCE_TO_ANINATE
         @distance = 0
         @message = @result
-        @message = 'miss' unless @message == 'IN'
+        @message = 'miss!' unless @message == 'IN'
       end
     end
 
