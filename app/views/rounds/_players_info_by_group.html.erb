@@ -18,7 +18,7 @@
          is_fin = ball.finished_round? -%>
       <td><%= player %></td>
       <% is_leader = @round.tournament.leaders.include?(player) -%>
-      <td class="numeric <%= is_leader && 'emphasized' %>">
+      <td class="numeric <%= @round.number > 1 && is_leader && 'emphasized' %>">
         <%= score_formatted(player.tournament_score) %>
       </td>
       <% if index.zero? -%>
