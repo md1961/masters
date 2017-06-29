@@ -4,8 +4,8 @@ class Club < ActiveRecord::Base
 
   attr_reader :info
 
-  def putt?
-    name == 'putt'
+  select(:name).uniq.pluck(:name).each do |club_name|
+    define_method("#{club_name}?") { name == club_name }
   end
 
   MAX_DICE_TO_RANDOMIZE_DIRECTION  = 1
