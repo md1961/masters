@@ -1,4 +1,5 @@
 class ClubStat
+  attr_reader :club
 
   def initialize(club)
     raise "Illegal argument '#{club.class}' (Club expected)" unless club.is_a?(Club)
@@ -10,11 +11,11 @@ class ClubStat
     calculate_average { |club_result|
       case club_result.result
       when /\AL/
-        10
+        100
       when /\AM/
-        8
+        80
       else
-        6
+        60
       end
     }
   end

@@ -1,0 +1,18 @@
+<table class="table_base">
+  <thead>
+    <tr>
+      <th />
+      <th>Drive Distance</th>
+      <th>Fairway Keep</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @player_club_stats.each do |player_club_stat| -%>
+      <tr>
+        <td><%= player_club_stat.player.last_name %></td>
+        <td class="numeric"><%= format('%4.1f', player_club_stat.drive_distance) %></td>
+        <td class="numeric"><%= format('%4.1f', player_club_stat.fairway_keeping * 100) %></td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
