@@ -20,10 +20,15 @@ class PlayerClubStat
   end
   def super_driving
   end
-  def green_hitting
+
+  def green_hitting(club_name)
+    @h_club_stats[club_name].green_hitting || "N/A(#{club_name})"
   end
-  def green_hitting_distance
+
+  def green_hitting_distance(club_name)
+    @h_club_stats[club_name].green_hitting_distance || "N/A(#{club_name})"
   end
+
   def putting_in_from(distance)
   end
   def erratic_putting
