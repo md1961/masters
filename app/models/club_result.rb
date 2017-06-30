@@ -23,4 +23,8 @@ class ClubResult < ActiveRecord::Base
       errors.add(:result, "'#{result}' is invalid for #{club} of #{club.player}")
     end
   end
+
+  def repdigit?
+    dice.to_s =~ /\A(:?\d)\1\z/
+  end
 end
