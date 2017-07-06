@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   resources :rounds           , only: [:index, :show, :update]
   resources :playoffs         , only: [:show, :update]
   resources :hole_stats       , only: [:index]
-  resources :player_club_stats, only: [:index]
   resources :leaders_snapshots, only: [:index, :show]
+  resources :player_club_stat_suites, only: [:show]
 
   resource :cut_off, only: %i[show update] do
     member do
