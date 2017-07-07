@@ -29,22 +29,10 @@
         <td class="numeric"><%= stat.rank(:drive_distance) %></td>
         <td class="numeric"><%= format('%4.1f', stat.fairway_keeping * 100) %></td>
         <td class="numeric"><%= stat.rank(:fairway_keeping) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:fw) * 100) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting, :fw) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:fw)) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting_distance, :fw) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:li) * 100) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting, :li) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:li)) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting_distance, :li) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:mi) * 100) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting, :mi) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:mi)) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting_distance, :mi) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:si) * 100) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting, :si) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:si)) %></td>
-        <td class="numeric"><%= stat.rank(:green_hitting_distance, :si) %></td>
+        <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :fw} %>
+        <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :li} %>
+        <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :mi} %>
+        <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :si} %>
         <td class="numeric"><%= format('%4.1f', stat.putting_distance) %></td>
         <td class="numeric"><%= stat.rank(:putting_distance) %></td>
         <td class="numeric"><%= format('%4.1f', stat.putting_in_from_20 * 100) %></td>
