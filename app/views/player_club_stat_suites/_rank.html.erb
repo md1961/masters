@@ -1,0 +1,5 @@
+<% top_rank = 10 unless defined?(top_tank) -%>
+
+<td class="numeric <%= rank <= top_rank && 'top_rank' %>">
+  <%= rank %>
+</td>
