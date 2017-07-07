@@ -8,12 +8,16 @@
       <th colspan="4">LI</th>
       <th colspan="4">MI</th>
       <th colspan="4">SI</th>
+      <th colspan="6">Putting</th>
     </tr>
     <tr>
       <% 4.times do -%>
         <th colspan="2">Green %</th>
         <th colspan="2">Accuracy</th>
       <% end -%>
+      <th colspan="2">20 (%)</th>
+      <th colspan="2">10 (%)</th>
+      <th colspan="2">5 (%)</th>
     </tr>
   </thead>
   <tbody>
@@ -40,6 +44,12 @@
         <td class="numeric"><%= stat.rank(:green_hitting, :si) %></td>
         <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:si)) %></td>
         <td class="numeric"><%= stat.rank(:green_hitting_distance, :si) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_20 * 100) %></td>
+        <td class="numeric"><%= stat.rank(:putting_in_from_20) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_10 * 100) %></td>
+        <td class="numeric"><%= stat.rank(:putting_in_from_10) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_5 * 100) %></td>
+        <td class="numeric"><%= stat.rank(:putting_in_from_5) %></td>
       </tr>
     <% end -%>
   </tbody>

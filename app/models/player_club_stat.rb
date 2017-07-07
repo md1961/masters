@@ -31,8 +31,15 @@ class PlayerClubStat
   end
 
   def putting_in_from(distance)
+    @h_club_stats['putt'].putting_in_from(distance)
   end
+
   def erratic_putting
+  end
+
+  def method_missing(name, *args)
+    super unless name =~ /\Aputting_in_from_(\d+)\z/
+    putting_in_from(Integer(Regexp.last_match(1)))
   end
 
   def rank(category, club_name = nil)
