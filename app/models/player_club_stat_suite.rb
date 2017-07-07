@@ -15,19 +15,22 @@ class PlayerClubStatSuite
       %i[drive_distance fairway_keeping].each do |category|
         set_ranks_for(category)
       end
-      %i[green_hitting].product(%i[fw li mi si]).each do |category, club_name|
+      %i[green_hitting ].product(%i[fw li mi si]).each do |category, club_name|
         set_ranks_for(category, club_name)
+      end
+      %i[green_hitting_distance].product(%i[fw li mi si]).each do |category, club_name|
+        set_ranks_for(category, club_name, :asc)
       end
     end
 
-    def set_ranks_for(category, club_name = nil)
+    def set_ranks_for(category, club_name = nil, ordering = :desc)
       values = if club_name
         @stats.map { |stat| stat.send(category, club_name.to_s) }
       else
         @stats.map(&:"#{category}")
       end
       @stats.zip(values) do |stat, value|
-        rank = values.count { |v| v > value } + 1
+        rank = values.count { |v| ordering == :desc ? v > value : v < value } + 1
         stat.set_rank(category, club_name, rank)
       end
     end

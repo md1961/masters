@@ -23,11 +23,11 @@ class PlayerClubStat
   end
 
   def green_hitting(club_name)
-    @h_club_stats[club_name].green_hitting || "N/A(#{club_name})"
+    @h_club_stats[club_name.to_s].green_hitting || "N/A(#{club_name})"
   end
 
   def green_hitting_distance(club_name)
-    @h_club_stats[club_name].green_hitting_distance || "N/A(#{club_name})"
+    @h_club_stats[club_name.to_s].green_hitting_distance || "N/A(#{club_name})"
   end
 
   def putting_in_from(distance)

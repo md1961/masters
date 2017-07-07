@@ -3,14 +3,17 @@
     <tr>
       <th rowspan="2" />
       <th rowspan="2" colspan="2">Drive<br>Distance</th>
-      <th rowspan="2" colspan="2">Fairway<br>Keep</th>
-      <th colspan="8">Green Hitting</th>
+      <th rowspan="2" colspan="2">Fairway<br>Keep %</th>
+      <th colspan="4">FW</th>
+      <th colspan="4">LI</th>
+      <th colspan="4">MI</th>
+      <th colspan="4">SI</th>
     </tr>
     <tr>
-      <th colspan="2">FW</th>
-      <th colspan="2">LI</th>
-      <th colspan="2">MI</th>
-      <th colspan="2">SI</th>
+      <% 4.times do -%>
+        <th colspan="2">Green %</th>
+        <th colspan="2">Accuracy</th>
+      <% end -%>
     </tr>
   </thead>
   <tbody>
@@ -21,14 +24,22 @@
         <td class="numeric"><%= stat.rank(:drive_distance) %></td>
         <td class="numeric"><%= format('%4.1f', stat.fairway_keeping * 100) %></td>
         <td class="numeric"><%= stat.rank(:fairway_keeping) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting('fw') * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:fw) * 100) %></td>
         <td class="numeric"><%= stat.rank(:green_hitting, :fw) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting('li') * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:fw)) %></td>
+        <td class="numeric"><%= stat.rank(:green_hitting_distance, :fw) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:li) * 100) %></td>
         <td class="numeric"><%= stat.rank(:green_hitting, :li) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting('mi') * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:li)) %></td>
+        <td class="numeric"><%= stat.rank(:green_hitting_distance, :li) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:mi) * 100) %></td>
         <td class="numeric"><%= stat.rank(:green_hitting, :mi) %></td>
-        <td class="numeric"><%= format('%4.1f', stat.green_hitting('si') * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:mi)) %></td>
+        <td class="numeric"><%= stat.rank(:green_hitting_distance, :mi) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting(:si) * 100) %></td>
         <td class="numeric"><%= stat.rank(:green_hitting, :si) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.green_hitting_distance(:si)) %></td>
+        <td class="numeric"><%= stat.rank(:green_hitting_distance, :si) %></td>
       </tr>
     <% end -%>
   </tbody>
