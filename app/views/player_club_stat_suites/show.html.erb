@@ -8,10 +8,12 @@
       <th colspan="4">LI</th>
       <th colspan="4">MI</th>
       <th colspan="4">SI</th>
+      <th colspan="4">P</th>
+      <th colspan="4">Ch</th>
       <th colspan="8">Putting</th>
     </tr>
     <tr>
-      <% 4.times do -%>
+      <% 6.times do -%>
         <th colspan="2">Green %</th>
         <th colspan="2">Accuracy</th>
       <% end -%>
@@ -33,6 +35,8 @@
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :li} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :mi} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :si} %>
+        <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :p} %>
+        <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :ch} %>
         <td class="numeric"><%= format('%4.1f', stat.putting_distance) %></td>
         <td class="numeric"><%= stat.rank(:putting_distance) %></td>
         <td class="numeric"><%= format('%4.1f', stat.putting_in_from_20 * 100) %></td>

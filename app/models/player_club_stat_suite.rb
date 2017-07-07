@@ -18,10 +18,10 @@ class PlayerClubStatSuite
       ].each do |category|
         set_ranks_for(category)
       end
-      %i[green_hitting].product(%i[fw li mi si]).each do |category, club_name|
+      %i[green_hitting].product(%i[fw li mi si p ch]).each do |category, club_name|
         set_ranks_for(category, club_name)
       end
-      %i[green_hitting_distance].product(%i[fw li mi si]).each do |category, club_name|
+      %i[green_hitting_distance].product(%i[fw li mi si p ch]).each do |category, club_name|
         set_ranks_for(category, club_name, :asc)
       end
     end
