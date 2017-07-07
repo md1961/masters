@@ -30,6 +30,10 @@ class PlayerClubStat
     @h_club_stats[club_name.to_s].green_hitting_distance || "N/A(#{club_name})"
   end
 
+  def putting_distance
+    @h_club_stats['putt'].putting_distance
+  end
+
   def putting_in_from(distance)
     @h_club_stats['putt'].putting_in_from(distance)
   end

@@ -12,7 +12,10 @@ class PlayerClubStatSuite
   private
 
     def set_ranks_for_all_categories
-      %i[drive_distance fairway_keeping putting_in_from_20 putting_in_from_10 putting_in_from_5].each do |category|
+      %i[
+        drive_distance fairway_keeping
+        putting_distance putting_in_from_20 putting_in_from_10 putting_in_from_5
+      ].each do |category|
         set_ranks_for(category)
       end
       %i[green_hitting].product(%i[fw li mi si]).each do |category, club_name|

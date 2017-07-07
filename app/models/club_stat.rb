@@ -72,6 +72,14 @@ class ClubStat
     } / green_hitting
   end
 
+  def putting_distance
+    return nil unless @club.putt?
+    calculate_average { |club_result|
+      result = club_result.result
+      result == 'IN' ? 60 : result.to_i
+    }
+  end
+
   def putting_in_from(distance)
     return nil unless @club.putt?
     calculate_average { |club_result|
