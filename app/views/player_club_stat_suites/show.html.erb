@@ -29,7 +29,7 @@
         <td><%= stat.player.last_name %></td>
         <td class="numeric"><%= format('%4.1f', stat.drive_distance) %></td>
         <%= render partial: 'rank', locals: {rank: stat.rank(:drive_distance)} %>
-        <td class="numeric"><%= format('%4.1f', stat.fairway_keeping * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.fairway_keeping) %></td>
         <%= render partial: 'rank', locals: {rank: stat.rank(:fairway_keeping)} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :fw} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :li} %>
@@ -39,11 +39,11 @@
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :ch} %>
         <td class="numeric"><%= format('%4.1f', stat.putting_distance) %></td>
         <%= render partial: 'rank', locals: {rank: stat.rank(:putting_distance)} %>
-        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_20 * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_20) %></td>
         <%= render partial: 'rank', locals: {rank: stat.rank(:putting_in_from_20)} %>
-        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_10 * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_10) %></td>
         <%= render partial: 'rank', locals: {rank: stat.rank(:putting_in_from_10)} %>
-        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_5 * 100) %></td>
+        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_5) %></td>
         <%= render partial: 'rank', locals: {rank: stat.rank(:putting_in_from_5)} %>
       </tr>
     <% end -%>

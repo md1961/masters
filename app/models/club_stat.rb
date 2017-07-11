@@ -24,35 +24,35 @@ class ClubStat
     return nil unless @club.drive?
     calculate_average { |club_result|
       club_result.result =~ /\A.C/ ? 1 : 0
-    }
+    } * 100
   end
 
   def drive_pulling
     return nil unless @club.drive?
     calculate_average { |club_result|
       club_result.result =~ /\A.L/ ? 1 : 0
-    }
+    } * 100
   end
 
   def drive_pushing
     return nil unless @club.drive?
     calculate_average { |club_result|
       club_result.result =~ /\A.R/ ? 1 : 0
-    }
+    } * 100
   end
 
   def super_driving
     return nil unless @club.drive?
     calculate_average { |club_result|
       club_result.result =~ /\*\z/ ? 1 : 0
-    }
+    } * 100
   end
 
   def green_hitting
     return nil if @club.drive? || @club.putt?
     calculate_average { |club_result|
       club_result.result =~ /\A(?:\(?\d+\)?|IN)\z/ ? 1 : 0
-    }
+    } * 100
   end
 
   def green_hitting_distance
@@ -69,7 +69,7 @@ class ClubStat
       else
         0
       end
-    } / green_hitting
+    } / green_hitting * 100
   end
 
   def putting_distance
@@ -85,14 +85,14 @@ class ClubStat
     calculate_average { |club_result|
       result = club_result.result
       result == 'IN' || result.to_i >= distance ? 1 : 0
-    }
+    } * 100
   end
 
   def erratic_putting
     return nil unless @club.putt?
     calculate_average { |club_result|
       club_result.result =~ /-[A-D]\z/ ? 1 : 0
-    }
+    } * 100
   end
 
   private

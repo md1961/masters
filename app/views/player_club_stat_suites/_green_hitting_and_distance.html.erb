@@ -1,5 +1,5 @@
 <td class="numeric">
-  <%= format('%4.1f', stat.green_hitting(club_name) * 100) %>
+  <%= format('%4.1f', stat.green_hitting(club_name)) %>
 </td>
 <%= render partial: 'rank', locals: {rank: stat.rank(:green_hitting, club_name)} %>
 
