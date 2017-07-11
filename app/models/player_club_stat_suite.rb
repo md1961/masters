@@ -1,5 +1,9 @@
 class PlayerClubStatSuite
 
+  def find_by_player(player)
+    @stats.find { |stat| stat.player == player }
+  end
+
   def initialize(players)
     @stats = players.map { |player| PlayerClubStat.new(player) }
     set_ranks_for_all_categories
