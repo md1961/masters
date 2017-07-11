@@ -1,4 +1,4 @@
-<table class="table_base">
+<table id="all_stats_table" class="table_base">
   <thead>
     <tr>
       <th rowspan="2" />
@@ -25,8 +25,8 @@
   </thead>
   <tbody>
     <% @stat_suite.each do |stat| -%>
-      <tr>
-        <td><%= stat.player.last_name %></td>
+      <tr id="player-<%= stat.player.id %>">
+        <td class="player_name"><%= stat.player.last_name %></td>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :drive_distance} %>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :fairway_keeping} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :fw} %>
@@ -43,3 +43,9 @@
     <% end -%>
   </tbody>
 </table>
+
+<div id="player_stat">
+  <% @stat_suite.each do |stat| -%>
+    <%= render partial: 'player', locals: {stat: stat} %>
+  <% end -%>
+</div>

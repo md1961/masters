@@ -1,6 +1,6 @@
-<% stat = @stat_suite.find_by_player(player) -%>
+<% player = stat.player -%>
 
-<table class="table_base">
+<table id="player_stat_table-<%= player.id %>" class="table_base" hidden>
   <tbody>
     <tr>
       <td colspan="4"><%= player.full_name %></td>
