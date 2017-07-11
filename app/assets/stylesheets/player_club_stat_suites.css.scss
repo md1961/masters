@@ -10,3 +10,8 @@ div#player_stat {
 table#all_stats_table td.player_name {
   cursor: pointer;
 }
+
+table.player_stat_table {
+  float: left;
+  margin-left: 10px;
+}

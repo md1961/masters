@@ -1,6 +1,6 @@
 <% player = stat.player -%>
 
-<table id="player_stat_table-<%= player.id %>" class="table_base" hidden>
+<table id="player_stat_table-<%= player.id %>" class="player_stat_table table_base" hidden>
   <tbody>
     <tr>
       <td colspan="4"><%= player.full_name %></td>
@@ -13,7 +13,7 @@
     <% end -%>
     <% %i[fw li mi si p ch].each do |club_name| -%>
       <tr>
-        <th rowspan="2"><%= club_name.to_s.upcase %></th>
+        <th rowspan="2"><%= club_name.to_s.send(club_name == :ch ? :titleize : :upcase) %></th>
         <% is_first_row = true -%>
         <% %i[green_hitting green_hitting_distance].each do |category| -%>
           <th><%= category.to_s.titleize.split.last %></th>
