@@ -1,0 +1,35 @@
+<% stat = @stat_suite.find_by_player(player) -%>
+
+<table class="table_base">
+  <tbody>
+    <tr>
+      <td colspan="4"><%= player.full_name %></td>
+    </tr>
+    <% %i[drive_distance fairway_keeping].each do |category| -%>
+      <tr>
+        <th colspan="2"><%= category.to_s.titleize %></th>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
+      </tr>
+    <% end -%>
+    <% %i[fw li mi si p ch].each do |club_name| -%>
+      <tr>
+        <th rowspan="2"><%= club_name.to_s.upcase %></th>
+        <% is_first_row = true -%>
+        <% %i[green_hitting green_hitting_distance].each do |category| -%>
+          <th><%= category.to_s.titleize.split.last %></th>
+          <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category, club_name: club_name} %>
+          <% if is_first_row -%>
+            </tr>
+            <tr>
+          <% end -%>
+        <% end -%>
+      </tr>
+    <% end -%>
+    <% %i[putting_distance putting_in_from_20 putting_in_from_10 putting_in_from_5].each do |category| -%>
+      <tr>
+        <th colspan="2"><%= category.to_s.titleize %></th>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
