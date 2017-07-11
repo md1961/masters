@@ -1,9 +1,4 @@
-<td class="numeric">
-  <%= format('%4.1f', stat.green_hitting(club_name)) %>
-</td>
-<%= render partial: 'rank', locals: {rank: stat.rank(:green_hitting, club_name)} %>
-
-<td class="numeric">
-  <%= format('%4.1f', stat.green_hitting_distance(club_name)) %>
-</td>
-<%= render partial: 'rank', locals: {rank: stat.rank(:green_hitting_distance, club_name)} %>
+<%= render partial: 'stat_with_rank',
+      locals: {stat: stat, category: :green_hitting, club_name: club_name} %>
+<%= render partial: 'stat_with_rank',
+      locals: {stat: stat, category: :green_hitting_distance, club_name: club_name} %>

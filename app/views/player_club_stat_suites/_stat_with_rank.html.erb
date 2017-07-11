@@ -1,0 +1,11 @@
+<% club_name = nil unless defined? club_name
+   top_rank  = 10  unless defined? top_tank -%>
+
+<td class="numeric">
+  <%= format('%4.1f', club_name ? stat.send(category, club_name) : stat.send(category)) %>
+</td>
+
+<% rank = stat.rank(category, club_name) -%>
+<td class="numeric <%= rank <= top_rank && 'top_rank' %>">
+  <%= rank %>
+</td>

@@ -27,24 +27,18 @@
     <% @stat_suite.each do |stat| -%>
       <tr>
         <td><%= stat.player.last_name %></td>
-        <td class="numeric"><%= format('%4.1f', stat.drive_distance) %></td>
-        <%= render partial: 'rank', locals: {rank: stat.rank(:drive_distance)} %>
-        <td class="numeric"><%= format('%4.1f', stat.fairway_keeping) %></td>
-        <%= render partial: 'rank', locals: {rank: stat.rank(:fairway_keeping)} %>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :drive_distance} %>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :fairway_keeping} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :fw} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :li} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :mi} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :si} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :p} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :ch} %>
-        <td class="numeric"><%= format('%4.1f', stat.putting_distance) %></td>
-        <%= render partial: 'rank', locals: {rank: stat.rank(:putting_distance)} %>
-        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_20) %></td>
-        <%= render partial: 'rank', locals: {rank: stat.rank(:putting_in_from_20)} %>
-        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_10) %></td>
-        <%= render partial: 'rank', locals: {rank: stat.rank(:putting_in_from_10)} %>
-        <td class="numeric"><%= format('%4.1f', stat.putting_in_from_5) %></td>
-        <%= render partial: 'rank', locals: {rank: stat.rank(:putting_in_from_5)} %>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :putting_distance} %>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :putting_in_from_20} %>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :putting_in_from_10} %>
+        <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :putting_in_from_5} %>
       </tr>
     <% end -%>
   </tbody>
