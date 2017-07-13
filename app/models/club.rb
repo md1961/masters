@@ -68,6 +68,23 @@ class Club < ActiveRecord::Base
     @@dices ||= club_results.empty? ? nil : club_results.pluck(:dice).sort
   end
 
+  def ==(other)
+    return false unless other && other.is_a?(self.class) && name == other.name
+    result_values == other.result_values
+  end
+
+  def eql?(other)
+    self == other
+  end
+
+  def hash
+    result_values.hash
+  end
+
+  def result_values
+    club_results.order(:dice).map(&:result)
+  end
+
   def to_s
     name =~ /(:?fw|[lms]i)\z/ ? name.upcase : name.capitalize
   end
