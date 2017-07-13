@@ -68,6 +68,10 @@ class Club < ActiveRecord::Base
     @@dices ||= club_results.empty? ? nil : club_results.pluck(:dice).sort
   end
 
+  def stats
+    @stats ||= make_stats
+  end
+
   def ==(other)
     return false unless other && other.is_a?(self.class) && name == other.name
     result_values == other.result_values
@@ -134,5 +138,21 @@ class Club < ActiveRecord::Base
         @info_add = ", not interpolated for adjacent is '#{raw_result_adjacent}' of '#{raw_result}'"
       end
       result
+    end
+
+    def make_stats
+      club_stat = ClubStat.new(self)
+      stat_names.map { |stat_name| [stat_name, club_stat.send(stat_name)] }.to_h
+    end
+
+    def stat_names
+      case name
+      when 'drive'
+        %i[drive_distance fairway_keeping]
+      when 'putt'
+        %i[putting_distance]
+      else
+        %i[green_hitting green_hitting_distance]
+      end
     end
 end
