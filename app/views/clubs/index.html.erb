@@ -1,0 +1,15 @@
+<% @clubs_by_name.each do |name, clubs| -%>
+  <table class="clubs table_base">
+    <caption><%= clubs.first %></caption>
+    <tbody>
+      <% clubs.first.dice_list.each_with_index do |dice, index| -%>
+        <tr>
+          <th><%= dice %></th>
+          <% clubs.each do |club| -%>
+            <td><%= club.result_values[index] %></td>
+          <% end -%>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+<% end -%>
