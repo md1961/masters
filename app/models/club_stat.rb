@@ -4,11 +4,12 @@ class ClubStat
   def initialize(club)
     raise "Illegal argument '#{club.class}' (Club expected)" unless club.is_a?(Club)
     @club = club
+    @putting_in_from = {}
   end
 
   def drive_distance
     return nil unless @club.drive?
-    calculate_average { |club_result|
+    @drive_distance ||= calculate_average { |club_result|
       case club_result.result
       when /\AL/
         100
@@ -22,42 +23,42 @@ class ClubStat
 
   def fairway_keeping
     return nil unless @club.drive?
-    calculate_average { |club_result|
+    @fairway_keeping ||= calculate_average { |club_result|
       club_result.result =~ /\A.C/ ? 1 : 0
     } * 100
   end
 
   def drive_pulling
     return nil unless @club.drive?
-    calculate_average { |club_result|
+    @drive_pulling ||= calculate_average { |club_result|
       club_result.result =~ /\A.L/ ? 1 : 0
     } * 100
   end
 
   def drive_pushing
     return nil unless @club.drive?
-    calculate_average { |club_result|
+    @drive_pushing ||= calculate_average { |club_result|
       club_result.result =~ /\A.R/ ? 1 : 0
     } * 100
   end
 
   def super_driving
     return nil unless @club.drive?
-    calculate_average { |club_result|
+    @super_driving ||= calculate_average { |club_result|
       club_result.result =~ /\*\z/ ? 1 : 0
     } * 100
   end
 
   def green_hitting
     return nil if @club.drive? || @club.putt?
-    calculate_average { |club_result|
+    @green_hitting ||= calculate_average { |club_result|
       club_result.result =~ /\A(?:\(?\d+\)?|IN)\z/ ? 1 : 0
     } * 100
   end
 
   def green_hitting_distance
     return nil if @club.drive? || @club.putt?
-    calculate_average { |club_result|
+    @green_hitting_distance ||= calculate_average { |club_result|
       result = club_result.result
       case result
       when 'IN'
@@ -74,7 +75,7 @@ class ClubStat
 
   def putting_distance
     return nil unless @club.putt?
-    calculate_average { |club_result|
+    @putting_distance ||= calculate_average { |club_result|
       result = club_result.result
       result == 'IN' ? 60 : result.to_i
     }
@@ -82,7 +83,7 @@ class ClubStat
 
   def putting_in_from(distance)
     return nil unless @club.putt?
-    calculate_average { |club_result|
+    @putting_in_from[distance] ||= calculate_average { |club_result|
       result = club_result.result
       result == 'IN' || result.to_i >= distance ? 1 : 0
     } * 100
@@ -90,7 +91,7 @@ class ClubStat
 
   def erratic_putting
     return nil unless @club.putt?
-    calculate_average { |club_result|
+    @erratic_putting ||= calculate_average { |club_result|
       club_result.result =~ /-[A-D]\z/ ? 1 : 0
     } * 100
   end
