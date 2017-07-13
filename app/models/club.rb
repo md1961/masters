@@ -82,7 +82,7 @@ class Club < ActiveRecord::Base
   end
 
   def result_values
-    club_results.order(:dice).map(&:result)
+    @result_values ||= club_results.order(:dice).map(&:result)
   end
 
   def to_s
