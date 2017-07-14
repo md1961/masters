@@ -72,6 +72,12 @@ class Club < ActiveRecord::Base
     @stats ||= make_stats
   end
 
+  def stats_value
+    stats.inject(0) { |sum, (stat_name, value)|
+      sum += value * (stat_name == :green_hitting_distance ? -1 : 1)
+    }
+  end
+
   def ==(other)
     return false unless other && other.is_a?(self.class) && name == other.name
     result_values == other.result_values
