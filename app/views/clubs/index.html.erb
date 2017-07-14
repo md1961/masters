@@ -10,6 +10,14 @@
           <% end -%>
         </tr>
       <% end -%>
+      <% clubs.first.stats.keys.each do |stat_name| -%>
+        <tr>
+          <th><%= stat_name_display(stat_name) %></th>
+          <% clubs.each do |club| -%>
+            <td class="numeric"><%= format('%4.1f', club.stats[stat_name]) %></td>
+          <% end -%>
+        </tr>
+      <% end -%>
     </tbody>
   </table>
 <% end -%>
