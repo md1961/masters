@@ -3,12 +3,17 @@ td.top_rank {
 }
 
 div#player_stat {
+  overflow: hidden;
   margin-top: 20px;
   margin-left: 10px;
 }
 
 table#all_stats_table td.player_name {
   cursor: pointer;
+}
+
+table#all_stats_table tr:hover {
+  background-color: cyan;
 }
 
 table.player_stat_table {
@@ -19,4 +24,8 @@ table.player_stat_table {
     cursor: pointer;
     vertical-align: super;
   }
+}
+
+div#command {
+  font-size: medium;
 }
