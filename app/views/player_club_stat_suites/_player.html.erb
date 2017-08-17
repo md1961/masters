@@ -3,7 +3,12 @@
 <table id="player_stat_table-<%= player.id %>" class="player_stat_table table_base" hidden>
   <tbody>
     <tr>
-      <td colspan="4"><%= player.full_name %></td>
+      <td colspan="3" style="border-right: 0px none white;">
+        <%= player.full_name %>
+      </td>
+      <td align="right" style="border-left: 0px none white;">
+        <span class="close" >x</span>
+      </td>
     </tr>
     <% %i[drive_distance fairway_keeping].each do |category| -%>
       <tr>

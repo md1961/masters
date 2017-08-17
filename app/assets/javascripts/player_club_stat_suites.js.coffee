@@ -3,5 +3,5 @@ $ ->
     player_id = $(this).parent().attr('id').replace('player-', '')
     $('div#player_stat table#player_stat_table-' + player_id).show()
 
-  $('table.player_stat_table').on 'click', ->
-    $(this).hide()
+  $('table.player_stat_table span.close').on 'click', ->
+    $(this).parents('table').hide()

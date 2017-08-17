@@ -14,4 +14,9 @@ table#all_stats_table td.player_name {
 table.player_stat_table {
   float: left;
   margin-left: 10px;
+
+  span.close {
+    cursor: pointer;
+    vertical-align: super;
+  }
 }
