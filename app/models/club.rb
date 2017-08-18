@@ -4,6 +4,11 @@ class Club < ActiveRecord::Base
 
   attr_reader :info
 
+  VALID_NAMES = %w[drive fw li mi si p ch sd putt]
+
+  validates :name, uniqueness: {scope: :player_id}, inclusion: {in: VALID_NAMES}
+  validates :player, presence: true
+
   select(:name).uniq.pluck(:name).each do |club_name|
     define_method("#{club_name}?") { name == club_name }
   end
