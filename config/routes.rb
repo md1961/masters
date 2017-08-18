@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 
   resource :player_club_stat_suites, only: [:show]
 
+  get 'player_clubs/alter'
+
   resource :cut_off, only: %i[show update] do
     member do
       get :confirm_update
