@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406232547) do
+ActiveRecord::Schema.define(version: 20170818055611) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "round_id"
@@ -102,6 +102,23 @@ ActiveRecord::Schema.define(version: 20170406232547) do
   end
 
   add_index "leaders_snapshots", ["round_id"], name: "index_leaders_snapshots_on_round_id"
+
+  create_table "old_club_results", force: :cascade do |t|
+    t.integer "old_club_id"
+    t.integer "dice",        null: false
+    t.string  "result",      null: false
+  end
+
+  add_index "old_club_results", ["old_club_id"], name: "index_old_club_results_on_old_club_id"
+
+  create_table "old_clubs", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.integer  "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "old_clubs", ["player_id"], name: "index_old_clubs_on_player_id"
 
   create_table "players", force: :cascade do |t|
     t.string  "last_name",  null: false

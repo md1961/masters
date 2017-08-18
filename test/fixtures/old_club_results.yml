@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  old_club_id: 
+  dice: 1
+  result: MyString
+
+two:
+  old_club_id: 
+  dice: 1
+  result: MyString
