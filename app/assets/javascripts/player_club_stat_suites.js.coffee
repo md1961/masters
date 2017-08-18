@@ -1,18 +1,27 @@
 $ ->
-  toggleCommand = ->
+  toggleCommandDivVisibility = ->
     if $('table.player_stat_table:visible').length == 2
-      $('div#command').show()
+      $('div#command_to_edit_player_club').show()
     else
-      $('div#command').hide()
+      $('div#command_to_edit_player_club').hide()
 
   $('table#all_stats_table td.player_name').on 'click', ->
     player_id = $(this).parent().attr('id').replace('player-', '')
     $('div#player_stat table#player_stat_table-' + player_id).show()
-    toggleCommand()
+    toggleCommandDivVisibility()
 
   $('table.player_stat_table span.close').on 'click', ->
     $(this).parents('table').hide()
-    toggleCommand()
+    toggleCommandDivVisibility()
 
   $('table.player_stat_table tr.club_name').on 'click', ->
-    $('div#command span#club_name').text($(this).data('club_name'))
+    $('div#command_to_edit_player_club span#club_name').text($(this).data('club_name'))
+    $('div#command_to_edit_player_club div#buttons').show()
+
+  $('div#command_to_edit_player_club div#buttons input[type="button"]').on 'click', ->
+    unless $('table.player_stat_table:visible').length == 2
+      alert('Exactly two players must be shown.  Call administrator')
+      return
+    player_ids = (table.id.replace('player_stat_table-', '') for table in $('table.player_stat_table:visible'))
+
+    alert($(this).attr('name') + player_ids)
