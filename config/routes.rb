@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   resources :clubs            , only: [:index]
   resources :hole_stats       , only: [:index]
   resources :leaders_snapshots, only: [:index, :show]
-  resources :player_club_stat_suites, only: [:show]
+
+  resource :player_club_stat_suites, only: [:show]
 
   resource :cut_off, only: %i[show update] do
     member do
