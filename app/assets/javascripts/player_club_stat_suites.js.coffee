@@ -23,5 +23,9 @@ $ ->
       alert('Exactly two players must be shown.  Call administrator')
       return
     player_ids = (table.id.replace('player_stat_table-', '') for table in $('table.player_stat_table:visible'))
-
-    alert($(this).attr('name') + player_ids)
+    window.location.href = '/player_clubs/alter?' + $.param({
+      command: $(this).attr('name'),
+      club_name: $(this).parent().siblings('span#club_name').first().text(),
+      player_left_id:  player_ids[0],
+      player_right_id: player_ids[1],
+    })
