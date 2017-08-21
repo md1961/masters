@@ -94,6 +94,10 @@ class Player < ActiveRecord::Base
     club.copy_from(player_from)
   end
 
+  def has_old_club?(club_name)
+    old_clubs.find_by(name: club_name)
+  end
+
   def ==(other)
     return false if other.nil? || !other.is_a?(Player)
     self.last_name == other.last_name && self.first_name == other.first_name

@@ -4,35 +4,44 @@
 <table id="player_stat_table-<%= player.id %>" class="player_stat_table table_base" <%= is_hidden && 'hidden' %>>
   <tbody>
     <tr>
-      <td colspan="3" style="border-right: 0px none white;">
+      <td colspan="4" style="border-right: 0px none white;">
         <%= player.full_name %>
       </td>
       <td align="right" style="border-left: 0px none white;">
         <span class="close" >x</span>
       </td>
     </tr>
-    <% %i[drive_distance fairway_keeping].each do |category| -%>
+    <% %i[drive_distance fairway_keeping].each_with_index do |category, index| -%>
       <tr class="club_name" data-club_name="Drive">
         <th colspan="2"><%= category.to_s.titleize %></th>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
+        <% if index.zero? -%>
+          <td rowspan="2" align="center"><%= old_club_denote(player, 'drive') %></td>
+        <% end -%>
       </tr>
     <% end -%>
     <% %i[fw li mi si p ch].each do |club_name| -%>
       <% club_name_display = club_name.to_s.send(club_name == :ch ? :titleize : :upcase) -%>
       <tr class="club_name" data-club_name="<%= club_name_display %>">
         <th rowspan="2"><%= club_name_display %></th>
-        <% %i[green_hitting green_hitting_distance].each do |category| -%>
+        <% %i[green_hitting green_hitting_distance].each_with_index do |category, index| -%>
           <th><%= category.to_s.titleize.split.last %></th>
           <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category, club_name: club_name} %>
+          <% if index.zero? -%>
+            <td rowspan="2" align="center"><%= old_club_denote(player, club_name) %></td>
+          <% end -%>
           </tr>
           <tr class="club_name" data-club_name="<%= club_name %>">
         <% end -%>
       </tr>
     <% end -%>
-    <% %i[putting_distance putting_in_from_20 putting_in_from_10 putting_in_from_5].each do |category| -%>
+    <% %i[putting_distance putting_in_from_20 putting_in_from_10 putting_in_from_5].each_with_index do |category, index| -%>
       <tr class="club_name" data-club_name="Putt">
         <th colspan="2"><%= category.to_s.titleize %></th>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
+        <% if index.zero? -%>
+          <td rowspan="4" align="center"><%= old_club_denote(player, 'putt') %></td>
+        <% end -%>
       </tr>
     <% end -%>
   </tbody>
