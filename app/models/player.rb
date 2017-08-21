@@ -86,6 +86,10 @@ class Player < ActiveRecord::Base
     @info
   end
 
+  def has_old_club?(club_name)
+    old_clubs.find_by(name: club_name)
+  end
+
   def receive_club(club_name, player_from)
     name = club_name.downcase
     raise "Illegal club name '#{club_name}'" unless Club::VALID_NAMES.include?(name)
@@ -94,8 +98,14 @@ class Player < ActiveRecord::Base
     club.copy_from(player_from)
   end
 
-  def has_old_club?(club_name)
-    old_clubs.find_by(name: club_name)
+  def restore_old_club(club_name)
+    old_club = old_clubs.order(created_at: :desc).find_by(name: club_name)
+    return unless old_club
+    club_to = clubs.find_by(name: club_name)
+    old_club.old_club_results.each do |club_result|
+      club_to.club_results.find_or_create_by!(dice: club_result.dice).update!(result: club_result.result)
+    end
+    old_club.destroy
   end
 
   def ==(other)
