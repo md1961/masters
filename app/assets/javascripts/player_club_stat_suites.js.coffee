@@ -5,13 +5,19 @@ $ ->
     else
       $('div#command_to_edit_player_club').hide()
 
+  toggleCommandDivVisibility()
+
   $('table#all_stats_table td.player_name').on 'click', ->
     player_id = $(this).parent().attr('id').replace('player-', '')
     $('div#player_stat table#player_stat_table-' + player_id).show()
+    $.get('/player_club_stat_suites/remember_player', {player_id: player_id})
     toggleCommandDivVisibility()
 
   $('table.player_stat_table span.close').on 'click', ->
-    $(this).parents('table').hide()
+    $table = $(this).parents('table')
+    $table.hide()
+    player_id = $table.attr('id').replace('player_stat_table-', '')
+    $.get('/player_club_stat_suites/forget_player', {player_id: player_id})
     toggleCommandDivVisibility()
 
   $('table.player_stat_table tr.club_name').on 'click', ->

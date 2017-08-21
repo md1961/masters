@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   resources :hole_stats       , only: [:index]
   resources :leaders_snapshots, only: [:index, :show]
 
-  resource :player_club_stat_suites, only: [:show]
+  resource :player_club_stat_suites, only: [:show] do
+    get :remember_player, :forget_player
+  end
 
   get 'player_clubs/alter'
 

@@ -1,6 +1,7 @@
-<% player = stat.player -%>
+<% player = stat.player
+   is_hidden = !@player_ids_to_show.include?(player.id) -%>
 
-<table id="player_stat_table-<%= player.id %>" class="player_stat_table table_base" hidden>
+<table id="player_stat_table-<%= player.id %>" class="player_stat_table table_base" <%= is_hidden && 'hidden' %>>
   <tbody>
     <tr>
       <td colspan="3" style="border-right: 0px none white;">
