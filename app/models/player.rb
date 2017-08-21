@@ -1,5 +1,6 @@
 class Player < ActiveRecord::Base
   has_many :clubs
+  has_many :old_clubs
   has_many :invitations
   has_many :tournaments, through: :invitations
   has_many :score_cards, -> { order(:round_id) }
@@ -83,6 +84,14 @@ class Player < ActiveRecord::Base
     write_score if ball.holed_out?
     ball.save!
     @info
+  end
+
+  def receive_club(club_name, player_from)
+    name = club_name.downcase
+    raise "Illegal club name '#{club_name}'" unless Club::VALID_NAMES.include?(name)
+    club = clubs.find_by(name: name)
+    club.store_as_old
+    club.copy_from(player_from)
   end
 
   def ==(other)

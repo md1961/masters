@@ -100,6 +100,21 @@ class Club < ActiveRecord::Base
     @result_values ||= club_results.order(:dice).map(&:result)
   end
 
+  def copy_from(player_from)
+    club_from = player_from.clubs.find_by(name: name)
+    club_from.club_results.each do |club_result|
+      club_results.find_or_create_by!(dice: club_result.dice).update!(result: club_result.result)
+    end
+  end
+
+  def store_as_old
+    OldClub.create!(player: player, name: name).tap { |old_club|
+      club_results.each do |club_result|
+        old_club.old_club_results.create!(dice: club_result.dice, result: club_result.result)
+      end
+    }
+  end
+
   def to_s
     name =~ /(:?fw|[lms]i)\z/ ? name.upcase : name.capitalize
   end
