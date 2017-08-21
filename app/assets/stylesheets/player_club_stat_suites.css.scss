@@ -24,6 +24,10 @@ table.player_stat_table {
     cursor: pointer;
     vertical-align: super;
   }
+
+  span.old_club {
+    cursor: pointer;
+  }
 }
 
 div#command_to_edit_player_club {

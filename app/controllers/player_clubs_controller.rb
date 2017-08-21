@@ -23,4 +23,17 @@ class PlayerClubsController < ApplicationController
     end
     redirect_to player_club_stat_suites_path
   end
+
+  def restore
+    player = Player.find(params[:player_id])
+    club_name = params[:club_name]
+    begin
+      ActiveRecord::Base.transaction do
+        player.restore_old_club(club_name)
+      end
+    rescue => e
+      raise e
+    end
+    redirect_to player_club_stat_suites_path
+  end
 end

@@ -99,9 +99,10 @@ class Player < ActiveRecord::Base
   end
 
   def restore_old_club(club_name)
-    old_club = old_clubs.order(created_at: :desc).find_by(name: club_name)
+    name = club_name.downcase
+    old_club = old_clubs.order(created_at: :desc).find_by(name: name)
     return unless old_club
-    club_to = clubs.find_by(name: club_name)
+    club_to = clubs.find_by(name: name)
     old_club.old_club_results.each do |club_result|
       club_to.club_results.find_or_create_by!(dice: club_result.dice).update!(result: club_result.result)
     end

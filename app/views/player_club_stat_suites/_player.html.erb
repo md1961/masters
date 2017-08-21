@@ -16,7 +16,7 @@
         <th colspan="2"><%= category.to_s.titleize %></th>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
         <% if index.zero? -%>
-          <td rowspan="2" align="center"><%= old_club_denote(player, 'drive') %></td>
+          <%= old_club_denote(player, 'drive') %>
         <% end -%>
       </tr>
     <% end -%>
@@ -28,10 +28,10 @@
           <th><%= category.to_s.titleize.split.last %></th>
           <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category, club_name: club_name} %>
           <% if index.zero? -%>
-            <td rowspan="2" align="center"><%= old_club_denote(player, club_name) %></td>
+            <%= old_club_denote(player, club_name) %>
           <% end -%>
           </tr>
-          <tr class="club_name" data-club_name="<%= club_name %>">
+          <tr class="club_name" data-club_name="<%= club_name_display %>">
         <% end -%>
       </tr>
     <% end -%>
@@ -40,7 +40,7 @@
         <th colspan="2"><%= category.to_s.titleize %></th>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
         <% if index.zero? -%>
-          <td rowspan="4" align="center"><%= old_club_denote(player, 'putt') %></td>
+          <%= old_club_denote(player, 'putt', 4) %>
         <% end -%>
       </tr>
     <% end -%>

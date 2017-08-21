@@ -24,6 +24,14 @@ $ ->
     $('div#command_to_edit_player_club span#club_name').text($(this).data('club_name'))
     $('div#command_to_edit_player_club div#buttons').show()
 
+  $('table.player_stat_table span.old_club').on 'click', (e) ->
+    e.stopPropagation()
+    $table = $(this).parents('table')
+    window.location.href = '/player_clubs/restore?' + $.param({
+      player_id: $table.attr('id').replace('player_stat_table-', ''),
+      club_name: $(this).parents('tr.club_name').data('club_name'),
+    })
+
   $('div#command_to_edit_player_club div#buttons input[type="button"]').on 'click', ->
     unless $('table.player_stat_table:visible').length == 2
       alert('Exactly two players must be shown.  Call administrator')

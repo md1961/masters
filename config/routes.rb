@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   end
 
   get 'player_clubs/alter'
+  get 'player_clubs/restore'
 
   resource :cut_off, only: %i[show update] do
     member do
