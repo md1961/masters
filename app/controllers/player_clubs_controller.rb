@@ -13,7 +13,7 @@ class PlayerClubsController < ApplicationController
         when 'copy_right_to_left'
           player_left.receive_club(club_name, player_right)
         when 'swap'
-          #"Swap #{player_left}'s #{club_name} to #{player_right}'s #{club_name}"
+          player_left.swap_clubs(club_name, player_right)
         else
           raise "ILLEGAL COMMAND '#{params[:command]}'"
         end
