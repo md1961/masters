@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th rowspan="2" />
+      <th rowspan="2">GRF</th>
       <th rowspan="2" colspan="2">Drive<br>Distance</th>
       <th rowspan="2" colspan="2">Fairway<br>Keep %</th>
       <th colspan="4">FW</th>
@@ -27,6 +28,7 @@
     <% @stat_suite.each do |stat| -%>
       <tr id="player-<%= stat.player.id %>">
         <td class="player_name"><%= stat.player.last_name %></td>
+        <td class="numeric"><%= stat.general_rank_factor %></td>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :drive_distance} %>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: :fairway_keeping} %>
         <%= render partial: 'green_hitting_and_distance', locals: {stat: stat, club_name: :fw} %>
