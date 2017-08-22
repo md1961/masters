@@ -86,10 +86,6 @@ class Player < ActiveRecord::Base
     @info
   end
 
-  def has_old_club?(club_name)
-    old_clubs.find_by(name: club_name)
-  end
-
   def receive_club(club_name, player_from)
     name = club_name.downcase
     raise "Illegal club name '#{club_name}'" unless Club::VALID_NAMES.include?(name)
