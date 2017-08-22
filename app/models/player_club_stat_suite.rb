@@ -7,6 +7,7 @@ class PlayerClubStatSuite
   def initialize(players)
     @stats = players.map { |player| PlayerClubStat.new(player) }
     set_ranks_for_all_categories
+    @stats.sort_by! { |stat| stat.general_rank_factor }
   end
 
   def each
