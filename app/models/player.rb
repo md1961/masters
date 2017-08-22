@@ -94,6 +94,21 @@ class Player < ActiveRecord::Base
     club.copy_from(player_from)
   end
 
+  def swap_clubs(club_name, other)
+    name = club_name.downcase
+    raise "Illegal club name '#{club_name}'" unless Club::VALID_NAMES.include?(name)
+
+    club1 = clubs.find_by(name: name)
+    club1.store_as_old
+    club2 = other.clubs.find_by(name: name)
+    club2.store_as_old
+
+    is_saved = club1.update_attribute(:player, other)
+    raise ActiveRecord::RecordInvalid, "Fail to update :player with #{other}" unless is_saved
+    is_saved = club2.update_attribute(:player, self )
+    raise ActiveRecord::RecordInvalid, "Fail to update :player with #{self}"  unless is_saved
+  end
+
   def restore_old_club(club_name)
     name = club_name.downcase
     old_club = old_clubs.order(created_at: :desc).find_by(name: name)
