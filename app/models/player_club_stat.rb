@@ -59,4 +59,12 @@ class PlayerClubStat
       @h_ranks[category.to_sym] = value
     end
   end
+
+  def general_rank_factor
+    %i[drive_distance fairway_keeping putting_distance].inject(0) { |sum, category|
+      sum += rank(category)
+    } + %i[green_hitting green_hitting_distance].product(%i[fw li mi si p ch]).inject(0) { |sum, (category, club_name)|
+      sum += rank(category, club_name)
+    }
+  end
 end
