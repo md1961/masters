@@ -16,7 +16,7 @@
         <% if index.zero? -%>
           <th rowspan="2">Drive</th>
         <% end -%>
-        <th><%= category.to_s.titleize %></th>
+        <th><%= index.zero? ? 'Distance' : 'Fairway %' %></th>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
         <% if index.zero? -%>
           <%= old_club_denote(player, 'drive') %>
@@ -28,7 +28,7 @@
       <tr class="club_name" data-club_name="<%= club_name_display %>">
         <th rowspan="2"><%= club_name_display %></th>
         <% %i[green_hitting green_hitting_distance].each_with_index do |category, index| -%>
-          <th><%= category.to_s.titleize %></th>
+          <th><%= index.zero? ? 'Green %' : 'Accuracy' %></th>
           <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category, club_name: club_name} %>
           <% if index.zero? -%>
             <%= old_club_denote(player, club_name) %>
@@ -43,7 +43,7 @@
         <% if index.zero? -%>
           <th rowspan="4">Putt</th>
         <% end -%>
-        <th><%= category.to_s.titleize %></th>
+        <th><%= category.to_s.titleize.split.last(index.zero? ? 1 : 2).join(' ') %></th>
         <%= render partial: 'stat_with_rank', locals: {stat: stat, category: category} %>
         <% if index.zero? -%>
           <%= old_club_denote(player, 'putt', 4) %>
