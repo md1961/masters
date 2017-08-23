@@ -86,6 +86,12 @@ class Player < ActiveRecord::Base
     @info
   end
 
+  def has_same_club?(club_name, other)
+    name = club_name.downcase
+    raise "Illegal club name '#{club_name}'" unless Club::VALID_NAMES.include?(name)
+    clubs.find_by(name: name) == other.clubs.find_by(name: name)
+  end
+
   def receive_club(club_name, player_from)
     name = club_name.downcase
     raise "Illegal club name '#{club_name}'" unless Club::VALID_NAMES.include?(name)
