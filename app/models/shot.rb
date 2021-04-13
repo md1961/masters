@@ -1,4 +1,4 @@
-class Shot < ActiveRecord::Base
+class Shot < ApplicationRecord
   include Comparable
 
   belongs_to :hole

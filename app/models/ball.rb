@@ -1,4 +1,4 @@
-class Ball < ActiveRecord::Base
+class Ball < ApplicationRecord
   include Comparable
 
   belongs_to :player

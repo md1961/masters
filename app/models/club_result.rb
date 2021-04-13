@@ -1,4 +1,4 @@
-class ClubResult < ActiveRecord::Base
+class ClubResult < ApplicationRecord
   belongs_to :club
 
   validate :result_is_valid

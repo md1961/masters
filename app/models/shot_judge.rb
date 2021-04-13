@@ -1,4 +1,4 @@
-class ShotJudge < ActiveRecord::Base
+class ShotJudge < ApplicationRecord
   belongs_to :shot
 
   def to_s

@@ -1,4 +1,4 @@
-class Area < ActiveRecord::Base
+class Area < ApplicationRecord
   belongs_to :round
   has_many :shots
 
