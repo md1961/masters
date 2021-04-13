@@ -1,4 +1,4 @@
-class Club < ActiveRecord::Base
+class Club < ApplicationRecord
   has_many :club_results
   belongs_to :player
 

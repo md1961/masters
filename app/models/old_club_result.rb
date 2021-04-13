@@ -1,3 +1,3 @@
-class OldClubResult < ActiveRecord::Base
+class OldClubResult < ApplicationRecord
   belongs_to :old_club
 end

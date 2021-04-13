@@ -1,4 +1,4 @@
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   belongs_to :round
   has_many :groupings, -> { order(:play_order) }
   has_many :players, through: :groupings

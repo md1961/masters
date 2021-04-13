@@ -1,4 +1,4 @@
-class ScoreCard < ActiveRecord::Base
+class ScoreCard < ApplicationRecord
   belongs_to :player
   belongs_to :round
   has_many :scores

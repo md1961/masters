@@ -1,4 +1,4 @@
-class Leader < ActiveRecord::Base
+class Leader < ApplicationRecord
   belongs_to :leaders_snapshot
   belongs_to :player
   belongs_to :hole

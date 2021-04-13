@@ -1,4 +1,4 @@
-class Tournament < ActiveRecord::Base
+class Tournament < ApplicationRecord
   include Comparable
 
   has_many :rounds, -> { order(:number) }

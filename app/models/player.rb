@@ -1,4 +1,4 @@
-class Player < ActiveRecord::Base
+class Player < ApplicationRecord
   has_many :clubs
   has_many :old_clubs
   has_many :invitations
