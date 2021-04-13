@@ -1,4 +1,4 @@
-class CreateGroupings < ActiveRecord::Migration
+class CreateGroupings < ActiveRecord::Migration[4.2]
 
   def change
     create_table :groupings do |t|

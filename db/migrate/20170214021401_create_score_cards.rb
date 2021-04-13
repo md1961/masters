@@ -1,4 +1,4 @@
-class CreateScoreCards < ActiveRecord::Migration
+class CreateScoreCards < ActiveRecord::Migration[4.2]
 
   def change
     create_table :score_cards do |t|
