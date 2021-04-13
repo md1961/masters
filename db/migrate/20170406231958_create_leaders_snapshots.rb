@@ -1,4 +1,4 @@
-class CreateLeadersSnapshots < ActiveRecord::Migration
+class CreateLeadersSnapshots < ActiveRecord::Migration[4.2]
 
   def change
     create_table :leaders_snapshots do |t|

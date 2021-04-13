@@ -1,4 +1,4 @@
-class CreateShotJudges < ActiveRecord::Migration
+class CreateShotJudges < ActiveRecord::Migration[4.2]
 
   def change
     create_table :shot_judges do |t|

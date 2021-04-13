@@ -1,4 +1,4 @@
-class CreateBalls < ActiveRecord::Migration
+class CreateBalls < ActiveRecord::Migration[4.2]
 
   def change
     create_table :balls do |t|

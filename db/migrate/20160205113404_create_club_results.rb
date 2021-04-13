@@ -1,4 +1,4 @@
-class CreateClubResults < ActiveRecord::Migration
+class CreateClubResults < ActiveRecord::Migration[4.2]
 
   def change
     create_table :club_results do |t|
