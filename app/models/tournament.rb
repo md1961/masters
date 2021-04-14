@@ -10,7 +10,7 @@ class Tournament < ApplicationRecord
   end
 
   def players_to_play
-    players.joins(:invitations).where(invitations: {cut_after_round_number_of: [nil]})
+    invitations.where(cut_after_round_number_of: [nil]).map(&:player)
   end
 
   def leaders
