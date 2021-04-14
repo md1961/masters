@@ -5,8 +5,10 @@ module HolesHelper
     # TODO: Move players_in_landings() to Round ?
     def players_in_landings(result)
       @round.group_to_display.players.find_all do |player|
-        player_result = player.ball.result
-        if player.ball.shot.is_layup
+        player_result = player.ball&.result
+        if player.ball.nil?
+          false
+        elsif player.ball.shot.is_layup
           result == 'layup'
         elsif result == 'MC-Ch'
           player_result.to_i > 0
