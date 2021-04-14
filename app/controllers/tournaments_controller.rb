@@ -26,6 +26,9 @@ class TournamentsController < ApplicationController
 
   def new
     @tournament = Tournament.new
+    if t = Tournament.order(:created_at).last
+      @tournament.year = t.year + 1
+    end
   end
 
   def create
