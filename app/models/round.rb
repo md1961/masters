@@ -135,6 +135,7 @@ class Round < ApplicationRecord
   def current_stamp
     return nil unless current_group
     player = current_group.players.first
+    return nil unless player.ball
     format('T%02dR%d-G%02dH%02d%s', tournament.id, id, current_group.number,
            player.ball.shot.hole.number, player.ball.shot.area.name.first.downcase)
   end
