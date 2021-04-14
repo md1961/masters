@@ -81,7 +81,7 @@ class Group < ApplicationRecord
   end
 
   def next_player
-    players.sort_by { |p| [p.ball, p.play_order] }.first
+    players.reject { |p| p.ball.nil? }.sort_by { |p| [p.ball, p.play_order] }.first
   end
 
   def play(index_option: nil)
