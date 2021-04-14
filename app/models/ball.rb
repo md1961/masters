@@ -2,7 +2,7 @@ class Ball < ApplicationRecord
   include Comparable
 
   belongs_to :player
-  belongs_to :shot
+  belongs_to :shot, optional: true
 
   attr_accessor :club_used
   attr_reader :info
