@@ -10,7 +10,9 @@ class RoundsController < ApplicationController
     elsif params[:choosing_next_use] && params[:shot_option].nil?
       render :choose_shot_option
     else
-      @round.proceed(shot_option: params[:shot_option])
+      Round.transaction do
+        @round.proceed(shot_option: params[:shot_option])
+      end
       prepare_messages unless @no_animation
     end
   end
