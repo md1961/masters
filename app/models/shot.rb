@@ -21,6 +21,10 @@ class Shot < ApplicationRecord
       : Shot.find_by(hole: hole, number: number + 1, is_layup: ball.is_layup) || self
   end
 
+  def destroy
+    raise "Cannot destroy a Shot"
+  end
+
   def <=>(other)
     if self.hole != other.hole
       self.hole <=> other.hole
