@@ -1,7 +1,7 @@
 class Leader < ApplicationRecord
-  belongs_to :leaders_snapshot
-  belongs_to :player
-  belongs_to :hole
+  belongs_to :leaders_snapshot, optional: true
+  belongs_to :player          , optional: true
+  belongs_to :hole            , optional: true
 
   def tournament_score
     score

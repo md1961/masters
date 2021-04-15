@@ -1,6 +1,6 @@
 class ScoreCard < ApplicationRecord
-  belongs_to :player
-  belongs_to :round
+  belongs_to :player, optional: true
+  belongs_to :round , optional: true
   has_many :scores
 
   def total_value
