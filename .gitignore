@@ -16,6 +16,8 @@
 /log/*.log*
 /tmp
 
+/public/assets
+
 *~
 
 Session.vim
@@ -23,3 +25,6 @@ Session.vim
 note.txt
 
 config/unicorn_*
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
