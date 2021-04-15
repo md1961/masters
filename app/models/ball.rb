@@ -251,7 +251,7 @@ class Ball < ApplicationRecord
     end
 
     def set_next_use_if_nil
-      if shot&.hole.number == 12 && shot&.number = 1
+      if shot&.hole&.number == 12 && shot&.number == 1
         self.next_use = player.round.club_name_for_12_tee
       else
         shot_judges = shot.shot_judges
