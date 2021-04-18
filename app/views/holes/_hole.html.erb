@@ -3,8 +3,8 @@
     <caption><%= hole.full_desc(with_distance: true) %></caption>
     <% fairway_landings(hole).each do |row| -%>
       <tr>
-        <% row.each do |td| -%>
-          <%= td %>
+        <% row.each do |td_with_content| -%>
+          <%= td_with_content %>
         <% end -%>
       </tr>
     <% end -%>
@@ -15,8 +15,8 @@
   <caption><%= hole.par >= 4 ? '&nbsp;'.html_safe : hole.full_desc(with_distance: true) %></caption>
   <% green_landings(hole).each_with_index do |row, index_row| -%>
     <tr>
-      <% row.each_with_index do |td, index_td| -%>
-        <% if hole.par == 5 && index_row == 0 && index_td == (hole.number >= 13 ? 0 : 1) -%>
+      <% row.each_with_index do |td_with_content, index| -%>
+        <% if hole.par == 5 && index_row == 0 && index == (hole.number >= 13 ? 0 : 1) -%>
           <% players = players_in_landings('layup') -%>
           <td rowspan="7" class="near_green <%= players.empty? || 'players' %>">
             (layup)
@@ -24,7 +24,7 @@
             <%= players.join(', ') %>
           </td>
         <% end -%>
-        <%= td %>
+        <%= td_with_content %>
       <% end -%>
     </tr>
   <% end -%>

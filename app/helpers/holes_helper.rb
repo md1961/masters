@@ -49,7 +49,17 @@ module HolesHelper
   end
 
   def hole_map_element(shot_judge, players)
-    players = players.empty? ? '&nbsp'.html_safe : players.join(', ')
-    safe_join([shot_judge, players], '<br>'.html_safe)
+    value = if players.empty?
+              '&nbsp'.html_safe
+            else
+              players.map { |player|
+                [player, player.ball.result.to_i]
+              }.sort_by { |player, distance|
+                -distance
+              }.map { |player, distance|
+                "#{player}#{distance > 0 ? "&nbsp;#{distance}" : ''}".html_safe
+              }.yield_self { |ps| safe_join(ps, ' ') }
+            end
+    safe_join([shot_judge, value], '<br>'.html_safe)
   end
 end
