@@ -1,11 +1,7 @@
 class TournamentsController < ApplicationController
 
   def index
-    if Tournament.count == 0
-      redirect_to new_tournament_path
-    else
-      redirect_to Tournament.order(:created_at).last
-    end
+    @tournaments = Tournament.order(:year)
   end
 
   def show

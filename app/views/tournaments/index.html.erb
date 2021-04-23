@@ -1,0 +1,13 @@
+<div class="tournaments_index">
+  <table>
+    <tbody>
+      <% @tournaments.each do |tournament| -%>
+        <tr>
+          <td>
+            <%= link_to tournament, tournament %>
+          </td>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+</div>
